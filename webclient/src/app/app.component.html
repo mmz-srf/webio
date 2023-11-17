@@ -1,0 +1,33 @@
+<div class="box" *ngIf="authFinished$ | async">
+  <div class="header">
+      <link rel="icon" type="image/x-icon" href="./../assets/favicon.ico" />
+    <app-users></app-users>
+    <h1 class="title" [innerHTML]="title"></h1>
+    <div class="navigation">
+    <div class="leftnavigation">
+    <a routerLink="/devices" routerLinkActive="routerLinkActive" class="navElement">Devices</a>
+    <a routerLink="/interfaces" [queryParams]="currentInterfaceFilter$ | async" routerLinkActive="routerLinkActive" class="navElement">Interfaces</a>
+    <a routerLink="/streams" [queryParams]="currentStreamsFilter$ | async" routerLinkActive="routerLinkActive" class="navElement">Sender/Receiver</a>
+    <app-globalsearch></app-globalsearch>
+    </div>
+    <div class="rightnavigation">
+      <button class="btn tpc-button headerbutton" data-toggle="modal" data-target="#exportDataModal">Export Data</button>
+      <button class="btn tpc-button headerbutton" data-toggle="modal" data-target="#addDeviceModal">Add Devices</button>
+    </div>
+  </div>
+
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="footer">
+    <app-modifications></app-modifications>
+  </div>
+</div>
+
+
+<app-add-device></app-add-device>
+<app-export-data></app-export-data>
+<app-edit-device></app-edit-device>
+<app-edit-interface></app-edit-interface>
+<app-edit-streams></app-edit-streams>

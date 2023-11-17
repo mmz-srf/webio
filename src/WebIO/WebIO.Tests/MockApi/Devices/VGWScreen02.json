@@ -1,0 +1,98 @@
+{
+    "_meta": {
+        "info": {
+            "auth": true,
+            "code": 0,
+            "desc": "",
+            "internalDetails": [
+            ],
+            "msg": "OK",
+            "ok": true,
+            "requestDetails": [
+            ],
+            "user": "adm-meierdan"
+        },
+        "type": "mainResult"
+    },
+    "data": {
+        "config": {
+            "devman": {
+                "devices": {
+                    "device201": {
+                        "active": true,
+                        "cinfoOverrides": {
+                            "http": {
+                                "id": "default",
+                                "useDefault": false
+                            },
+                            "snmp": {
+                                "id": "default",
+                                "useDefault": true
+                            }
+                        },
+                        "config": {
+                            "cinfo": {
+                                "address": "10.120.12.12",
+                                "altAddresses": [
+                                ],
+                                "altAddressesWithAuth": [
+                                ],
+                                "auth": null,
+                                "http": {
+                                    "httpAuth": 0,
+                                    "https": false,
+                                    "trustAllCertificates": false
+                                },
+                                "protocols": {
+                                },
+                                "snmp": {
+                                    "protocol": {
+                                        "localEngineId": "",
+                                        "maxRepetitions": 10,
+                                        "preferredVersion": 1,
+                                        "retries": 1,
+                                        "timeout": 5000,
+                                        "useGetBulk": true
+                                    },
+                                    "security": {
+                                        "read": {
+                                            "community": "public",
+                                            "user": ""
+                                        },
+                                        "write": {
+                                            "community": "private",
+                                            "user": ""
+                                        }
+                                    },
+                                    "users": {
+                                    }
+                                },
+                                "socketTimeout": null,
+                                "traps": {
+                                    "trapDestinations": [
+                                    ],
+                                    "trapType": "Trap",
+                                    "user": "videoipath"
+                                }
+                            },
+                            "customSettings": {
+                            },
+                            "desc": {
+                                "desc": "Embrionix \"IGEL\" Screen 2",
+                                "label": "VGWScreen02"
+                            },
+                            "driver": {
+                                "name": "embrionix_sfp",
+                                "organization": "com.nevion",
+                                "version": "0.1.0"
+                            }
+                        },
+                        "id": "device201",
+                        "meta": {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

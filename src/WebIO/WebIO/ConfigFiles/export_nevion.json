@@ -1,0 +1,162 @@
+[
+    {
+        "DisplayName": "#EndpointType",
+        "StaticValue": "EXT"
+    },
+    {
+        "DisplayName": "EndpointName",
+        "Property": "CompositeName"
+    },
+    {
+        "DisplayName": "Tags",
+        "Property": "TagsNevion",
+        "Script": [
+            "var driver = GetValue(\"Driver\") ?? string.Empty;",
+            "var tags = GetValue(\"Tags\") ?? string.Empty;",
+            "var list = new List<string>();",
+            "foreach (var tag in tags.Split(';'))",
+            "{",
+            "    if (!string.IsNullOrWhiteSpace(tag))",
+            "    {",
+            "        list.Add($\"Type:{tag}\");",
+            "    }",
+            "}",
+            "list.Add($\"#{driver}\");",
+            "return string.Join(\", \", list);"
+        ]
+    },
+    {
+        "DisplayName": "Description",
+        "Property": "Description",
+        "Script": [
+            "var family = GetValue(\"Family\");",
+            "var label = GetValue(\"Label1\");",
+            "var attachedDevice = GetValue(\"AttachedDevice\");",
+            "return $\"{family} | {label} | {attachedDevice}\";"
+        ] 
+    },
+    {
+        "DisplayName": "DeviceName",
+        "Property": "CombinedDeviceName"
+    },
+    {
+        "DisplayName": "Slot",
+        "Property": "Slot"
+    },
+    {
+        "DisplayName": "Channel",
+        "Property": "Channel" 
+    },
+    {
+        "DisplayName": "PriSwitch",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "PriSwitchIf",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "SecSwitch",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "SecSwitchIf",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "SourceIp",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "DestinationIp",
+        "Script": [
+            "if (GetValue(\"Name\").Contains(\"send\", System.StringComparison.InvariantCultureIgnoreCase))",
+            "{",
+            "   if (GetValue(\"Driver\").Contains(\"embrionix\", System.StringComparison.InvariantCultureIgnoreCase))",
+            "       {",
+            "           if (GetValue(\"Driver\").Contains(\"Quadsplit\", System.StringComparison.InvariantCultureIgnoreCase))",
+            "               return \"pool:TPC\";",
+            "           else",
+            "               return \"pool:TPC|pool:TPC\";",
+            "       }",
+            "   else",
+            "       return \"pool:TPC\";",
+            "}",
+            "else",
+            "   return \"\";"
+        ]
+    },
+    {
+        "DisplayName": "DestinationUdp",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "VlanId",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "PortIp",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "PortGateway",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "PortNetmask",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "Active",
+        "Script": [
+            "var gettags = GetValue(\"Tags\") ?? \"-\"; ",
+            "if(gettags == \"\") {return \"false\";} else {return \"true\";}"
+        ]
+    },
+    {
+        "DisplayName": "Present",
+        "Script": [
+            "var gettags = GetValue(\"Tags\") ?? \"-\"; ",
+            "if(gettags == \"\") {return \"off\";} else {return \"full\";}"
+        ]
+    },
+    {
+        "DisplayName": "Not Used",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "SDPSupprt",
+        "Property": "SDPSupport"
+    },
+    {
+        "DisplayName": "Not Used",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "Custom",
+        "StaticValue": ""
+    },
+    {
+        "DisplayName": "SIPS Mode",
+        "Script": [
+            "if (string.IsNullOrWhiteSpace(GetValue(\"SwitchRealtimeB\")))",
+            "{",
+            "    if (GetValue(\"Driver\").Contains(\"Embrionix\", System.StringComparison.InvariantCultureIgnoreCase))",
+            "    {",
+            "       if (GetValue(\"deviceType\").Contains(\"quadsplit\", System.StringComparison.InvariantCultureIgnoreCase))",
+            "           return \"none\";",
+            "       else if (GetValue(\"Name\").Contains(\"rec\", System.StringComparison.InvariantCultureIgnoreCase))",
+            "           return \"merge\";",
+            "       else",
+            "           return \"split\";",
+            "    }",
+            "    else",
+            "        return \"none\";",
+            "}",
+            "else if (GetValue(\"name\").Contains(\"rec\", System.StringComparison.InvariantCultureIgnoreCase))",
+            "    return \"split\";",
+            "else",
+            "    return \"merge\";"
+        ] 
+    }
+]

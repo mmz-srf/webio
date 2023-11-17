@@ -1,0 +1,42 @@
+<div class="modal" id="editStreamModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="title">{{header}}</h1>
+      </div>
+      <div class="modal-body grid">
+        <div class="grid-right">
+          <p>Selected streams:</p>
+          <div>
+            <ul class="streams">
+              <li *ngFor="let stream of streams$ | async">
+                {{stream.properties["Name"].value}}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid-left">
+          <app-edit-fields
+            *ngIf="streams.length > 0"
+            [entities$]="streams$"
+            [fieldProvider]="streamService"
+            (fieldChanged)="addFieldUpdate($event.field, $event.newVal)"
+          ></app-edit-fields>
+
+          <app-edit-streams-tag-selector
+            *ngIf="streams.length > 0"
+            [streams$]="streams$"
+            (tagChanged)="addTagUpdate($event.tagName, $event.newVal)">
+          </app-edit-streams-tag-selector>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn tpc-button" data-dismiss="modal" (click)="cancel()">Cancel</button>
+        <button type="button" class="btn tpc-button" data-dismiss="modal"
+                (click)="onUpdateStream()">{{header}}</button>
+      </div>
+    </div>
+  </div>
+</div>

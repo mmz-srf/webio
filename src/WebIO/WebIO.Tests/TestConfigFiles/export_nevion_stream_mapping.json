@@ -1,0 +1,348 @@
+[
+    {
+        "DeviceTypeName": "embrionixIp2Sdi",
+        "Mappings": [
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_ANCrec_0001",
+                "DestinationVipStreamKey": "{deviceId}.2.5",
+                "DestinationVipStreamLabel": "Ancillary rx ch1 flow 5"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI02_ANCrec_0001",
+                "DestinationVipStreamKey": "{deviceId}.2.11",
+                "DestinationVipStreamLabel": "Ancillary rx ch2 flow 5"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDrec_0001",
+                "DestinationVipStreamKey": "{deviceId}.2.1",
+                "DestinationVipStreamLabel": "Audio rx ch1 flow 1"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDrec_0001",
+                "DestinationVipStreamKey": "{deviceId}.2.7",
+                "DestinationVipStreamLabel": "Audio rx ch2 flow 1"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDrec_0002",
+                "DestinationVipStreamKey": "{deviceId}.2.2",
+                "DestinationVipStreamLabel": "Audio rx ch1 flow 2"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDrec_0002",
+                "DestinationVipStreamKey": "{deviceId}.2.8",
+                "DestinationVipStreamLabel": "Audio rx ch2 flow 2"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDrec_0003",
+                "DestinationVipStreamKey": "{deviceId}.2.3",
+                "DestinationVipStreamLabel": "Audio rx ch1 flow 3"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDrec_0003",
+                "DestinationVipStreamKey": "{deviceId}.2.9",
+                "DestinationVipStreamLabel": "Audio rx ch2 flow 3"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDrec_0004",
+                "DestinationVipStreamKey": "{deviceId}.2.4",
+                "DestinationVipStreamLabel": "Audio rx ch1 flow 4"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDrec_0004",
+                "DestinationVipStreamKey": "{deviceId}.2.10",
+                "DestinationVipStreamLabel": "Audio rx ch2 flow 4"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_VIDrec_0001",
+                "DestinationVipStreamKey": "{deviceId}.2.0",
+                "DestinationVipStreamLabel": "Video rx ch1 flow 0"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI02_VIDrec_0001",
+                "DestinationVipStreamKey": "{deviceId}.2.6",
+                "DestinationVipStreamLabel": "Video rx ch2 flow 0"
+            }
+        ]
+    },
+    {
+        "DeviceTypeName": "embrionixIpHdmi",
+        "Mappings": [
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_ANCrec_0001",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_ANCsend_0001",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_AUDrec_0001",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_AUDrec_0002",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_AUDrec_0003",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_AUDrec_0004",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_AUDsend_0001",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_AUDsend_0002",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_AUDsend_0003",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_AUDsend_0004",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_VIDrec_0001",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_HDMI01_VIDsend_0001",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            }
+        ]
+    },
+    {
+        "DeviceTypeName": "embrionix2SdiIp",
+        "Mappings": [
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI01_ANCsend_0001",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI01_ANCsend_0002",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0001",
+                "DestinationVipStreamKey": "{deviceId}.1.1",
+                "DestinationVipStreamLabel": "Audio tx ch1 flow 1"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0002",
+                "DestinationVipStreamKey": "{deviceId}.1.2",
+                "DestinationVipStreamLabel": "Audio tx ch1 flow 2"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}__SDI01_AUDsend_0003",
+                "DestinationVipStreamKey": "{deviceId}.1.3",
+                "DestinationVipStreamLabel": "Audio tx ch1 flow 3"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0004",
+                "DestinationVipStreamKey": "{deviceId}.1.4",
+                "DestinationVipStreamLabel": "Audio tx ch1 flow 4"
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0005",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0006",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0007",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0008",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_VIDsend_0001",
+                "DestinationVipStreamKey": "{deviceId}.1.0",
+                "DestinationVipStreamLabel": "Video tx ch1 flow 0"
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI01_VIDsend_0002",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI02_ANCsend_0001",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI02_ANCsend_0002",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDsend_0001",
+                "DestinationVipStreamKey": "{deviceId}.1.7",
+                "DestinationVipStreamLabel": "Audio tx ch2 flow 1"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDsend_0002",
+                "DestinationVipStreamKey": "{deviceId}.1.8",
+                "DestinationVipStreamLabel": "Audio tx ch2 flow 2"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}__SDI02_AUDsend_0003",
+                "DestinationVipStreamKey": "{deviceId}.1.9",
+                "DestinationVipStreamLabel": "Audio tx ch2 flow 3"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDsend_0004",
+                "DestinationVipStreamKey": "{deviceId}.1.10",
+                "DestinationVipStreamLabel": "Audio tx ch2 flow 4"
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDsend_0005",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDsend_0006",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDsend_0007",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI02_AUDsend_0008",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI02_VIDsend_0001",
+                "DestinationVipStreamKey": "{deviceId}.1.6",
+                "DestinationVipStreamLabel": "Video tx ch2 flow 0"
+            },
+            {
+                // Todo: VIP Key und Label eintragen
+                "SourceWebIoStreamName": "{deviceName}_SDI02_VIDsend_0002",
+                "DestinationVipStreamKey": "{deviceId}",
+                "DestinationVipStreamLabel": ""
+            }
+        ]
+    },
+    {
+        "DeviceTypeName": "embrionixSdiBidiIp",
+        "Mappings": [
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_ANCrec_0001",
+                "DestinationVipStreamKey": "{deviceId}.2.5",
+                "DestinationVipStreamLabel": "Ancillary rx ch2 flow 5"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_ANCsend_0001",
+                "DestinationVipStreamKey": "{deviceId}.1.5",
+                "DestinationVipStreamLabel": "Ancillary tx ch1 flow 5"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDrec_0001",
+                "DestinationVipStreamKey": "{deviceId}.2.1",
+                "DestinationVipStreamLabel": "Audio rx ch2 flow 1"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDrec_0002",
+                "DestinationVipStreamKey": "{deviceId}.2.2",
+                "DestinationVipStreamLabel": "Audio rx ch2 flow 2"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDrec_0003",
+                "DestinationVipStreamKey": "{deviceId}.2.3",
+                "DestinationVipStreamLabel": "Audio rx ch2 flow 3"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDrec_0004",
+                "DestinationVipStreamKey": "{deviceId}.2.4",
+                "DestinationVipStreamLabel": "Audio rx ch2 flow 4"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0001",
+                "DestinationVipStreamKey": "{deviceId}.1.1",
+                "DestinationVipStreamLabel": "Audio tx ch1 flow 1"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0002",
+                "DestinationVipStreamKey": "{deviceId}.1.2",
+                "DestinationVipStreamLabel": "Audio tx ch1 flow 2"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0003",
+                "DestinationVipStreamKey": "{deviceId}.1.3",
+                "DestinationVipStreamLabel": "Audio tx ch1 flow 3"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_AUDsend_0004",
+                "DestinationVipStreamKey": "{deviceId}.1.4",
+                "DestinationVipStreamLabel": "Audio tx ch1 flow 4"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_VIDrec_0001",
+                "DestinationVipStreamKey": "{deviceId}.2.0",
+                "DestinationVipStreamLabel": "Video rx ch2 flow 0"
+            },
+            {
+                "SourceWebIoStreamName": "{deviceName}_SDI01_VIDsend_0001",
+                "DestinationVipStreamKey": "{deviceId}.1.0",
+                "DestinationVipStreamLabel": "Video tx ch1 flow 0"
+            }
+        ]
+    }
+]

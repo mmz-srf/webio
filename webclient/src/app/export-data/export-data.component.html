@@ -1,0 +1,43 @@
+<div class="modal" id="exportDataModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="title">Export Data</h1>
+      </div>
+      <div class="modal-body">
+        <div class="navigation">
+
+          <div class="modal-chooses modal-dropdown">
+            <p class="modal-description">Export target</p>
+            <select (change)="selectExportTarget($event.target.value)" class="select modal-select" [(ngModel)]="selectedExportTargetName">
+              <option value="" selected disabled>--- bitte wählen ---</option>
+              <option *ngFor="let exportTarget of exportTargets" [value]="exportTarget">
+                {{exportTarget}}
+              </option>
+            </select>
+          </div>
+          <div class="modal-chooses modal-dropdown">
+            <p class="modal-description">Export selection</p>
+            <select (change)="selectExportSelection($event.target.value)" class="select modal-select" [(ngModel)]="selectedExportSelection">
+              <option value="" selected disabled>--- bitte wählen ---</option>
+              <option *ngFor="let selection of exportSelections" [value]="selection">
+                {{selection}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+          <button type="button" class="btn tpc-button" data-dismiss="modal" (click)="cancel()">Cancel</button>
+          <button type="button"
+                  class="btn tpc-button"
+                  data-dismiss="modal"
+                  (click)="onStartExport()"
+                  [disabled]="!selectedExportTargetName || !selectedExportSelection"
+          >Start export</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,421 @@
+{
+  "DeviceColumns": [
+    {
+      "Group": "General",
+      "Columns": [
+        {
+          "DisplayName": "Device",
+          "Property": "Name",
+          "Readonly": false,
+          "Visible": "Always"
+        },
+        {
+          "Property": "Status"
+        }
+      ]
+    },
+    {
+      "Group": "Device",
+      "Columns": [
+        {
+          "Property": "DeviceType",
+          "Visible": "Always"
+        },
+        {
+          "Property": "DeviceLocation"
+        },
+        {
+          "DisplayName": "Last Modified",
+          "Property": "Modified",
+          "Readonly": true
+        },
+        {
+          "Property": "Responsibility"
+        },
+        {
+          "Property": "KscAcquisition"
+        },
+        {
+          "Property": "KscProduction"
+        },
+        {
+          "Property": "KscAggregation"
+        }
+      ]
+    },
+    {
+      "Group": "Network",
+      "Columns": [
+        {
+          "Property": "FqdnRealtimeA",
+          "Visible": "Always"
+        },
+        {
+          "Property": "IpAddressRealtimeA"
+        },
+        {
+          "Property": "SwitchRealtimeA"
+        },
+        {
+          "Property": "PortRealtimeA"
+        },
+        {
+          "Property": "FqdnRealtimeB"
+        },
+        {
+          "Property": "IpAddressRealtimeB"
+        },
+        {
+          "Property": "SwitchRealtimeB"
+        },
+        {
+          "Property": "PortRealtimeB"
+        },
+        {
+          "Property": "FqdnControlA"
+        },
+        {
+          "Property": "IpAddressControlA"
+        },
+        {
+          "Property": "FqdnControlB"
+        },
+        {
+          "Property": "IpAddressControlB"
+        }
+      ]
+    },
+    {
+      "Group": "Orchestrator",
+      "Columns": [
+        {
+          "Property": "Driver",
+          "Visible": "Always"
+        },
+        { "Property": "StaticMulticasts" },
+        { "Property": "Smpte20227" }
+      ]
+    }
+  ],
+
+  "InterfaceColumns": [
+    {
+      "Group": "General",
+      "Columns": [
+        {
+          "DisplayName": "Device",
+          "Property": "DeviceName",
+          "Readonly": true,
+          "Visible":  "Always" 
+        },
+        {
+          "DisplayName": "Interface",
+          "Property": "Name",
+          "Readonly": true,
+          "Visible": "Always"
+        },
+        {
+          "Property": "Status"
+        }
+      ]
+    },
+    {
+      "Group": "Streams",
+      "Columns": [
+        {
+          "DisplayName": "VIDsend",
+          "Property": "StreamsCountVideoSend",
+          "Readonly": true,
+          "Visible": "Always"
+        },
+        {
+          "DisplayName": "AUDsend",
+          "Property": "StreamsCountAudioSend",
+          "Readonly": true
+        },
+        {
+          "DisplayName": "ANCsend",
+          "Property": "StreamsCountAncillarySend",
+          "Readonly": true
+        },
+        {
+          "DisplayName": "VIDrec",
+          "Property": "StreamsCountVideoReceive",
+          "Readonly": true
+        },
+        {
+          "DisplayName": "AUDrec",
+          "Property": "StreamsCountAudioReceive",
+          "Readonly": true
+        },
+        {
+          "DisplayName": "ANCrec",
+          "Property": "StreamsCountAncillaryReceive",
+          "Readonly": true
+        }
+      ]
+    },
+    {
+      "Group": "Device",
+      "Columns": [
+        {
+          "Property": "DeviceType",
+          "Visible": "Always"
+        },
+        {
+          "Property": "WorkplaceUsage"
+        },
+        {
+          "Property": "AttachedDevice"
+        },
+        {
+          "Property": "FunctionalGroup"
+        },
+        {
+          "Property": "DeviceLocation"
+        },
+        {
+          "Property": "RoomLocation"
+        },
+        {
+          "DisplayName": "Last Modified",
+          "Property": "Modified"
+        },
+        {
+          "Property": "Responsibility"
+        },
+        {
+          "Property": "KscAcquisition"
+        },
+        {
+          "Property": "KscProduction"
+        },
+        {
+          "Property": "KscAggregation"
+        }
+      ]
+    },
+    {
+      "Group": "Network",
+      "Columns": [
+        {
+          "Property": "FqdnRealtimeA",
+          "Visible": "Always"
+        },
+        {
+          "Property": "IpAddressRealtimeA"
+        },
+        {
+          "Property": "SwitchRealtimeA"
+        },
+        {
+          "Property": "PortRealtimeA"
+        },
+        {
+          "Property": "FqdnRealtimeB"
+        },
+        {
+          "Property": "IpAddressRealtimeB"
+        },
+        {
+          "Property": "SwitchRealtimeB"
+        },
+        {
+          "Property": "PortRealtimeB"
+        },
+        {
+          "Property": "FqdnControlA"
+        },
+        {
+          "Property": "IpAddressControlA"
+        },
+        {
+          "Property": "FqdnControlB"
+        },
+        {
+          "Property": "IpAddressControlB"
+        }
+      ]
+    },
+    {
+      "Group": "Orchestrator",
+      "Columns": [
+        {
+          "Property": "Driver",
+          "Visible": "Always"
+        },
+        { "Property": "StaticMulticasts" },
+        { "Property": "Smpte20227" },
+        {
+          "Property": "DescriptorOrchestrator",
+          "DisplayName": "Descriptor Orchestrator",
+          "Script": [
+            "var workplace = GetValue(\"WorkplaceUsage\") ?? \"-\"; ",
+            "var attachedDevice = GetValue(\"AttachedDevice\") ?? \"-\"; ",
+            "if(workplace == \"\" && attachedDevice == \"\") {return \"\";} else {return workplace + \" | \" + attachedDevice;}"
+          ]
+        }
+      ]
+    }
+  ],
+
+  "StreamColumns": [
+    {
+      "Group": "General",
+      "Columns": [
+        {
+          "DisplayName": "Device",
+          "Property": "DeviceName",
+          "Readonly": true,
+          "Visible": "Always"
+        },
+        {
+          "DisplayName": "Interface",
+          "Property": "InterfaceName",
+          "Readonly": true,
+          "Visible": "Always"
+        },
+        {
+          "DisplayName": "Stream",
+          "Property": "Name",
+          "Readonly": true,
+          "Visible": "Always"
+        },
+        {
+          "DisplayName": "Sender- / Receivername",
+          "Property": "CompositeName",
+          "Readonly": true
+        },
+        {
+          "Property": "Status"
+        },
+        {
+          "Property": "BFEStatus"
+        }
+      ]
+    },
+    {
+      "Group": "Device",
+      "Columns": [
+        {
+          "Property": "DeviceType",
+          "Visible": "Always"
+        },
+        {
+          "Property": "WorkplaceUsage"
+        },
+        {
+          "Property": "AttachedDevice"
+        },
+        {
+          "Property": "FunctionalGroup"
+        },
+        {
+          "Property": "RoomLocation"
+        },
+        {
+          "Property": "DeviceLocation"
+        },
+        {
+          "DisplayName": "Last Modified",
+          "Property": "Modified"
+        },
+        {
+          "Property": "Responsibility"
+        },
+        {
+          "Property": "KscAcquisition"
+        },
+        {
+          "Property": "KscProduction"
+        },
+        {
+          "Property": "KscAggregation"
+        }
+      ]
+    },
+    {
+      "Group": "Network",
+      "Columns": [
+        {
+          "Property": "FqdnRealtimeA",
+          "Visible": "Always"
+        },
+        {
+          "Property": "IpAddressRealtimeA"
+        },
+        {
+          "Property": "SwitchRealtimeA"
+        },
+        {
+          "Property": "PortRealtimeA"
+        },
+        {
+          "Property": "FqdnRealtimeB"
+        },
+        {
+          "Property": "IpAddressRealtimeB"
+        },
+        {
+          "Property": "SwitchRealtimeB"
+        },
+        {
+          "Property": "PortRealtimeB"
+        },
+        {
+          "Property": "FqdnControlA"
+        },
+        {
+          "Property": "IpAddressControlA"
+        },
+        {
+          "Property": "FqdnControlB"
+        },
+        {
+          "Property": "IpAddressControlB"
+        }
+      ]
+    },
+    {
+      "Group": "Orchestrator",
+      "Columns": [
+        {
+          "Property": "Driver",
+          "Visible": "Always"
+        },
+        { "Property": "Tags" },
+        { "Property": "StaticMulticasts" },
+        { "Property": "Smpte20227" },
+        { "Property": "SDPSupport" },
+        { "Property": "Mbb" },
+        {
+          "Property": "DescriptorOrchestrator",
+          "DisplayName": "Descriptor Orchestrator",
+          "Script": [
+            "var workplace = GetValue(\"WorkplaceUsage\") ?? \"-\"; ",
+            "var attachedDevice = GetValue(\"AttachedDevice\") ?? \"-\"; ",
+            "if(workplace == \"\" && attachedDevice == \"\") {return \"\";} else {return workplace + \" | \" + attachedDevice;}"
+          ]
+        },
+        { 
+          "Property": "UseAsEndpoint",
+          "DisplayName": "UseAsEndpoint",
+          "Script": [
+            "var gettags = GetValue(\"Tags\") ?? \"-\"; ",
+            "if(gettags == \"\") {return \"false\";} else {return \"true\";}"
+          ]
+        }
+      ]
+    },
+    {
+      "Group": "BFE",
+      "Columns": [
+        {
+          "Property": "Family",
+          "Visible": "Always"
+        },
+        { "Property": "Label1" }
+      ]
+    }
+  ]
+}

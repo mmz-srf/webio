@@ -1,0 +1,58 @@
+[
+  {
+    "DisplayName": "Device",
+    "Property": "DeviceName",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "Sender/Receiver",
+    "Property": "Name",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "Remarks",
+    "Property": "Comment"
+  },
+  {
+    "DisplayName": "Last Modified",
+    "Property": "Modified"
+  },
+  {
+    "Property": "StatusBfe"
+  },
+  {
+    "Property": "StatusNevion"
+  },
+  { "Property": "Driver" },
+  {
+    "Property": "TagsNevion",
+    "DisplayName": "Tags",
+    "Script": [
+      "var driver = GetValue(\"Driver\") ?? string.Empty;",
+      "var tags = GetValue(\"Tags\") ?? string.Empty;",
+      "var list = new List<string>();",
+      "foreach (var tag in tags.Split(';'))",
+      "{",
+      "    if (!string.IsNullOrWhiteSpace(tag))",
+      "    {",
+      "        list.Add($\"Type:{tag}\");",
+      "    }",
+      "}",
+      "list.Add($\"#{driver}\");",
+      "return string.Join(\", \", list);"
+    ]
+  },
+  { "Property": "StaticMulticasts" },
+  { "Property": "Smpte20227" },
+  { "Property": "Mbb" },
+  {
+    "Property": "DescriptorOrchestrator",
+    "DisplayName": "Descriptor Orchestrator",
+    "Script": [
+      "var workplace = GetValue(\"WorkplaceUsage\") ?? \"-\"; ",
+      "var attachedDevice = GetValue(\"AttachedDevice\") ?? \"-\"; ",
+      "if(workplace == \"\" && attachedDevice == \"\") {return \"\";} else {return workplace + \" | \" + attachedDevice;}"
+    ]
+  }
+
+]

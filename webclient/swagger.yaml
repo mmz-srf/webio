@@ -1,0 +1,1163 @@
+openapi: 3.0.1
+info:
+  title: WebIO API
+  version: v1
+paths:
+  /api/Authorization/write-access:
+    get:
+      tags:
+        - Authorization
+      operationId: Authorization.WriteAccess
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: boolean
+            application/json:
+              schema:
+                type: boolean
+            text/json:
+              schema:
+                type: boolean
+      x-operation-name: writeAccess
+  /api/ChangeEvents/history:
+    get:
+      tags:
+        - ChangeEvents
+      operationId: ChangeEvents.GetHistory
+      parameters:
+        - name: start
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: count
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 100
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ChangeHistoryDtoQueryResultDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangeHistoryDtoQueryResultDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ChangeHistoryDtoQueryResultDto'
+      x-operation-name: getHistory
+  /api/ChangeEvents:
+    post:
+      tags:
+        - ChangeEvents
+      operationId: ChangeEvents.Post
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PropertiesChangedSummaryDto'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PropertiesChangedSummaryDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PropertiesChangedSummaryDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PropertiesChangedSummaryDto'
+      responses:
+        '200':
+          description: Success
+      x-operation-name: post
+  /api/ChangeEvents/createDevice:
+    post:
+      tags:
+        - ChangeEvents
+      operationId: ChangeEvents.CreateDevice
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/DeviceAddedEventDto'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceAddedEventDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/DeviceAddedEventDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/DeviceAddedEventDto'
+      responses:
+        '200':
+          description: Success
+      x-operation-name: createDevice
+  /api/ChangeEvents/deleteDevice:
+    post:
+      tags:
+        - ChangeEvents
+      operationId: ChangeEvents.DeleteDevice
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/DeviceDeletedDto'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceDeletedDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/DeviceDeletedDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/DeviceDeletedDto'
+      responses:
+        '200':
+          description: Success
+      x-operation-name: deleteDevice
+  /api/ChangeEvents/updateDevice:
+    post:
+      tags:
+        - ChangeEvents
+      operationId: ChangeEvents.UpdateDevice
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/DeviceUpdatedEventDto'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeviceUpdatedEventDto'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/DeviceUpdatedEventDto'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/DeviceUpdatedEventDto'
+      responses:
+        '200':
+          description: Success
+      x-operation-name: updateDevice
+  /api/Debug/init:
+    get:
+      tags:
+        - Debug
+      operationId: Debug.Init
+      responses:
+        '200':
+          description: Success
+      x-operation-name: init
+  /api/Debug/import:
+    get:
+      tags:
+        - Debug
+      operationId: Debug.Import
+      responses:
+        '200':
+          description: Success
+      x-operation-name: import
+  /api/Debug/config/reload:
+    get:
+      tags:
+        - Debug
+      operationId: Debug.ReloadConfiguration
+      responses:
+        '200':
+          description: Success
+      x-operation-name: reloadConfiguration
+  '/api/Devices/{deviceId}/details':
+    get:
+      tags:
+        - Devices
+      operationId: Devices.GetDeviceDetails
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DeviceDetailsDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDetailsDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDetailsDto'
+      x-operation-name: getDeviceDetails
+  /api/Devices:
+    post:
+      tags:
+        - Devices
+      operationId: Devices.Get
+      parameters:
+        - name: start
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: count
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 100
+        - name: sort
+          in: query
+          schema:
+            type: string
+        - name: sortOrder
+          in: query
+          schema:
+            type: string
+        - name: global
+          in: query
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          text/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          application/*+json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DeviceDtoQueryResultDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDtoQueryResultDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/DeviceDtoQueryResultDto'
+      x-operation-name: get
+  /api/Devices/isDuplicate:
+    get:
+      tags:
+        - Devices
+      operationId: Devices.IsDuplicate
+      parameters:
+        - name: deviceName
+          in: query
+          schema:
+            type: string
+        - name: ownId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: boolean
+            application/json:
+              schema:
+                type: boolean
+            text/json:
+              schema:
+                type: boolean
+      x-operation-name: isDuplicate
+  /api/Devices/fields:
+    get:
+      tags:
+        - Devices
+      operationId: Devices.GetFields
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataFieldDto'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataFieldDto'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataFieldDto'
+      x-operation-name: getFields
+  /api/Devices/types:
+    get:
+      tags:
+        - Devices
+      operationId: Devices.GetTypes
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeviceTypeDto'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeviceTypeDto'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DeviceTypeDto'
+      x-operation-name: getTypes
+  /api/Export/types:
+    get:
+      tags:
+        - Export
+      operationId: Export.GetTypes
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExportTypeDto'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExportTypeDto'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExportTypeDto'
+      x-operation-name: getTypes
+  /api/Export/export:
+    post:
+      tags:
+        - Export
+      operationId: Export.Get
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/ExportRequest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ExportRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ExportRequest'
+      responses:
+        '200':
+          description: Success
+      x-operation-name: get
+  /api/Export:
+    post:
+      tags:
+        - Export
+      operationId: Export.CreateExportFile
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/ExportArgs'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportArgs'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ExportArgs'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ExportArgs'
+      responses:
+        '200':
+          description: Success
+      x-operation-name: createExportFile
+  '/api/Export/downloadfile/{fileId}':
+    get:
+      tags:
+        - Export
+      operationId: Export.DownloadFile
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+      x-operation-name: downloadFile
+  /api/Interfaces:
+    post:
+      tags:
+        - Interfaces
+      operationId: Interfaces.Get
+      parameters:
+        - name: start
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: count
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 100
+        - name: sort
+          in: query
+          schema:
+            type: string
+        - name: sortOrder
+          in: query
+          schema:
+            type: string
+        - name: global
+          in: query
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          text/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          application/*+json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/InterfaceDtoQueryResultDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterfaceDtoQueryResultDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/InterfaceDtoQueryResultDto'
+      x-operation-name: get
+  /api/Interfaces/fields:
+    get:
+      tags:
+        - Interfaces
+      operationId: Interfaces.GetFields
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataFieldDto'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataFieldDto'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataFieldDto'
+      x-operation-name: getFields
+  /api/Streams:
+    post:
+      tags:
+        - Streams
+      operationId: Streams.Get
+      parameters:
+        - name: start
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: count
+          in: query
+          schema:
+            type: integer
+            format: int32
+            default: 100
+        - name: sort
+          in: query
+          schema:
+            type: string
+        - name: sortOrder
+          in: query
+          schema:
+            type: string
+        - name: global
+          in: query
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          text/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+          application/*+json:
+            schema:
+              type: object
+              additionalProperties:
+                type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StreamDtoQueryResultDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamDtoQueryResultDto'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StreamDtoQueryResultDto'
+      x-operation-name: get
+  /api/Streams/tags:
+    get:
+      tags:
+        - Streams
+      operationId: Streams.GetTags
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TagDto'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TagDto'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TagDto'
+      x-operation-name: getTags
+  /api/Streams/fields:
+    get:
+      tags:
+        - Streams
+      operationId: Streams.GetFields
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataFieldDto'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataFieldDto'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataFieldDto'
+      x-operation-name: getFields
+components:
+  schemas:
+    ChangeHistoryDto:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        username:
+          type: string
+          nullable: true
+        comment:
+          type: string
+          nullable: true
+        summary:
+          type: string
+          nullable: true
+        details:
+          nullable: true
+      additionalProperties: false
+    ChangeHistoryDtoQueryResultDto:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/QueryResultState'
+        start:
+          type: integer
+          format: int32
+        count:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChangeHistoryDto'
+          nullable: true
+      additionalProperties: false
+    ColumnVisibilityDto:
+      enum:
+        - Always
+        - Expanded
+        - Collapsed
+      type: string
+    DataFieldDto:
+      type: object
+      properties:
+        key:
+          type: string
+          nullable: true
+        category:
+          type: string
+          nullable: true
+        displayName:
+          type: string
+          nullable: true
+        placeholder:
+          type: string
+          nullable: true
+        maxLength:
+          type: integer
+          format: int32
+        readonly:
+          type: boolean
+        fieldType:
+          $ref: '#/components/schemas/DataFieldTypeDto'
+        selectableValues:
+          type: array
+          items:
+            type: string
+          nullable: true
+        selectableValuesExt:
+          type: array
+          items:
+            $ref: '#/components/schemas/SelectableValue'
+          nullable: true
+        size:
+          type: integer
+          format: int32
+        visible:
+          $ref: '#/components/schemas/ColumnVisibilityDto'
+        description:
+          type: string
+          nullable: true
+        selectableValuesFactory:
+          $ref: '#/components/schemas/SelectableValuesFactory'
+      additionalProperties: false
+    DataFieldTypeDto:
+      enum:
+        - Text
+        - Boolean
+        - Selection
+        - IpAddress
+      type: string
+    DeviceAddedEventDto:
+      type: object
+      properties:
+        comment:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        deviceType:
+          type: string
+          nullable: true
+        interfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceTemplateSelectionDto'
+          nullable: true
+        useSt2022_7:
+          type: boolean
+      additionalProperties: false
+    DeviceDeletedDto:
+      type: object
+      properties:
+        comment:
+          type: string
+          nullable: true
+        deviceId:
+          type: string
+          format: uuid
+      additionalProperties: false
+    DeviceDetailsDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        deviceType:
+          $ref: '#/components/schemas/DeviceTypeDto'
+        interfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceInfoDto'
+          nullable: true
+        comment:
+          type: string
+          nullable: true
+      additionalProperties: false
+    DeviceDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        deviceId:
+          type: string
+          nullable: true
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FieldValueDto'
+          nullable: true
+          readOnly: true
+        deviceType:
+          type: string
+          nullable: true
+      additionalProperties: false
+    DeviceDtoQueryResultDto:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/QueryResultState'
+        start:
+          type: integer
+          format: int32
+        count:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeviceDto'
+          nullable: true
+      additionalProperties: false
+    DeviceTypeDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        displayName:
+          type: string
+          nullable: true
+        interfaceCount:
+          type: integer
+          format: int32
+        interfaceTemplates:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceTemplateDto'
+          nullable: true
+        defaultInterfaces:
+          type: array
+          items:
+            type: string
+          nullable: true
+        flexibleStreams:
+          type: boolean
+        interfaceNamePrefix:
+          type: string
+          nullable: true
+      additionalProperties: false
+    DeviceUpdatedEventDto:
+      type: object
+      properties:
+        comment:
+          type: string
+          nullable: true
+        deviceId:
+          type: string
+          format: uuid
+        interfaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceTemplateSelectionDto'
+          nullable: true
+      additionalProperties: false
+    ExportArgs:
+      type: object
+      properties:
+        exportTargetName:
+          type: string
+          nullable: true
+        all:
+          type: boolean
+        selectedDeviceIds:
+          type: array
+          items:
+            type: string
+          nullable: true
+        filters:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+      additionalProperties: false
+    ExportRequest:
+      type: object
+      properties:
+        exportType:
+          type: string
+          nullable: true
+        all:
+          type: boolean
+        selectedDeviceIds:
+          type: array
+          items:
+            type: string
+          nullable: true
+        filter:
+          type: object
+          additionalProperties:
+            type: string
+            nullable: true
+          nullable: true
+      additionalProperties: false
+    ExportTypeDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        displayName:
+          type: string
+          nullable: true
+      additionalProperties: false
+    FactoryType:
+      enum:
+        - SwitchPortFactory
+      type: string
+    FieldValueDto:
+      type: object
+      properties:
+        value:
+          type: string
+          nullable: true
+        inherited:
+          type: boolean
+        dirty:
+          type: boolean
+      additionalProperties: false
+    InterfaceDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        deviceId:
+          type: string
+          nullable: true
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FieldValueDto'
+          nullable: true
+          readOnly: true
+        interfaceTemplate:
+          type: string
+          nullable: true
+      additionalProperties: false
+    InterfaceDtoQueryResultDto:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/QueryResultState'
+        start:
+          type: integer
+          format: int32
+        count:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterfaceDto'
+          nullable: true
+      additionalProperties: false
+    InterfaceInfoDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        template:
+          type: string
+          nullable: true
+        streams:
+          $ref: '#/components/schemas/StreamCardinalityDto'
+      additionalProperties: false
+    InterfaceTemplateDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        displayName:
+          type: string
+          nullable: true
+        streams:
+          type: array
+          items:
+            $ref: '#/components/schemas/StreamTemplateDto'
+          nullable: true
+      additionalProperties: false
+    InterfaceTemplateSelectionDto:
+      type: object
+      properties:
+        templateName:
+          type: string
+          nullable: true
+        audioSend:
+          type: integer
+          format: int32
+        audioReceive:
+          type: integer
+          format: int32
+        videoSend:
+          type: integer
+          format: int32
+        videoReceive:
+          type: integer
+          format: int32
+        ancillarySend:
+          type: integer
+          format: int32
+        ancillaryReceive:
+          type: integer
+          format: int32
+      additionalProperties: false
+    PropertiesChangedSummaryDto:
+      type: object
+      properties:
+        comment:
+          type: string
+          nullable: true
+        changedEvents:
+          type: array
+          items:
+            $ref: '#/components/schemas/PropertyChangedEventDto'
+          nullable: true
+      additionalProperties: false
+    PropertyChangedEventDto:
+      type: object
+      properties:
+        property:
+          type: string
+          nullable: true
+        newValue:
+          type: string
+          nullable: true
+        entity:
+          type: string
+          nullable: true
+        device:
+          type: string
+          nullable: true
+        entityType:
+          type: string
+          nullable: true
+      additionalProperties: false
+    QueryResultState:
+      enum:
+        - Success
+      type: string
+    SelectableValue:
+      type: object
+      properties:
+        value:
+          type: string
+          nullable: true
+        backgroundColor:
+          type: string
+          nullable: true
+        foregroundColor:
+          type: string
+          nullable: true
+      additionalProperties: false
+    SelectableValuesFactory:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/FactoryType'
+        referenceField:
+          type: string
+          nullable: true
+      additionalProperties: false
+    StreamCardinalityDto:
+      type: object
+      properties:
+        audioSend:
+          type: integer
+          format: int32
+        audioReceive:
+          type: integer
+          format: int32
+        videoSend:
+          type: integer
+          format: int32
+        videoReceive:
+          type: integer
+          format: int32
+        ancillarySend:
+          type: integer
+          format: int32
+        ancillaryReceive:
+          type: integer
+          format: int32
+      additionalProperties: false
+    StreamDto:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: true
+        deviceId:
+          type: string
+          nullable: true
+        properties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/FieldValueDto'
+          nullable: true
+          readOnly: true
+        type:
+          type: string
+          nullable: true
+      additionalProperties: false
+    StreamDtoQueryResultDto:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/QueryResultState'
+        start:
+          type: integer
+          format: int32
+        count:
+          type: integer
+          format: int32
+        totalCount:
+          type: integer
+          format: int32
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/StreamDto'
+          nullable: true
+      additionalProperties: false
+    StreamTemplateDto:
+      type: object
+      properties:
+        count:
+          type: integer
+          format: int32
+        nameTemplate:
+          type: string
+          nullable: true
+      additionalProperties: false
+    TagDto:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        streamType:
+          type: string
+          nullable: true
+      additionalProperties: false

@@ -1,0 +1,25 @@
+version: '3'
+services:
+  mssql:
+    image: docker.io/webio/mssql:latest
+    ports:
+      - "1433:1433"
+    environment:
+      - "ACCEPT_EULA=Y"
+      - "MSSQL_SA_PASSWORD=BVkMcwpF57vCCGQN7Pbr"
+    volumes:
+      - mssql:/var/opt/mssql
+  
+  elastic:
+    image: elasticsearch:8.10.2
+    ports:
+      - "9200:9200"
+    environment:
+      "discovery.type": "single-node"
+      "xpack.security.enabled": "false"
+    volumes:
+      - elastic:/usr/share/elasticsearch/data
+
+volumes:
+  mssql: { }
+  elastic: { }

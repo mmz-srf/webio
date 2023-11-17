@@ -1,0 +1,70 @@
+[
+  {
+    "Name": "Vid_720p50",
+    "StreamType": "Video"
+  },
+  {
+    "Name": "Vid_1080i50",
+    "StreamType": "Video"
+  },
+  {
+    "Name": "Vid_1080p25",
+    "StreamType": "Video"
+  },
+  {
+    "Name": "Vid_1080p50",
+    "StreamType": "Video"
+  },
+  {
+    "Name": "Vid_2160p50",
+    "StreamType": "Video"
+  },
+  {
+    "Name": "Vid_1080p60",
+    "StreamType": "Video"
+  },
+  {
+    "Name": "Aud_1CH_M",
+    "StreamType": "Audio"
+  },
+  {
+    "Name": "Aud_1CH_M_LD",
+    "StreamType": "Audio"
+  },
+  {
+    "Name": "Aud_2CH_DBE",
+    "StreamType": "Audio"
+  },
+  {
+    "Name": "Aud_2CH_LR",
+    "StreamType": "Audio"
+  },
+  {
+    "Name": "Aud_2CH_LR_LD",
+    "StreamType": "Audio"
+  },
+  {
+    "Name": "Aud_3CH_LRC",
+    "StreamType": "Audio"
+  },
+  {
+    "Name": "Aud_6CH_5.1",
+    "StreamType": "Audio"
+  },
+  {
+    "Name": "Aud_8CH_RAW",
+    "StreamType": "Audio"
+  },
+  {
+    "Name": "Aud_8CH_RAW_LD",
+    "StreamType": "Audio"
+  },
+  {
+    "Name": "Aud_32CH_RAW_LD",
+    "StreamType": "Audio"
+  },
+  {
+    "Name": "Anc_Prot",
+    "StreamType": "Ancillary"
+  }
+]
