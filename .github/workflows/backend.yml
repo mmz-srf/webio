@@ -52,7 +52,6 @@ jobs:
     - name: Publish
       run: dotnet publish -c Release WebIO.Cli/WebIO.Cli.csproj
   publish-api:
-    defaults:
     runs-on: ubuntu-latest
     needs: build-and-test-backend
     steps:
