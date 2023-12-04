@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\WebIO\appsettings.Development.json">
+      <Content Include="..\WebIO\appsettings.Development.json" Condition="Exists('..\WebIO\appsettings.Development.json')">
         <Link>appsettings.Development.json</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
@@ -28,7 +28,7 @@
         <Link>appsettings.json</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
-      <Content Include="..\WebIO\appsettings.Production.json">
+      <Content Include="..\WebIO\appsettings.Production.json" Condition="Exists('..\WebIO\appsettings.Production.json')">
         <Link>appsettings.Production.json</Link>
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
