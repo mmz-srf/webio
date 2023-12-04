@@ -29,6 +29,12 @@ jobs:
         host node port: 9300
         node port: 9300
         discovery type: 'single-node'
+    - uses: potatoqualitee/mssqlsuite@v1.7
+      with:
+        install: sqlengine
+        version: 2022
+        sa-password: BVkMcwpF57vCCGQN7Pbr
+        show-log: true
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
