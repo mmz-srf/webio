@@ -46,9 +46,6 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
   publish-cli:
-    defaults:
-      run:
-        working-directory: src/WebIO
     runs-on: ubuntu-latest   
     needs: build-and-test-backend
     steps:
@@ -56,8 +53,6 @@ jobs:
       run: dotnet publish -c Release WebIO.Cli/WebIO.Cli.csproj
   publish-api:
     defaults:
-      run:
-        working-directory: src/WebIO
     runs-on: ubuntu-latest
     needs: build-and-test-backend
     steps:
