@@ -12,8 +12,23 @@ jobs:
       run:
         working-directory: ./src/WebIO
     runs-on: ubuntu-latest
+#    services:
+#      elasticsearch:
+#        image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+#        command: [ "bin/elasticsearch", "-Expack.security.enabled=false", "-Ediscovery.type=single-node" ]
+#        ports:
+#        - 9200:9200
+#        - 9300:9300
     steps:
     - uses: actions/checkout@v3
+    - uses: getong/elasticsearch-action@v1.2
+      with:
+        elasticsearch version: '8.10.2'
+        host port: 9200
+        container port: 9200
+        host node port: 9300
+        node port: 9300
+        discovery type: 'single-node'
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
