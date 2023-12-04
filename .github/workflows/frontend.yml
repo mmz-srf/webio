@@ -1,0 +1,32 @@
+name: WebIO frontend build and publish
+
+on:
+  push:
+    branches: [ "main", "beta" ]
+  pull_request:
+    branches: [ "main", "beta" ]
+
+jobs:
+  build-frontend:
+    defaults:
+      run:
+        working-directory: ./webclient
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/cache@v2
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+    - name: Install dependencies
+      run: npm install
+    - name: Swagger
+      run: npm run swagger
+    - name: Build
+      run: npm run build-prod
