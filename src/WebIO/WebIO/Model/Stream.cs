@@ -15,7 +15,7 @@ public class Stream : IHaveProperties
 
   public StreamDirection Direction { get; init; }
 
-  public Modification Modification { get; init; } = null!;
+  public required Modification Modification { get; init; } = null!;
 
   public FieldValues Properties { get; init; } = new();
 }

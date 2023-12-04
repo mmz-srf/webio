@@ -17,5 +17,5 @@ public class Device : IHaveProperties
 
   public List<Interface> Interfaces { get; init; } = new();
 
-  public Modification Modification { get; init; } = null!;
+  public required Modification Modification { get; init; } = null!;
 }

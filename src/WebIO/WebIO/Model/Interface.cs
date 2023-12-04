@@ -24,7 +24,7 @@ public class Interface : IHaveProperties
 
   public List<Stream> Streams { get; init; } = new();
 
-  public Modification Modification { get; init; } = null!;
+  public required Modification Modification { get; init; } = null!;
 
   public IEnumerable<Stream> GetStreams(StreamType streamType, StreamDirection direction)
     => Streams

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Application;
 using Entities;
 using Mappers;
@@ -173,7 +175,7 @@ public class EfCoreDeviceRepository : IDeviceRepository
     foreach (var iface in toUpdate)
     {
       var dbEntity = dbEntities.SingleOrDefault(i => i.DeviceId == iface.deviceId && i.Index == iface.iface.Index);
-      if(dbEntity != null)
+      if (dbEntity != null)
       {
         iface.iface.Id = dbEntity.Id;
       }
@@ -183,10 +185,11 @@ public class EfCoreDeviceRepository : IDeviceRepository
   private void UpsertAll(IReadOnlyCollection<(Stream stream, Guid ifaceId)> streams)
   {
     using var span = Telemetry.Span($"{nameof(UpsertAll)} - {nameof(Stream)}");
-    var toCreate = streams.Where(s => !_context.Streams.Any(DeviceEntityMapper.StreamEquals(s.stream, s.ifaceId))).ToList();
+    var toCreate = streams.Where(s => !_context.Streams.Any(DeviceEntityMapper.StreamEquals(s.stream, s.ifaceId)))
+      .ToList();
     var toUpdate = streams.Except(toCreate).ToList();
     UseDbIds(toUpdate);
-    
+
     var toUpdateDic = toUpdate.ToDictionary(t => t.stream.Id);
 
     _context.Streams.AddRange(toCreate.Select(t => t.stream.ToEntity(t.ifaceId)));
@@ -209,7 +212,7 @@ public class EfCoreDeviceRepository : IDeviceRepository
     foreach (var stream in toUpdate)
     {
       var dbEntity = dbEntities.SingleOrDefault(i => i.InterfaceId == stream.ifaceId && i.Name == stream.stream.Name);
-      if(dbEntity != null)
+      if (dbEntity != null)
       {
         stream.stream.Id = dbEntity.Id;
       }
@@ -317,7 +320,7 @@ public class EfCoreDeviceRepository : IDeviceRepository
       .Join(_context.DevicesDenormalized,
         d => d.Id,
         den => den.Id,
-        (d, den) => new DeviceInfoQueryResult {Device = d, Denormalized = den});
+        (d, den) => new DeviceInfoQueryResult { Device = d, Denormalized = den });
   }
 
   public QueryResult<InterfaceInfo> GetInterfaceInfos(Query query)
@@ -351,12 +354,12 @@ public class EfCoreDeviceRepository : IDeviceRepository
       .Join(_context.InterfacesDenormalized,
         i => i.Id,
         den => den.Id,
-        (i, den) => new {entity = i, denormalized = den})
+        (i, den) => new { entity = i, denormalized = den })
       .Join(_context.Devices.Include(x => x.Properties),
         i => i.entity.DeviceId,
         d => d.Id,
         (i, d) => new InterfaceInfoQueryResult
-          {Interface = i.entity, Denormalized = i.denormalized, Device = d});
+          { Interface = i.entity, Denormalized = i.denormalized, Device = d });
   }
 
   public QueryResult<StreamInfo> GetStreamInfos(Query query)
@@ -390,10 +393,43 @@ public class EfCoreDeviceRepository : IDeviceRepository
       .Join(_context.Interfaces.Include(x => x.Properties),
         s => s.InterfaceId,
         i => i.Id,
-        (s, i) => new {stream = s, @interface = i})
+        (s, i) => new { stream = s, @interface = i })
       .Join(_context.Devices.Include(x => x.Properties),
         i => i.@interface.DeviceId,
         d => d.Id,
-        (s, d) => new StreamInfoQueryResult {Stream = s.stream, Interface = s.@interface, Device = d});
+        (s, d) => new StreamInfoQueryResult { Stream = s.stream, Interface = s.@interface, Device = d });
   }
+
+  public async Task<Modification> GetDeviceModificationAsync(Guid deviceId, CancellationToken ct)
+    => await _context.Devices
+      .AsNoTracking()
+      .Where(d => d.Id == deviceId)
+      .Select(d => new Modification(
+        d.Creator ?? string.Empty,
+        d.Created, d.Modifier ?? string.Empty,
+        d.Modified,
+        d.ModificationComment ?? string.Empty))
+      .SingleOrDefaultAsync(ct) ?? Modification.Empty;
+
+  public async Task<Modification> GetInterfaceModificationAsync(Guid interfaceId, CancellationToken ct)
+    => await _context.Interfaces
+      .AsNoTracking()
+      .Where(d => d.Id == interfaceId)
+      .Select(d => new Modification(
+        d.Creator ?? string.Empty,
+        d.Created, d.Modifier ?? string.Empty,
+        d.Modified,
+        d.ModificationComment ?? string.Empty))
+      .SingleOrDefaultAsync(ct) ?? Modification.Empty;
+
+  public async Task<Modification> GetStreamModificationAsync(Guid streamId, CancellationToken ct)
+    => await _context.Streams
+      .AsNoTracking()
+      .Where(d => d.Id == streamId)
+      .Select(d => new Modification(
+        d.Creator ?? string.Empty,
+        d.Created, d.Modifier ?? string.Empty,
+        d.Modified,
+        d.ModificationComment ?? string.Empty))
+      .SingleOrDefaultAsync(ct) ?? Modification.Empty;
 }

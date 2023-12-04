@@ -3,6 +3,7 @@
 using System;
 using Cli;
 using DataAccess;
+using DataAccess.EntityFrameworkCore;
 using Elastic.Data;
 using Elastic.Hosting;
 using FluentAssertions;
@@ -52,6 +53,7 @@ public class ElasticTest
   {
     _app = CliApp.CreateAppBuilder(Array.Empty<string>()).Build();
     _app.Services.GetRequiredService<IElasticStartup>().InitializeAllIndexes(default).GetAwaiter().GetResult();
+    _app.Services.GetRequiredService<AppDbContext>().Database.EnsureCreated();
   }
 
   [Fact]

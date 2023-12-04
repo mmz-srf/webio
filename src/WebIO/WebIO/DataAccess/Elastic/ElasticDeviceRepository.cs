@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using EntityFrameworkCore;
 using Model;
 using Model.Readonly;
 using WebIO.Elastic.Data;
@@ -21,13 +23,16 @@ public class ElasticDeviceRepository : IDeviceRepository
   private readonly ISearcher<IndexedInterface, InterfaceSearchRequest, Guid> _ifaceSearcher;
   private readonly ISearcher<IndexedStream, StreamSearchRequest, Guid> _streamSearcher;
 
+  private readonly EfCoreDeviceRepository _dbRepo;
+
   public ElasticDeviceRepository(
     IIndexer<IndexedDevice, Guid> deviceIndexer,
     IIndexer<IndexedInterface, Guid> ifaceIndexer,
     IIndexer<IndexedStream, Guid> streamIndexer,
     ISearcher<IndexedDevice, DeviceSearchRequest, Guid> deviceSearcher,
     ISearcher<IndexedInterface, InterfaceSearchRequest, Guid> ifaceSearcher,
-    ISearcher<IndexedStream, StreamSearchRequest, Guid> streamSearcher)
+    ISearcher<IndexedStream, StreamSearchRequest, Guid> streamSearcher,
+    EfCoreDeviceRepository dbRepo)
   {
     _deviceIndexer = deviceIndexer;
     _ifaceIndexer = ifaceIndexer;
@@ -35,6 +40,7 @@ public class ElasticDeviceRepository : IDeviceRepository
     _deviceSearcher = deviceSearcher;
     _ifaceSearcher = ifaceSearcher;
     _streamSearcher = streamSearcher;
+    _dbRepo = dbRepo;
   }
 
   public Device? GetDevice(Guid deviceId)
@@ -51,7 +57,8 @@ public class ElasticDeviceRepository : IDeviceRepository
 
     return device == null
       ? null
-      : ToDevice(device, ifaces.Documents.ToBlockingEnumerable(), streams.Documents.ToBlockingEnumerable());
+      : ToDevice(device, ifaces.Documents.ToBlockingEnumerable(), streams.Documents.ToBlockingEnumerable(), default)
+        .GetAwaiter().GetResult(); // todo use async
   }
 
   public void Upsert(Device device)
@@ -129,7 +136,8 @@ public class ElasticDeviceRepository : IDeviceRepository
 
   public IEnumerable<Device> GetDevicesByIds(IEnumerable<Guid> deviceIds)
     => _deviceSearcher.GetAllAsync(deviceIds, default).GetAwaiter().GetResult().Select(idev
-      => ToDevice(idev, new List<IndexedInterface>(), new List<IndexedStream>())); // todo
+      => ToDevice(idev, new List<IndexedInterface>(), new List<IndexedStream>(), default).GetAwaiter()
+        .GetResult()); // todo use async
 
   private SearchResult<IndexedDevice> FindDeviceByQuery(Query query)
     => _deviceSearcher.FindAllAsync(new()
@@ -163,10 +171,11 @@ public class ElasticDeviceRepository : IDeviceRepository
                    string.Empty,
     }, default).GetAwaiter().GetResult();
 
-  private static Device ToDevice(
+  private async Task<Device> ToDevice(
     IndexedDevice device,
     IEnumerable<IndexedInterface> interfaces,
-    IEnumerable<IndexedStream> streams)
+    IEnumerable<IndexedStream> streams,
+    CancellationToken ct)
     => new()
     {
       Id = device.Id,
@@ -175,9 +184,12 @@ public class ElasticDeviceRepository : IDeviceRepository
       Comment = device.Comment,
       Properties = new(new(device.Properties)),
       Interfaces = interfaces.Select(iface => ToInterface(iface, streams)).ToList(),
+      Modification = await _dbRepo.GetDeviceModificationAsync(device.Id, ct),
     };
 
-  private static Interface ToInterface(IndexedInterface iface, IEnumerable<IndexedStream> streams)
+  private Interface ToInterface(
+    IndexedInterface iface,
+    IEnumerable<IndexedStream> streams)
     => new()
     {
       Id = iface.Id,
@@ -186,9 +198,10 @@ public class ElasticDeviceRepository : IDeviceRepository
       InterfaceTemplate = iface.InterfaceTemplate,
       Comment = iface.Comment,
       Streams = streams.Where(stream => stream.InterfaceId == iface.Id).Select(ToStream).ToList(),
+      Modification = _dbRepo.GetInterfaceModificationAsync(iface.Id, default).GetAwaiter().GetResult(),
     };
 
-  private static Stream ToStream(IndexedStream stream)
+  private Stream ToStream(IndexedStream stream)
     => new()
     {
       Id = stream.Id,
@@ -196,6 +209,7 @@ public class ElasticDeviceRepository : IDeviceRepository
       Comment = stream.Comment,
       Type = stream.Type,
       Direction = stream.Direction,
+      Modification = _dbRepo.GetStreamModificationAsync(stream.Id, default).GetAwaiter().GetResult(),
     };
 
   private static IndexedDevice ToIndexedDevice(Device device)
@@ -219,16 +233,18 @@ public class ElasticDeviceRepository : IDeviceRepository
       InterfaceTemplate = iface.InterfaceTemplate ?? string.Empty,
       Comment = iface.Comment,
       Properties = iface.Properties.All.ToImmutableDictionary(),
-      StreamsCountVideoSend = iface.Streams.Count(s => s is {Type: StreamType.Video, Direction: StreamDirection.Send}),
-      StreamsCountAudioSend = iface.Streams.Count(s => s is {Type: StreamType.Audio, Direction: StreamDirection.Send}),
+      StreamsCountVideoSend =
+        iface.Streams.Count(s => s is { Type: StreamType.Video, Direction: StreamDirection.Send }),
+      StreamsCountAudioSend =
+        iface.Streams.Count(s => s is { Type: StreamType.Audio, Direction: StreamDirection.Send }),
       StreamsCountAncillarySend =
-        iface.Streams.Count(s => s is {Type: StreamType.Ancillary, Direction: StreamDirection.Send}),
+        iface.Streams.Count(s => s is { Type: StreamType.Ancillary, Direction: StreamDirection.Send }),
       StreamsCountVideoReceive =
-        iface.Streams.Count(s => s is {Type: StreamType.Video, Direction: StreamDirection.Receive}),
+        iface.Streams.Count(s => s is { Type: StreamType.Video, Direction: StreamDirection.Receive }),
       StreamsCountAudioReceive =
-        iface.Streams.Count(s => s is {Type: StreamType.Audio, Direction: StreamDirection.Receive}),
+        iface.Streams.Count(s => s is { Type: StreamType.Audio, Direction: StreamDirection.Receive }),
       StreamsCountAncillaryReceive =
-        iface.Streams.Count(s => s is {Type: StreamType.Ancillary, Direction: StreamDirection.Receive}),
+        iface.Streams.Count(s => s is { Type: StreamType.Ancillary, Direction: StreamDirection.Receive }),
     };
 
   private static IndexedStream ToIndexedStream(Stream stream, Guid ifaceId)
