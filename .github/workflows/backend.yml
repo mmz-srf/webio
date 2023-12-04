@@ -49,6 +49,10 @@ jobs:
     runs-on: ubuntu-latest   
     needs: build-and-test-backend
     steps:
+    - name: pwd
+      run: pwd
+    - name: ls
+      run: find
     - name: Publish
       run: dotnet publish -c Release WebIO.Cli/WebIO.Cli.csproj
   publish-api:
@@ -57,3 +61,4 @@ jobs:
     steps:
     - name: Publish
       run: dotnet publish -c Release WebIO.Api/WebIO.Api.csproj
+
