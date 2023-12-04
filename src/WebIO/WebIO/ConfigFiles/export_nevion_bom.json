@@ -1,0 +1,65 @@
+[
+  {
+    "DisplayName": "Device",
+    "Property": "DeviceName",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "Interface",
+    "Property": "Name",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "Remarks",
+    "Property": "Comment"
+  },
+  {
+    "DisplayName": "Last Modified",
+    "Property": "Modified"
+  },
+  {
+    "Property": "StatusBfe"
+  },
+  {
+    "Property": "StatusNevion"
+  },
+  {
+    "Property": "FqdnRealtimeA"
+  },
+  {
+    "Property": "IpAddressRealtimeA"
+  },
+  {
+    "Property": "SwitchRealtimeA"
+  },
+  {
+    "Property": "PortRealtimeA"
+  },
+  {
+    "Property": "FqdnRealtimeB"
+  },
+  {
+    "Property": "IpAddressRealtimeB"
+  },
+  {
+    "Property": "SwitchRealtimeB"
+  },
+  {
+    "Property": "PortRealtimeB"
+  },
+  {
+    "Property": "FqdnControlA"
+  },
+  {
+    "Property": "IpAddressControlA"
+  },
+  {
+    "Property": "FqdnControlB"
+  },
+  {
+    "Property": "IpAddressControlB"
+  },
+  { "Property": "Driver" },
+  { "Property": "StaticMulticasts" },
+  { "Property": "Smpte20227" }
+]

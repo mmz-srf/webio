@@ -1,0 +1,14 @@
+<div *ngIf="(streamsHaveTagsInCommon$ | async) === false">
+  <p>These devices have no tags in common!</p>
+</div>
+<div *ngIf="streamsHaveTagsInCommon$ | async" class="navigation">
+  <div class="nav1">
+    <div *ngFor="let tag of tags$ | async" class="modal-chooses modal-input small5">
+      <p class="modal-description">{{tag.name}}</p>
+      <input type="checkbox"
+             class="inputfield checkbox"
+             [checked]="allStreamsHave$(tag) | async"
+             (change)="change(tag.name, $event)">
+    </div>
+  </div>
+</div>

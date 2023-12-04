@@ -1,0 +1,1036 @@
+[
+  {
+    "name": "embrionixIp2Sdi",
+    "displayName": "Embrionix IP > 2x SDI",
+    "interfaceCount": 2,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceNameTemplate": "SDI{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "embrionix_sfp"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Embrionix emBox"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 2
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "Receiver",
+        "fieldValues": [],
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 4,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "ANCrec_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Receive",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "embrionixIpHdmi",
+    "displayName": "Embrionix IP > HDMI",
+    "interfaceNameTemplate": "HDMI{0:00}",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": false,
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "embrionix_sfp"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Embrionix emBox"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "Sender",
+        "fieldValues": [],
+        "streamsFlexible": false,
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 4,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "ANCrec_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Receive",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "embrionix2SdiIp",
+    "displayName": "Embrionix 2x SDI > IP",
+    "interfaceNameTemplate": "SDI{0:00}",
+    "interfaceCount": 2,
+    "softwareDefinedInterfaceCount": false,
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "embrionix_sfp"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Embrionix emBox"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 2
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "Sender",
+        "fieldValues": [],
+        "streamsFlexible": false,
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "VIDsend_{0:0000}",
+            "type": "Video",
+            "direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "count": 4,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "ANCsend_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "embrionixSdiBidiIp",
+    "displayName": "Embrionix SDI < BiDi > IP",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceNameTemplate": "SDI{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "embrionix_sfp"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Embrionix emBox"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "Sender",
+        "fieldValues": [],
+        "streamsFlexible": false,
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "VIDsend_{0:0000}",
+            "type": "Video",
+            "direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "count": 4,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 4,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "ANCrec_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "ANCsend_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "SnpGateway",
+    "displayName": "SNP Gateway",
+    "interfaceCount": 32,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceNameTemplate": "SDI{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "selenio_13p"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "SNP"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "receive",
+        "count": 32
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "send",
+        "displayName": "Sender",
+        "fieldValues": [],
+        "streamsFlexible": false,
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "VIDsend_{0:0000}",
+            "type": "Video",
+            "direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "count": 16,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "count": 4,
+            "nameTemplate": "ANCsend_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      },
+      {
+        "name": "receive",
+        "displayName": "Receiver",
+        "fieldValues": [],
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 16,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 4,
+            "nameTemplate": "ANCrec_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Receive",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "SnpProcessor",
+    "displayName": "SNP Processor",
+    "interfaceCount": 8,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "selenio_13p"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "SNP"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 8
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "Sender",
+        "fieldValues": [],
+        "streamsFlexible": false,
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 2,
+            "nameTemplate": "VIDsend_{0:0000}",
+            "type": "Video",
+            "direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "count": 16,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 16,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "count": 4,
+            "nameTemplate": "ANCrec_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 4,
+            "nameTemplate": "ANCsend_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "EmbrionixQuadsplit",
+    "displayName": "Embrionix Quadsplit",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "embrionix_sfp"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Embrionix Quadsplit"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "Sender",
+        "fieldValues": [],
+        "streamsFlexible": false,
+        "streams": [
+          {
+            "count": 4,
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "VIDsend_{0:0000}",
+            "type": "Video",
+            "direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "DirectoutMontone",
+    "displayName": "Directout Montone",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "montone42"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Montone"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "Sender",
+        "fieldValues": [],
+        "streamsFlexible": false,
+        "streams": [
+          {
+            "count": 32,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 32,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "TektronixPrism",
+    "displayName": "Tektronix PRISM",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "NMOS"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Prism"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "Sender",
+        "fieldValues": [],
+        "streamsFlexible": false,
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 4,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "ANCrec_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Receive",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Prismon",
+    "displayName": "R&S PRISMON",
+    "interfaceCount": 32,
+    "softwareDefinedInterfaceCount": true,
+    "interfaceStreamsFlexible": false,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "NMOS"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Prismon"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "recsend",
+        "count": 2
+      },
+      {
+        "template": "receive",
+        "count": 30
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "receive",
+        "displayName": "Receiver",
+        "fieldValues": [],
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 6,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 8,
+            "nameTemplate": "ANCrec_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Receive",
+            "fieldValues": []
+          }
+        ]
+      },
+      {
+        "name": "recsend",
+        "displayName": "Receiver & Sender",
+        "fieldValues": [],
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 6,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 8,
+            "nameTemplate": "ANCrec_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "VIDsend_{0:0000}",
+            "type": "Video",
+            "Direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "GenericSdi",
+    "displayName": "Generic SDI",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": true,
+    "interfaceStreamsFlexible": true,
+    "interfaceNameTemplate": "SDI{0:00}",
+    "fieldValues": [],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "Sender",
+        "fieldValues": [],
+        "streamsFlexible": true,
+        "streams": []
+      }
+    ]
+  },
+  {
+    "name": "LawoR3Lay",
+    "displayName": "Lawo R3Lay",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": true,
+    "interfaceStreamsFlexible": true,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "r3lay"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "R3Lay"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "default",
+        "fieldValues": [],
+        "streams": [
+          {
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "nameTemplate": "ANCrec_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "nameTemplate": "VIDsend_{0:0000}",
+            "type": "Video",
+            "Direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "nameTemplate": "ANCsend_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dhdseries",
+    "displayName": "DHD Core",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "dhd_series52"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "DHD"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "default",
+        "fieldValues": [],
+        "streams": [
+          {
+            "count": 32,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 32,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "streamer",
+    "displayName": "Streamer++",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "NMOS"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Streamer++"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "default",
+        "fieldValues": [],
+        "streams": [
+          {
+            "count": 32,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 32,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "pebble",
+    "displayName": "Pebble",
+    "interfaceCount": 5,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "NMOS"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "PebbleBeach"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 5
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "default",
+        "fieldValues": [],
+        "streams": [
+          {
+            "count": 1,
+            "nameTemplate": "ANCrec_{0:0000}",
+            "type": "Ancillary",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 6,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 6,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "VIDrec_{0:0000}",
+            "type": "Video",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 1,
+            "nameTemplate": "VIDsend_{0:0000}",
+            "type": "Video",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "powercore",
+    "displayName": "Powercore",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceStreamsFlexible": true,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "powercore"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Powercore"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "default",
+        "fieldValues": [],
+        "streams": [
+          {
+            "count": 16,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 16,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "sonifex",
+    "displayName": "Sonifex",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceStreamsFlexible": true,
+    "interfaceNameTemplate": "IP{0:00}",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "avnpxh12"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Sonifex"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "default",
+        "fieldValues": [],
+        "streams": [
+          {
+            "count": 24,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 2,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "tieline",
+    "displayName": "Tieline",
+    "interfaceCount": 1,
+    "softwareDefinedInterfaceCount": false,
+    "interfaceStreamsFlexible": true,
+    "interfaceNameTemplate": "IP",
+    "fieldValues": [
+      {
+        "fieldKey": "Driver",
+        "value": "virtual device"
+      },
+      {
+        "fieldKey": "DeviceTag",
+        "value": "Tieline"
+      }
+    ],
+    "defaultInterfaces": [
+      {
+        "template": "default",
+        "count": 1
+      }
+    ],
+    "interfaceTemplates": [
+      {
+        "name": "default",
+        "displayName": "default",
+        "fieldValues": [],
+        "streams": [
+          {
+            "count": 32,
+            "nameTemplate": "AUDrec_{0:0000}",
+            "type": "Audio",
+            "Direction": "Receive",
+            "fieldValues": []
+          },
+          {
+            "count": 32,
+            "nameTemplate": "AUDsend_{0:0000}",
+            "type": "Audio",
+            "Direction": "Send",
+            "fieldValues": []
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,82 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <LangVersion>default</LangVersion>
+        <AssemblyName>WebIO.Cli</AssemblyName>
+        <RootNamespace>WebIO.Cli</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WebIO\WebIO.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\WebIO\appsettings.Development.json">
+            <Link>appsettings.Development.json</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\WebIO\appsettings.json">
+            <Link>appsettings.json</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="..\WebIO\appsettings.Production.json">
+            <Link>appsettings.Production.json</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="ExcelImport\ImportData\import.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\MV-036.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\BD1-30M02.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\MV-01.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\Quad-MV25.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGW-01.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGW-103.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGW-903 Version 2022.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGW0104-04.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGW0177-01.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGW2001-01.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGW4069-01.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGW4069-02.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGW4226-05.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGWScreen02.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="ExcelImport\ImportData\files\VGWV302-01.xlsx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+</Project>

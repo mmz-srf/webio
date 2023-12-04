@@ -1,0 +1,913 @@
+{
+    "_meta": {
+        "info": {
+            "auth": true,
+            "code": 0,
+            "desc": "",
+            "internalDetails": [
+            ],
+            "msg": "OK",
+            "ok": true,
+            "requestDetails": [
+            ],
+            "user": "adm-meierdan"
+        },
+        "type": "mainResult"
+    },
+    "data": {
+        "config": {
+            "network": {
+                "nGraphElements": {
+                    "device201.2.0": {
+                        "key": "device201.2.0",
+                        "rev": "13-7bb1d08fec942ba4cb0cd6fc881dd79d",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Video",
+                            "configPriority": "off",
+                            "control": "full",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI01_VIDrec_0001_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Video rx ch1 flow 0"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "0"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "Type:Vid_1080i50",
+                                "Type:Vid_1080p25",
+                                "Type:Vid_1080p50",
+                                "Type:Vid_1080p60",
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": true,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.1": {
+                        "key": "device201.2.1",
+                        "rev": "23-b757dc8c379d558718f734b1caca5fdd",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "full",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI01_AUDrec_0001_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch1 flow 1"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "1"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "Type:Aud_1CH_M",
+                                "Type:Aud_1CH_M_LD",
+                                "Type:Aud_2CH_DBE",
+                                "Type:Aud_2CH_LR",
+                                "Type:Aud_2CH_LR_LD",
+                                "Type:Aud_3CH_LRC",
+                                "Type:Aud_6CH_5.1",
+                                "Type:Aud_8CH_RAW",
+                                "Type:Aud_8CH_RAW_LD",
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": true,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.10": {
+                        "key": "device201.2.10",
+                        "rev": "15-f76ead22fba2f794c1becd9c63095bea",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI02_AUDrec_0004_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch2 flow 4"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "10"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.11": {
+                        "key": "device201.2.11",
+                        "rev": "13-a18090c75b8884b1f8f571c5d0dbdf54",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Ancillary",
+                            "configPriority": "off",
+                            "control": "full",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI02_ANCrec_0001_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Ancillary rx ch2 flow 5"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "11"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "Type:Anc_Prot",
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": true,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.2": {
+                        "key": "device201.2.2",
+                        "rev": "15-e473692b48d6ddb83c96a236b6475aa7",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI01_AUDrec_0002_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch1 flow 2"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "2"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.3": {
+                        "key": "device201.2.3",
+                        "rev": "15-2e55f7c39bf759745a50071f2dbc595f",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI01_AUDrec_0003_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch1 flow 3"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "3"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.4": {
+                        "key": "device201.2.4",
+                        "rev": "15-79d9b2eca18c53bfeeb7d56cf5ab7885",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI01_AUDrec_0004_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch1 flow 4"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "4"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.5": {
+                        "key": "device201.2.5",
+                        "rev": "14-2bf4c047c7a97474355d27cf5e8d426d",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Ancillary",
+                            "configPriority": "off",
+                            "control": "full",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI01_ANCrec_0001_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Ancillary rx ch1 flow 5"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "5"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "Type:Anc_Prot",
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": true,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.6": {
+                        "key": "device201.2.6",
+                        "rev": "13-1f98767ea9261e7a303e51125d96bbe3",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Video",
+                            "configPriority": "off",
+                            "control": "full",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI02_VIDrec_0001_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Video rx ch2 flow 0"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "6"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "Type:Vid_1080i50",
+                                "Type:Vid_1080p25",
+                                "Type:Vid_1080p50",
+                                "Type:Vid_1080p60",
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": true,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.7": {
+                        "key": "device201.2.7",
+                        "rev": "15-1e9ae4584ef88dd38a9e6ef01cdfa51f",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "full",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI02_AUDrec_0001_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch2 flow 1"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "7"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "Type:Aud_1CH_M",
+                                "Type:Aud_1CH_M_LD",
+                                "Type:Aud_2CH_DBE",
+                                "Type:Aud_2CH_LR",
+                                "Type:Aud_2CH_LR_LD",
+                                "Type:Aud_3CH_LRC",
+                                "Type:Aud_6CH_5.1",
+                                "Type:Aud_8CH_RAW",
+                                "Type:Aud_8CH_RAW_LD",
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": true,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.8": {
+                        "key": "device201.2.8",
+                        "rev": "15-06fa9f4888fec041869d80b647283136",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI02_AUDrec_0002_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch2 flow 2"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "8"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.2.9": {
+                        "key": "device201.2.9",
+                        "rev": "15-365342f489f78116958dff9b16f95d8a",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": " |  | Screen 02",
+                                "label": "VGWScreen02_SDI02_AUDrec_0003_IPLASRF"
+                            },
+                            "deviceId": "device201",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch2 flow 3"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "2",
+                                    "9"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "SIPSMerge",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                                "#Embrionix emBox"
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device201.3.0.in": {
+                        "key": "device201.3.0.in",
+                        "rev": "1-085bb79a3da64c242584679820cdc57e",
+                        "value": {
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device201",
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Ethernet (in)"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "3",
+                                    "0"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "ipAddress": null,
+                            "ipNetmask": null,
+                            "isVirtual": false,
+                            "maps": [
+                            ],
+                            "sipsMode": "NONE",
+                            "supportsCpipeCfg": false,
+                            "supportsIgmpCfg": false,
+                            "supportsMacForwardingCfg": false,
+                            "supportsNsoCfg": false,
+                            "supportsOpenflowCfg": false,
+                            "supportsStaticIgmpCfg": false,
+                            "supportsVlanCfg": false,
+                            "supportsVplsCfg": false,
+                            "tags": [
+                            ],
+                            "type": "ipVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "In",
+                            "vlanId": null,
+                            "vrfId": null
+                        }
+                    },
+                    "device201.3.0.out": {
+                        "key": "device201.3.0.out",
+                        "rev": "1-d0bf870c33a88419a5d96f99064b225c",
+                        "value": {
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device201",
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Ethernet (out)"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device201",
+                                    "dev",
+                                    "3",
+                                    "0"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "ipAddress": null,
+                            "ipNetmask": null,
+                            "isVirtual": false,
+                            "maps": [
+                            ],
+                            "sipsMode": "NONE",
+                            "supportsCpipeCfg": false,
+                            "supportsIgmpCfg": false,
+                            "supportsMacForwardingCfg": false,
+                            "supportsNsoCfg": false,
+                            "supportsOpenflowCfg": false,
+                            "supportsStaticIgmpCfg": false,
+                            "supportsVlanCfg": false,
+                            "supportsVplsCfg": false,
+                            "tags": [
+                            ],
+                            "type": "ipVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out",
+                            "vlanId": null,
+                            "vrfId": null
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

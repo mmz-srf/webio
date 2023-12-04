@@ -1,0 +1,4 @@
+<ng-select [(ngModel)]="selectedValue" class="selection" (change)="onChange()" [isOpen]="true" #ngSelect>
+  <ng-option *ngFor="let value of params.values" [value]="value">{{value}}</ng-option>
+</ng-select>
+

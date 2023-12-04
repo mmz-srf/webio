@@ -1,0 +1,873 @@
+{
+    "_meta": {
+        "info": {
+            "auth": true,
+            "code": 0,
+            "desc": "",
+            "internalDetails": [
+            ],
+            "msg": "OK",
+            "ok": true,
+            "requestDetails": [
+            ],
+            "user": "adm-meierdan"
+        },
+        "type": "mainResult"
+    },
+    "data": {
+        "config": {
+            "network": {
+                "nGraphElements": {
+                    "device358.1.0": {
+                        "key": "device358.1.0",
+                        "rev": "1-46955bd24087ac67c0fbb6946cc6d5af",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Video",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Video tx ch1 flow 0"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "1",
+                                    "0"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "In"
+                        }
+                    },
+                    "device358.1.1": {
+                        "key": "device358.1.1",
+                        "rev": "1-c5ade92a13366b77c2675d49eb94ea96",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio tx ch1 flow 1"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "1",
+                                    "1"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "In"
+                        }
+                    },
+                    "device358.1.2": {
+                        "key": "device358.1.2",
+                        "rev": "1-3b2f26a0d2c6afd85eedbdcb19037826",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio tx ch1 flow 2"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "1",
+                                    "2"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "In"
+                        }
+                    },
+                    "device358.1.3": {
+                        "key": "device358.1.3",
+                        "rev": "1-c73039add084ad5fadc1d48118b3b816",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio tx ch1 flow 3"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "1",
+                                    "3"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "In"
+                        }
+                    },
+                    "device358.1.4": {
+                        "key": "device358.1.4",
+                        "rev": "1-50826f1d5b6e4626d9372b35b8772a61",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio tx ch1 flow 4"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "1",
+                                    "4"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "In"
+                        }
+                    },
+                    "device358.1.5": {
+                        "key": "device358.1.5",
+                        "rev": "1-d75ba6cb3dd0f2776b72803aea109547",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Ancillary",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Ancillary tx ch1 flow 5"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "1",
+                                    "5"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "In"
+                        }
+                    },
+                    "device358.2.0": {
+                        "key": "device358.2.0",
+                        "rev": "1-25a982d5569f11990254a1a9bb2ed228",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Video",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Video rx ch2 flow 0"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "2",
+                                    "0"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device358.2.1": {
+                        "key": "device358.2.1",
+                        "rev": "1-1891d761b1dd0baf7597371af52907dd",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch2 flow 1"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "2",
+                                    "1"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device358.2.2": {
+                        "key": "device358.2.2",
+                        "rev": "1-e965eb5c2a8c0f54955cae94b4ef7aaf",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch2 flow 2"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "2",
+                                    "2"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device358.2.3": {
+                        "key": "device358.2.3",
+                        "rev": "1-03505844f3af039e48a47c4a3fb80fad",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch2 flow 3"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "2",
+                                    "3"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device358.2.4": {
+                        "key": "device358.2.4",
+                        "rev": "1-1fcd157eb28d8c8b98dcc46eb26af05d",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Audio",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Audio rx ch2 flow 4"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "2",
+                                    "4"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device358.2.5": {
+                        "key": "device358.2.5",
+                        "rev": "1-15e8faccdf23bebd002a13434b32bda2",
+                        "value": {
+                            "bidirPartnerId": null,
+                            "codecFormat": "Ancillary",
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "eppConfig": null,
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Ancillary rx ch2 flow 5"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "2",
+                                    "5"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "isIgmpSource": false,
+                            "isVirtual": false,
+                            "mainDstIp": null,
+                            "mainDstMac": null,
+                            "mainDstPort": null,
+                            "mainDstVlan": null,
+                            "mainSrcGateway": null,
+                            "mainSrcIp": null,
+                            "mainSrcMac": null,
+                            "mainSrcNetmask": null,
+                            "maps": [
+                            ],
+                            "sdpSupport": true,
+                            "serviceId": null,
+                            "sipsMode": "NONE",
+                            "spareDstIp": null,
+                            "spareDstMac": null,
+                            "spareDstPort": null,
+                            "spareDstVlan": null,
+                            "spareSrcGateway": null,
+                            "spareSrcIp": null,
+                            "spareSrcMac": null,
+                            "spareSrcNetmask": null,
+                            "tags": [
+                            ],
+                            "type": "codecVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out"
+                        }
+                    },
+                    "device358.3.0.in": {
+                        "key": "device358.3.0.in",
+                        "rev": "1-ccca198f34e423581d3666309928d695",
+                        "value": {
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Ethernet (in)"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "3",
+                                    "0"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "ipAddress": null,
+                            "ipNetmask": null,
+                            "isVirtual": false,
+                            "maps": [
+                            ],
+                            "sipsMode": "NONE",
+                            "supportsCpipeCfg": false,
+                            "supportsIgmpCfg": false,
+                            "supportsMacForwardingCfg": false,
+                            "supportsNsoCfg": false,
+                            "supportsOpenflowCfg": false,
+                            "supportsStaticIgmpCfg": false,
+                            "supportsVlanCfg": false,
+                            "supportsVplsCfg": false,
+                            "tags": [
+                            ],
+                            "type": "ipVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "In",
+                            "vlanId": null,
+                            "vrfId": null
+                        }
+                    },
+                    "device358.3.0.out": {
+                        "key": "device358.3.0.out",
+                        "rev": "1-81acdf4d6c07bd75e65533addbf5a1fd",
+                        "value": {
+                            "configPriority": "off",
+                            "control": "off",
+                            "custom": {
+                            },
+                            "descriptor": {
+                                "desc": "",
+                                "label": ""
+                            },
+                            "deviceId": "device358",
+                            "extraAlertFilters": [
+                            ],
+                            "fDescriptor": {
+                                "desc": "",
+                                "label": "Ethernet (out)"
+                            },
+                            "gpid": {
+                                "component": 1,
+                                "pointId": [
+                                    "device358",
+                                    "dev",
+                                    "3",
+                                    "0"
+                                ]
+                            },
+                            "imgUrl": "",
+                            "ipAddress": null,
+                            "ipNetmask": null,
+                            "isVirtual": false,
+                            "maps": [
+                            ],
+                            "sipsMode": "NONE",
+                            "supportsCpipeCfg": false,
+                            "supportsIgmpCfg": false,
+                            "supportsMacForwardingCfg": false,
+                            "supportsNsoCfg": false,
+                            "supportsOpenflowCfg": false,
+                            "supportsStaticIgmpCfg": false,
+                            "supportsVlanCfg": false,
+                            "supportsVplsCfg": false,
+                            "tags": [
+                            ],
+                            "type": "ipVertex",
+                            "useAsEndpoint": false,
+                            "vertexType": "Out",
+                            "vlanId": null,
+                            "vrfId": null
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
