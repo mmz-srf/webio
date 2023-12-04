@@ -79,8 +79,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "metechno-io-db:build",
-            "proxyConfig": "proxy.conf.json"
+            "proxyConfig": "proxy.conf.json",
+            "buildTarget": "metechno-io-db:build"
           },
           "configurations": {
             "production": {
@@ -89,14 +89,14 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
-              "browserTarget": "metechno-io-db:build:production"
+              "buildTarget": "metechno-io-db:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "metechno-io-db:build"
+            "buildTarget": "metechno-io-db:build"
           }
         },
         "test": {
