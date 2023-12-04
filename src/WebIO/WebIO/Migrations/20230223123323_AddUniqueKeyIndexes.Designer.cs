@@ -5,6 +5,7 @@
 namespace Tpc.WebIO.Migrations
 {
     using System;
+    using global::WebIO.DataAccess.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
     using Microsoft.EntityFrameworkCore.Migrations;
