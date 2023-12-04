@@ -1,0 +1,19 @@
+<div class="box" style="padding: 0; width: 100%; height: 25%;">
+  <p class="devicedetail title">Device</p>
+  <ag-grid-angular
+    style="height: 100%;"
+    class="ag-theme-balham-dark"
+    [enableBrowserTooltips]="true"
+    [gridOptions]="gridOptionsDevice">
+  </ag-grid-angular>
+</div>
+
+<div class="box" style="padding: 0; width: 100%; height: 25%;">
+  <p class="devicedetail title">Interfaces</p>
+  <app-interfaces></app-interfaces>
+</div>
+
+<div class="box" style="padding: 0; width: 100%; height: 50%;">
+  <p class="devicedetail title">Streams</p>
+  <app-streams></app-streams>
+</div>

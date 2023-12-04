@@ -1,0 +1,28 @@
+<div>
+  <h4>Common fields</h4>
+  <div *ngFor="let field of (editableStreamFields$ | async)">
+    <label [for]="field">{{field.displayName}}</label>
+    <div [ngSwitch]="field.fieldType">
+      <input *ngSwitchCase="fieldType.Boolean"
+             type="checkbox"
+             class="checkboxinput"
+             [id]="field.key"
+             [checked]="getValueIfAllEqual$(field) | async"
+             (change)="changeCheckbox(field, $event)">
+
+      <ng-select *ngSwitchCase="fieldType.Selection"
+                 class="selection-field"
+                 [id]="field.key"
+                 [ngModel]="getValueIfAllEqual$(field) | async"
+                 (change)="changeSelection(field, $event)">
+        <ng-option *ngFor="let value of getOptions(field)" [value]="value">{{value}}</ng-option>
+      </ng-select>
+
+      <input *ngSwitchDefault
+             class="textinput"
+             [id]="field.key"
+             [value]="getValueIfAllEqual$(field) | async"
+             (change)="change(field, $event)">
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="modal" id="addDeviceModal">
+  <div class="modal-dialog medium">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="title">Add Device</h1>
+      </div>
+      <div class="modal-body">
+        <div class="navigation">
+
+          <div class="modal-chooses modal-input">
+            <p class="modal-description">Device Name</p>
+            <input type="text" class="inputfield" [(ngModel)]="deviceName" #deviceInput placeholder="new device" />
+            <div *ngIf="isDuplicateDeviceName" class="input-error">Device name already exists</div>
+          </div>
+
+          <div class="modal-chooses modal-dropdown">
+            <p class="modal-description">Device Type</p>
+            <select (change)="selectDeviceType($event.target.value)" class="select modal-select">
+              <option value="">--- bitte wählen ---</option>
+              <option *ngFor="let deviceType of deviceTypes" [value]="deviceType.name">
+                {{deviceType.displayName}}
+              </option>
+            </select>
+          </div>
+
+          <div *ngIf="selectedDeviceType">
+            <div>
+                <input type="checkbox" id="useSt2022_7" [(ngModel)]="useSt20227">
+                <label for="useSt2022_7" style="padding-left: 10px;">Use 'useSt2022_7'</label>
+            </div>
+
+            <div *ngIf="allowModifyInterfaceCount" class="modal-chooses modal-input small">
+              <p class="modal-description">Number of Interfaces</p>
+              <input type="number" min="0" class="inputfield" [(ngModel)]="interfaceCount"
+                (change)="interfacesNumber(+$event.target.value)" />
+            </div>
+
+            <div *ngIf="allowModifyInterfaceCount">
+              <div *ngFor="let iface of interfaceTemplates; let count = index">
+                <div class="modal-chooses modal-dropdown small">
+                  <p class="modal-description">{{interfaceNames[count]}}</p>
+                  <select (click)="selectInterfaceTemplate($event.target.value, count)"
+                          [(ngModel)]="iface.templateName" class="select modal-select">
+                    <option *ngFor="let template of availableInterfaceTemplates" [value]="template.name">
+                      {{template.displayName}}
+                    </option>
+                  </select>
+                </div>
+                <div class="modal-chooses modal-input small8">
+                  <p class="modal-description">VIDsend</p>
+                  <input type="number" min="0" class="inputfield" [(ngModel)]="iface.videoSend" />
+                </div>
+                <div class="modal-chooses modal-input small8">
+                  <p class="modal-description">AUDsend</p>
+                  <input type="number" min="0" class="inputfield" [(ngModel)]="iface.audioSend" />
+                </div>
+                <div class="modal-chooses modal-input small8">
+                  <p class="modal-description">ANCsend</p>
+                  <input type="number" min="0" class="inputfield" [(ngModel)]="iface.ancillarySend" />
+                </div>
+                <div class="modal-chooses modal-input small8">
+                  <p class="modal-description">VIDrec</p>
+                  <input type="number" min="0" class="inputfield" [(ngModel)]="iface.videoReceive" />
+                </div>
+                <div class="modal-chooses modal-input small8">
+                  <p class="modal-description">AUDrec</p>
+                  <input type="number" min="0" class="inputfield" [(ngModel)]="iface.audioReceive" />
+                </div>
+                <div class="modal-chooses modal-input small8">
+                  <p class="modal-description">ANCrec</p>
+                  <input type="number" min="0" class="inputfield" [(ngModel)]="iface.ancillaryReceive" />
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="!allowModifyInterfaceCount && hasBlockSize" class="modal-chooses modal-input small">
+              <p class="modal-description">Edit Block Size</p>
+              <input type="number" min="1" class="inputfield" [(ngModel)]="interfaceEditBlockSize" />
+            </div>
+            <div></div>
+
+            <div *ngIf="!allowModifyInterfaceCount">
+              <div *ngFor="let iface of interfaceTemplates; let i = index"
+                class="modal-chooses modal-dropdown small">
+                <p class="modal-description">{{interfaceNames[i]}}</p>
+                <select (click)="selectInterfaceTemplate($event.target.value, i)" [(ngModel)]="iface.templateName"
+                  [disabled]="!isSelectableInterfaceTemplate(i)" class="select modal-select">
+                  <option *ngFor="let template of availableInterfaceTemplates" [value]="template.name">
+                    {{template.displayName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn tpc-button" data-dismiss="modal" (click)="cancel()">Cancel</button>
+        <button type="button" class="btn tpc-button" data-dismiss="modal" (click)="onCreateDevice()"
+          [disabled]="!selectedDeviceType || isDuplicateDeviceName">
+          Create Device
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

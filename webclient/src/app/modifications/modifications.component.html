@@ -1,0 +1,6 @@
+<p *ngIf="(pendingModificationsCount) > 0" class="footercontent">
+    <span *ngIf="(pendingModificationsCount) === 1">1 change</span>
+    <span *ngIf="(pendingModificationsCount) > 1">{{pendingModificationsCount}} changes</span>
+    <button (click)="onSave()" class="btn tpc-button footerbutton">Save</button>
+    <button (click)="onDiscard()" class="btn tpc-button footerbutton">Discard</button>
+</p>

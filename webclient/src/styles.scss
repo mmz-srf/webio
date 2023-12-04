@@ -1,0 +1,434 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+// @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham-dark.css";
+@import 'ngx-toastr/toastr';
+@import "confirm-box-styles/theme";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: SegoeUI, Helvetica, Arial, sans-serif;
+  --skyBlue: #67b2ff;
+  --frenchBlue: #4274a6;
+  --white: #ffffff;
+  --dark: #1e1e1e;
+  --brownGrey: #979797;
+  --brownishGrey: #5f5f5f;
+  --blackThree: #252525;
+  --marigold: #ffc605;
+  color: var(--white);
+  background-color: var(--dark);
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.h1,
+h1 {
+  font-size: 1.5rem;
+}
+
+
+.title {
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+
+/* buttons */
+.tpc-button {
+  cursor: pointer;
+  border-radius: 100px;
+  padding: .3rem 1.2rem;
+  background-color: #333333;
+  text-align: center;
+  border: 2px solid var(--skyBlue);
+  margin-left: 2vw;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--skyBlue);
+}
+
+.tpc-button:focus,
+.tpc-button:hover {
+  background-color: var(--skyBlue);
+  color: var(--dark);
+  box-shadow: none;
+}
+
+.modal-footer > :not(:first-child) {
+  margin-left: 2vw;
+}
+
+.tpc-button.delete {
+  color: red;
+  border: 2px solid red;
+}
+
+.tpc-button.delete:focus,
+.tpc-button.delete:hover {
+  background-color: red;
+  color: var(--dark);
+  box-shadow: none;
+}
+
+button.icon-button {
+  background: transparent;
+  border: none;
+  padding-top: 0;
+}
+
+.icon-button .detailicon {
+  width: 70%;
+}
+
+.detailicon.right {
+  width: 40%;
+}
+
+
+.detailicon {
+  width: 70%;
+}
+
+
+/* scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #555555;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
+
+/* main content */
+.box {
+  display: flex;
+  flex-flow: column;
+  flex-grow: 1;
+  height: 100%;
+  padding: 30px;
+  font-size: 0.8rem;
+
+  .header {
+    flex: 0 1 auto;
+    margin-bottom: 50px;
+  }
+
+  .content {
+    flex: 1 1 auto;
+
+    .ag-theme-balham-dark .ag-root {
+      border: #ffffff;
+    }
+
+    .ag-theme-balham-dark .ag-header {
+      font-size: 0.9rem;
+      border-bottom: 1px solid #00000050;
+    }
+
+    .ag-row:focus, .ag-row:hover {
+        background-color: var(--frenchBlue);
+    }
+
+    .ag-cell.ag-cell-inline-editing {
+        box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.5), 0 0 10px 0 rgba(255, 255, 255, 0.5);
+        border: solid 2px var(--white);
+        background-color: var(--black);
+    }
+  }
+  .devicedetail.title {
+    margin-top: 15px;
+    margin-bottom: 0;
+  }
+
+
+  /* footer */
+  .footer {
+    flex: 0 1 auto;
+    margin: 20px 0 0 0;
+  }
+
+  .footercontent {
+    font-weight: bold;
+    text-align: right;
+    background-color: var(--skyBlue);
+    color: black;
+    border-radius: 100px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+
+    .footerbutton {
+      cursor: pointer;
+      border-radius: 100px;
+      padding: .3rem 1.2rem;
+      background-color: var(--skyBlue);
+      text-align: center;
+      border: 2px solid var(--frenchBlue);
+      margin-left: 2vw;
+      font-size: 0.9rem;
+      color: black;
+    }
+
+    .footerbutton:hover {
+      background-color: var(--frenchBlue);
+      color: white;
+    }
+  }
+}
+
+
+/* inputfields */
+.inputfield {
+  background-color: black;
+  padding: 0.2rem;
+  color: white;
+  width: 100%;
+  border: solid 2px var(--white)
+}
+
+.inputfield:focus, .inputfield:hover {
+  box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.5), 0 0 10px 0 rgba(255, 255, 255, 0.5);
+  border: solid 2px white;
+  background-color: black;
+}
+
+.inputfield.checkbox:focus, .inputfield.checkbox:hover {
+  box-shadow: none;
+}
+
+.inputfield.textarea {
+  resize: none;
+  height: 10vh;
+}
+
+/* navigation */
+.navigation {
+    .leftnavigation {
+        float: left;
+        font-size: 0.9rem;
+        margin-top: 10px;
+        width: 60vw;
+
+        .navElement {
+          color: #F5F5F5;
+          text-decoration: none;
+          margin-right: 20px;
+        }
+
+        .routerLinkActive {
+          border-bottom: 5px solid var(--skyBlue);
+          padding-bottom: 4px;
+          color: var(--skyBlue);
+        }
+      }
+
+  .rightnavigation {
+    float: right;
+    margin-right: 0;
+    margin-left: 20px;
+
+    .headerbutton {
+      margin-bottom: 15px;
+      margin-top: 10px;
+    }
+
+    .dropdown-menu.show {
+      background-color: black;
+      border-radius: 6px;
+      box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.25), 0 0 10px 0 rgba(255, 255, 255, 0.25), inset 0 -1px 0 0 #f2f4f5;
+      border: solid 1px var(--brownGrey);
+
+      .dropdown-item {
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: white;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .dropdown-item:focus,
+      .dropdown-item:hover {
+        box-shadow: 0 0 0 2px var(--frenchBlue);
+        background-color: var(--frenchBlue);
+      }
+    }
+  }
+
+  /* users dropdown */
+  .dropdown {
+    display: inline-block;
+  }
+
+  .dropdown.non-button {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+  }
+
+  .select {
+    padding: 5px;
+    border: solid 1px var(--brownishGrey);
+    background-color: var(--blackThree);
+    color: white;
+    width: 100%;
+  }
+
+  .select:focus {
+    padding: 5px;
+    outline-color: transparent;
+  }
+}
+
+
+
+
+/* modal */
+
+.modal-dialog {
+    max-width: 600px;
+    margin-top: 12vh;
+    font-size: 0.8rem;
+
+    .modal-content {
+      box-shadow: 0 0 2px 0 rgba(255, 255, 255, 0.25), 0 0 10px 0 rgba(255, 255, 255, 0.25), inset 0 -1px 0 0 #f2f4f5;
+      border: solid 1px var(--brownGrey);
+      background-color: black;
+      width: 600px;
+      height: 607px;
+      padding: 2rem;
+
+      .modal-header,
+      .modal-body {
+        border-bottom: none;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      .modal-body {
+        width: 500px;
+      }
+
+      .modal-chooses {
+        margin-bottom: 2rem;
+
+        .modal-description {
+          margin-bottom: 0.2rem;
+          font-size: 0.7rem;
+        }
+      }
+
+      .modal-chooses.modal-dropdown.small, .modal-chooses.modal-input.small {
+        display: inline-block;
+        margin-right: 1rem;
+        width: calc(100% / 6 - 1rem);
+      }
+
+      .modal-chooses.modal-input.small5 {
+        display: inline-block;
+        margin-right: 1rem;
+        width: calc(100% / 5 - 1rem);
+      }
+
+      .modal-chooses.modal-input.pw {
+        display: inline-block;
+        margin-right: 1rem;
+        width: calc(100% / 3 - 1rem);
+      }
+
+      .select.modal-select {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .modal-footer {
+        border-top: none;
+        padding: 0;
+      }
+
+
+    }
+  }
+
+    /* modal medium size */
+    .modal-dialog.medium {
+      max-width: 800px;
+
+      .modal-content {
+        width: 800px;
+        height: 807px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        .modal-body {
+          width: 700px;
+        }
+
+        .modal-chooses.modal-dropdown.small, .modal-chooses.modal-input.small {
+          display: inline-block;
+          margin-right: 1rem;
+          width: calc(100% / 4 - 1rem);
+        }
+        .modal-chooses.modal-dropdown.small8, .modal-chooses.modal-input.small8 {
+          display: inline-block;
+          margin-right: 1rem;
+          width: calc(100% / 8 - 1rem);
+        }
+      }
+
+}
+
+span.ag-header-expand-icon > span.ag-icon {
+  color: #67b2ff;
+}
+
+.ag-root-wrapper {
+  overflow: visible;
+}
+
+$bg-color: #2D3436;
+.ng-select.selection {
+  min-width: 150px;
+
+  .ng-select-container {
+    background: $bg-color;
+
+    .ng-value-container {
+      color: #fff;
+    }
+  }
+
+  .ng-dropdown-panel .ng-dropdown-panel-items {
+    max-height: 400px;
+
+    .ng-option {
+      background: $bg-color;
+      color: #fff;
+    }
+  }
+}

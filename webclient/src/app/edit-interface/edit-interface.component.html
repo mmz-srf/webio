@@ -1,0 +1,34 @@
+<div class="modal" id="editInterfaceModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="title">{{header}}</h1>
+      </div>
+      <div class="modal-body grid">
+        <div class="grid-right">
+          <p>Selected interfaces:</p>
+          <div>
+            <ul class="streams">
+              <li *ngFor="let iface of interfaces$ | async">
+                {{iface.properties["Name"].value}}
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid-left">
+          <app-edit-fields
+            [entities$]="interfaces$"
+            [fieldProvider]="interfaceService"
+            (fieldChanged)="addFieldUpdate($event.field, $event.newVal)"
+          ></app-edit-fields>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn tpc-button" data-dismiss="modal" (click)="cancel()">Cancel</button>
+        <button type="button" class="btn tpc-button" data-dismiss="modal" (click)="onUpdateInterface()">{{header}}</button>
+      </div>
+    </div>
+  </div>
+</div>

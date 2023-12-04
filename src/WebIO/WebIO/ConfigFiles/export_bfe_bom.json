@@ -1,0 +1,121 @@
+[
+  {
+    "DisplayName": "Device",
+    "Property": "DeviceName",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "Interface",
+    "Property": "Name",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "VIDsend",
+    "Property": "StreamsCountVideoSend",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "AUDsend",
+    "Property": "StreamsCountAudioSend",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "ANCsend",
+    "Property": "StreamsCountAncillarySend",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "VIDrec",
+    "Property": "StreamsCountVideoReceive",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "AUDrec",
+    "Property": "StreamsCountAudioReceive",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "ANCrec",
+    "Property": "StreamsCountAncillaryReceive",
+    "Readonly": true
+  },
+  {
+    "Property": "DeviceType"
+  },
+  {
+    "Property": "WorkplaceUsage"
+  },
+  {
+    "Property": "AttachedDevice"
+  },
+  {
+    "Property": "FunctionalGroup"
+  },
+  {
+    "Property": "RoomLocation"
+  },
+  {
+    "DisplayName": "Remarks",
+    "Property": "Comment"
+  },
+  {
+    "DisplayName": "Last Modified",
+    "Property": "Modified"
+  },
+  {
+    "Property": "StatusBfe"
+  },
+  {
+    "Property": "StatusNevion"
+  },
+  {
+    "Property": "Responsibility"
+  },
+  {
+    "Property": "KscAcquisition"
+  },
+  {
+    "Property": "KscProduction"
+  },
+  {
+    "Property": "KscAggregation"
+  },
+  {
+    "Property": "FqdnRealtimeA"
+  },
+  {
+    "Property": "IpAddressRealtimeA"
+  },
+  {
+    "Property": "SwitchRealtimeA"
+  },
+  {
+    "Property": "PortRealtimeA"
+  },
+  {
+    "Property": "FqdnRealtimeB"
+  },
+  {
+    "Property": "IpAddressRealtimeB"
+  },
+  {
+    "Property": "SwitchRealtimeB"
+  },
+  {
+    "Property": "PortRealtimeB"
+  },
+  {
+    "Property": "FqdnControlA"
+  },
+  {
+    "Property": "IpAddressControlA"
+  },
+  {
+    "Property": "FqdnControlB"
+  },
+  {
+    "Property": "IpAddressControlB"
+  },
+  { "Property": "Family" },
+  { "Property": "Label1" }
+]

@@ -1,0 +1,56 @@
+[
+  {
+    "DisplayName": "Device",
+    "Property": "DeviceName",
+    "Readonly": true
+  },
+  {
+    "DisplayName": "Sender/Receiver",
+    "Property": "Name",
+    "Readonly": true
+  },
+  {
+    "Property": "DeviceType"
+  },
+  {
+    "Property": "WorkplaceUsage"
+  },
+  {
+    "Property": "AttachedDevice"
+  },
+  {
+    "Property": "FunctionalGroup"
+  },
+  {
+    "Property": "RoomLocation"
+  },
+  {
+    "DisplayName": "Remarks",
+    "Property": "Comment"
+  },
+  {
+    "DisplayName": "Last Modified",
+    "Property": "Modified"
+  },
+  {
+    "Property": "StatusBfe"
+  },
+  {
+    "Property": "StatusNevion"
+  },
+  {
+    "Property": "Responsibility"
+  },
+  {
+    "Property": "KscAcquisition"
+  },
+  {
+    "Property": "KscProduction"
+  },
+  {
+    "Property": "KscAggregation"
+  },
+  { "Property": "UseAsEndpoint" },
+  { "Property": "Family" },
+  { "Property": "Label1" }
+]
