@@ -123,4 +123,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: WebIO.Docker
-          path: ./webio-latest.tar
+          path: ./app/webio-latest.tar
