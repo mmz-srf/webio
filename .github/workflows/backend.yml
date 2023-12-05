@@ -54,6 +54,11 @@ jobs:
     - uses: actions/checkout@v3
     - name: Publish
       run: dotnet publish -c Release WebIO.Cli/WebIO.Cli.csproj
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: WebIO.Cli
+        path: ./src/WebIO/WebIO.Cli/bin/Release/net7.0/publish
   publish-api:
     defaults:
       run:
@@ -64,4 +69,9 @@ jobs:
     - uses: actions/checkout@v3
     - name: Publish
       run: dotnet publish -c Release WebIO.Api/WebIO.Api.csproj
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: WebIO.Api
+        path: ./src/WebIO/WebIO.Api/bin/Release/net7.0/publish
 

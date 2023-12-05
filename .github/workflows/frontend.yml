@@ -32,3 +32,8 @@ jobs:
       run: cp src/environments/environment.ts src/environments/environment.prod.ts
     - name: Build
       run: npm run build-prod
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+          name: WebIO.Frontend
+          path: ./dist
