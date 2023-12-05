@@ -100,7 +100,7 @@ jobs:
   publish-docker:
     runs-on: ubuntu-latest
     needs:
-     - build-and-test-backend
+     - publish-api
      - build-frontend
     steps:
     - uses: actions/checkout@v3
