@@ -124,9 +124,9 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: WebIO.Docker-latest
-          path: ./app/webio-latest.tar
+          path: ./app/build/webio-latest.tar
     - name: Upload run-id version
       uses: actions/upload-artifact@v3
       with:
           name: WebIO.Docker-${{ github.run_id }}
-          path: ./app/webio-${{ github.run_id }}.tar
+          path: ./app/build/webio-${{ github.run_id }}.tar
