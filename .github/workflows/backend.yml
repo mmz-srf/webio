@@ -119,7 +119,7 @@ jobs:
     - name: Docker build
       run: |
         cd build
-        docker build -t webio:latest .
+        docker build -t webio:latest -t webio:${{ github.run_id }} .
         docker save webio:latest --output webio-latest.tar
     - name: Upload artifact
       uses: actions/upload-artifact@v3
