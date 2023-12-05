@@ -118,9 +118,15 @@ jobs:
       run: |
         cd build
         docker build -t webio:latest -t webio:${{ github.run_id }} .
-        docker save webio:latest --output webio-latest.tar
-    - name: Upload artifact
+        docker save webio:latest --output ./webio-latest.tar
+        docker save webio:${{ github.run_id }} --output ./webio-${{ github.run_id }}.tar
+    - name: Upload latest
       uses: actions/upload-artifact@v3
       with:
-          name: WebIO.Docker
+          name: WebIO.Docker-latest
           path: ./app/webio-latest.tar
+    - name: Upload run-id version
+      uses: actions/upload-artifact@v3
+      with:
+          name: WebIO.Docker-${{ github.run_id }}
+          path: ./app/webio-${{ github.run_id }}.tar
