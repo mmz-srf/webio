@@ -28,5 +28,7 @@ jobs:
       run: npm ci
     - name: Swagger
       run: npm run swagger
+    - name: copy environment file (replace with secret later)
+      run: cp src/environments/environment.ts src/environments/environment.prod.ts
     - name: Build
       run: npm run build-prod
