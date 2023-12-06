@@ -28,6 +28,7 @@ public abstract class Searcher<TEntity, TSearchRequest, TId> : ISearcher<TEntity
   public async Task<SearchResult<TEntity>> FindAllAsync(TSearchRequest request, CancellationToken ct)
   {
     var searchResponse = await _client.SearchAsync<TEntity>(sd => PrepareQuery(request, sd), ct);
+    // var json = Encoding.UTF8.GetString(searchResponse.ApiCall.RequestBodyInBytes);
     return new(Documents: IterateResultsAsync(searchResponse, request, ct), Total: searchResponse.Total);
   }
 
@@ -70,11 +71,10 @@ public abstract class Searcher<TEntity, TSearchRequest, TId> : ISearcher<TEntity
     SearchDescriptor<TEntity> sd,
     int currentPosition = 0)
     => UseIndex(_indexManager.GetAliasName(),
-      IncludeId(
         SkipTake(
           currentPosition,
           request.Take ?? _config.BatchSize,
-          ToQuery(request)(sd))));
+          ToQuery(request)(sd)));
 
   private static SearchDescriptor<TEntity> UseIndex(string index, SearchDescriptor<TEntity> sd)
   {
@@ -91,56 +91,4 @@ public abstract class Searcher<TEntity, TSearchRequest, TId> : ISearcher<TEntity
     sd.Take(take);
     return sd;
   }
-
-  private static SearchDescriptor<TEntity> IncludeId(SearchDescriptor<TEntity> sd)
-  {
-    // sd.Source(s => s.Includes(e => e.Field(f => f.Id)));
-    return sd;
-  }
-  //
-  // public async IAsyncEnumerable<TEntity> AllEntitiesAsync([EnumeratorCancellation] CancellationToken ct)
-  // {
-  //   // this only fetches 10.000 documents, should work for now
-  //   var response =
-  //     await _client.SearchAsync<TEntity>(sd => sd.Index(_indexManager.GetAliasName()).Take(_config.BatchSize), ct);
-  //
-  //   foreach (var entity in response.Documents)
-  //   {
-  //     yield return entity;
-  //   }
-  //
-  //   var currentPosition = response.Documents.Count;
-  //   while (!ct.IsCancellationRequested && response.Documents.Count > 0)
-  //   {
-  //     response = await _client.SearchAsync<TEntity>(
-  //       sd => sd.Index(_indexManager.GetAliasName()).Skip(currentPosition).Take(_config.BatchSize), ct);
-  //
-  //     foreach (var entity in response.Documents)
-  //     {
-  //       if (ct.IsCancellationRequested)
-  //       {
-  //         yield break;
-  //       }
-  //
-  //       yield return entity;
-  //     }
-  //
-  //     currentPosition += response.Documents.Count;
-  //   }
-  // }
-  //
-  // public async IAsyncEnumerable<TEntity> AllEntitiesWithIds(
-  //   IEnumerable<TId> ids,
-  //   [EnumeratorCancellation] CancellationToken ct)
-  // {
-  //   foreach (var indexedEntity in await GetAllAsync(ids, ct))
-  //   {
-  //     if (ct.IsCancellationRequested)
-  //     {
-  //       yield break;
-  //     }
-  //
-  //     yield return indexedEntity;
-  //   }
-  // }
 }

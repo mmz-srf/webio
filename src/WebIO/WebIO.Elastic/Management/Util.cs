@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using Nest;
 using Search;
 
-public static class Util
+public static partial class Util
 {
   public static readonly string[] ReservedCharacters =
   {
@@ -58,7 +58,7 @@ public static class Util
     IReadOnlyCollection<TextFieldSelector<TIndexedEntity>> fields)
     where TIndexedEntity : class, IIndexedEntity<TId>
   {
-    var spaceFreeTexts = new Regex("\\s+").Split(text).ToHashSet();
+    var spaceFreeTexts = TextSplitter().Split(text).ToHashSet();
     spaceFreeTexts.Add(text);
 
     var queryContainers = new List<QueryContainer?>();
@@ -190,4 +190,6 @@ public static class Util
     IEnumerable<TextFieldSelector<TIndexedEntity>> fields,
     TextFieldType textFieldType) where TIndexedEntity : class, IIndexedEntity<TId>
     => fields.Where(f => f.Type == textFieldType).ToList();
+    [GeneratedRegex("\\s+")]
+    private static partial Regex TextSplitter();
 }

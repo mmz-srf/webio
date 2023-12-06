@@ -146,6 +146,7 @@ public class ElasticDeviceRepository : IDeviceRepository
       Fulltext = query.GlobalFilter,
       DeviceName = query.Filter.FirstOrDefault(f => f.Key == "Name")?.Value ??
                    string.Empty,
+      Properties = query.Filter.ToDictionary(i => i.Key, i => i.Value),
     }, default).GetAwaiter().GetResult();
 
   private SearchResult<IndexedInterface> FindInterfaceByQuery(Query query)
@@ -159,6 +160,9 @@ public class ElasticDeviceRepository : IDeviceRepository
       DeviceId = deviceGuid,
       InterfaceName = query.Filter.FirstOrDefault(f => f.Key == "Name")?.Value ??
                       string.Empty,
+      DeviceName = query.Filter.FirstOrDefault(f => f.Key == nameof(InterfaceSearchRequest.DeviceName))?.Value ??
+                   string.Empty,
+      Properties = query.Filter.ToDictionary(i => i.Key, i => i.Value),
     }, default).GetAwaiter().GetResult();
   }
 
@@ -169,6 +173,11 @@ public class ElasticDeviceRepository : IDeviceRepository
       Fulltext = query.GlobalFilter,
       StreamName = query.Filter.FirstOrDefault(f => f.Key == "Name")?.Value ??
                    string.Empty,
+      InterfaceName = query.Filter.FirstOrDefault(f => f.Key == nameof(StreamSearchRequest.InterfaceName))?.Value ??
+                      string.Empty,
+      DeviceName = query.Filter.FirstOrDefault(f => f.Key == nameof(StreamSearchRequest.DeviceName))?.Value ??
+                   string.Empty,
+      Properties = query.Filter.ToDictionary(i => i.Key, i => i.Value),
     }, default).GetAwaiter().GetResult();
 
   private async Task<Device> ToDevice(
@@ -286,7 +295,7 @@ public class ElasticDeviceRepository : IDeviceRepository
         iface.StreamsCountAudioReceive,
         iface.StreamsCountAncillaryReceive),
       iface.Properties.ToImmutableDictionary(),
-      ImmutableDictionary<string, string>.Empty, // todo
+      iface.DeviceProperties.ToImmutableDictionary(),
       null
     );
 
@@ -297,30 +306,35 @@ public class ElasticDeviceRepository : IDeviceRepository
       stream.Comment,
       stream.Type,
       stream.Direction,
-      Guid.Empty, // todo
-      "", // todo
-      "", // todo
-      "", // todo
+      stream.DeviceId,
+      stream.DeviceType,
+      stream.DeviceName,
+      stream.InterfaceName,
       stream.Properties.ToImmutableDictionary(),
-      ImmutableDictionary<string, string>.Empty,
-      ImmutableDictionary<string, string>.Empty,
+      stream.DeviceProperties.ToImmutableDictionary(),
+      stream.InterfaceProperties.ToImmutableDictionary(),
       null);
 }
 
 public record DeviceSearchRequest : SearchRequest
 {
   public string DeviceName { get; init; } = string.Empty;
+  public IReadOnlyDictionary<string, string> Properties { get; init; } = ImmutableDictionary<string, string>.Empty;
 }
 
 public record InterfaceSearchRequest : SearchRequest
 {
   public Guid? DeviceId { get; init; }
   public string InterfaceName { get; init; } = string.Empty;
-  public string DeviceName { get; set; } = string.Empty;
+  public string DeviceName { get; init; } = string.Empty;
+  public IReadOnlyDictionary<string, string> Properties { get; init; } = ImmutableDictionary<string, string>.Empty;
 }
 
 public record StreamSearchRequest : SearchRequest
 {
+  public string DeviceName { get; init; } = string.Empty;
+  public string InterfaceName { get; init; } = string.Empty;
   public IEnumerable<Guid> InterfaceIds { get; init; } = new List<Guid>();
   public string StreamName { get; init; } = string.Empty;
+  public IReadOnlyDictionary<string, string> Properties { get; init; } = ImmutableDictionary<string, string>.Empty;
 }

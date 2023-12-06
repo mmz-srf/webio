@@ -14,10 +14,13 @@ public record IndexedInterface : IIndexedEntity<Guid>
   public string DeviceType { get; init; } = string.Empty;
   public string DeviceName { get; init; } = string.Empty;
   public IReadOnlyDictionary<string, string> Properties { get; init; } = ImmutableDictionary<string, string>.Empty;
-  public int StreamsCountVideoSend { get; set; }
-  public int StreamsCountAudioSend { get; set; }
-  public int StreamsCountAncillarySend { get; set; }
-  public int StreamsCountVideoReceive { get; set; }
-  public int StreamsCountAudioReceive { get; set; }
-  public int StreamsCountAncillaryReceive { get; set; }
-}
+  public int StreamsCountVideoSend { get; init; }
+  public int StreamsCountAudioSend { get; init; }
+  public int StreamsCountAncillarySend { get; init; }
+  public int StreamsCountVideoReceive { get; init; }
+  public int StreamsCountAudioReceive { get; init; }
+  public int StreamsCountAncillaryReceive { get; init; }
+
+  public IReadOnlyDictionary<string, string> DeviceProperties { get; init; } =
+    ImmutableDictionary<string, string>.Empty;
+} 

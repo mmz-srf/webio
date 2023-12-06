@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using EntityFrameworkCore;
@@ -35,6 +36,8 @@ public class InterfaceDataSource : IDataSource<IndexedInterface, Guid>
   private static IndexedInterface ToIndexedInterface(InterfaceEntity iface, AppDbContext db)
   {
     var count = CountStreamTypes(iface, db);
+
+    var device = db.Devices.Include(d => d.Properties).First(d => d.Id == iface.DeviceId);
     return new()
     {
       Id = iface.Id,
@@ -43,23 +46,27 @@ public class InterfaceDataSource : IDataSource<IndexedInterface, Guid>
       Index = iface.Index,
       InterfaceTemplate = iface.InterfaceTemplate,
       Comment = iface.Comment ?? string.Empty,
-      DeviceType = "TODO", // todo!
-      DeviceName = "TODO", // todo!
+      DeviceType = device.DeviceType,
+      DeviceName = device.Name,
       Properties = iface.Properties.ToDictionary(p => p.Key,
+        p => p.Value ?? string.Empty),
+      DeviceProperties = device.Properties.ToDictionary(p => p.Key,
         p => p.Value ?? string.Empty),
       StreamsCountVideoSend = CountByTypeAndDirection(count, StreamType.Video, StreamDirection.Send),
       StreamsCountAudioSend = CountByTypeAndDirection(count, StreamType.Audio, StreamDirection.Send),
       StreamsCountAncillarySend = CountByTypeAndDirection(count, StreamType.Ancillary, StreamDirection.Send),
       StreamsCountVideoReceive = CountByTypeAndDirection(count, StreamType.Video, StreamDirection.Receive),
       StreamsCountAudioReceive = CountByTypeAndDirection(count, StreamType.Audio, StreamDirection.Receive),
-      StreamsCountAncillaryReceive = CountByTypeAndDirection(count, StreamType.Ancillary, StreamDirection.Receive)
+      StreamsCountAncillaryReceive = CountByTypeAndDirection(count, StreamType.Ancillary, StreamDirection.Receive),
     };
   }
 
-  private static List<(StreamDirection Direction, StreamType Type, int Count)> CountStreamTypes(InterfaceEntity iface, AppDbContext db)
+  private static List<(StreamDirection Direction, StreamType Type, int Count)> CountStreamTypes(
+    InterfaceEntity iface,
+    AppDbContext db)
     => db.Streams
       .Where(s => s.InterfaceId == iface.Id)
-      .GroupBy(s => new {s.Direction, s.Type})
+      .GroupBy(s => new { s.Direction, s.Type })
       .Select(g => new
       {
         g.Key.Direction,

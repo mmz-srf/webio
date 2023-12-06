@@ -21,12 +21,14 @@ public class DeviceDataSource : IDataSource<IndexedDevice, Guid>
 
   public IAsyncEnumerable<IndexedDevice> AllEntitiesAsync(CancellationToken ct)
     => _db.Devices
+      .Include(d => d.Properties)
       .AsNoTracking()
       .Select(d => ToIndexedDevice(d, _db))
       .AsAsyncEnumerable();
 
   public IAsyncEnumerable<IndexedDevice> AllEntitiesWithIds(IEnumerable<Guid> ids, CancellationToken ct)
     => _db.Devices
+      .Include(d => d.Properties)
       .AsNoTracking()
       .Where(d => ids.Contains(d.Id))
       .Select(d => ToIndexedDevice(d, _db))

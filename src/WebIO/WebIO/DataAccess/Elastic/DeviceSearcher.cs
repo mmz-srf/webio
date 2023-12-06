@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using Nest;
 using WebIO.Elastic.Data;
@@ -26,14 +27,29 @@ public class DeviceSearcher : Searcher<IndexedDevice, DeviceSearchRequest, Guid>
 
     if (!string.IsNullOrWhiteSpace(request.DeviceName))
     {
-      mustFilters.Add(mf
-        => mf.Match(f
-          => f.Field(d => d.Name).Query(request.DeviceName)));
+      var fields = new[]
+      {
+        new TextFieldSelector<IndexedDevice>
+        {
+          Selector = i => i.Name,
+          Boost = 2,
+          Type = TextFieldType.Exact,
+        },
+        new TextFieldSelector<IndexedDevice>
+        {
+          Selector = i => i.Name,
+          Boost = 1.5,
+          Type = TextFieldType.PrefixWildcard,
+        },
+      };
+      mustFilters.Add(mf => Util.ToTextQuery<IndexedDevice, Guid>(mf, request.DeviceName, fields));
     }
 
     return sd
-      => sd.Query(qd
-        => qd.Bool(bqd
-          => bqd.Must(mustFilters.ToArray())));
+      => sd
+        .MinScore(mustFilters.Any() ? 8 : 0)
+        .Query(qd
+          => qd.Bool(bqd
+            => bqd.Must(mustFilters.ToArray())));
   }
 }

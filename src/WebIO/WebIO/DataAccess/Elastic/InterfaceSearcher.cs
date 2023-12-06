@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using Nest;
 using WebIO.Elastic.Data;
@@ -30,24 +31,52 @@ public class InterfaceSearcher : Searcher<IndexedInterface, InterfaceSearchReque
         => mf.Match(f
           => f.Field(d => d.DeviceId).Query($"{request.DeviceId}")));
     }
-    
-    if (!string.IsNullOrWhiteSpace(request.InterfaceName))
-    {
-      mustFilters.Add(mf
-        => mf.Match(f
-          => f.Field(d => d.Name).Query($"{request.InterfaceName}")));
-    }
 
     if (!string.IsNullOrWhiteSpace(request.InterfaceName))
     {
-      mustFilters.Add(mf
-        => mf.Match(f
-          => f.Field(d => d.DeviceName).Query($"{request.DeviceName}")));
+      var fields = new[]
+      {
+        new TextFieldSelector<IndexedInterface>
+        {
+          Selector = i => i.Name,
+          Boost = 5,
+          Type = TextFieldType.Exact,
+        },
+        new TextFieldSelector<IndexedInterface>
+        {
+          Selector = i => i.Name,
+          Boost = 2.5,
+          Type = TextFieldType.PrefixWildcard,
+        },
+      };
+      mustFilters.Add(mf => Util.ToTextQuery<IndexedInterface, Guid>(mf, request.InterfaceName, fields));
+    }
+
+    if (!string.IsNullOrWhiteSpace(request.DeviceName))
+    {
+      var fields = new[]
+      {
+        new TextFieldSelector<IndexedInterface>
+        {
+          Selector = i => i.DeviceName,
+          Boost = 5,
+          Type = TextFieldType.Exact,
+        },
+        new TextFieldSelector<IndexedInterface>
+        {
+          Selector = i => i.DeviceName,
+          Boost = 2.5,
+          Type = TextFieldType.PrefixWildcard,
+        },
+      };
+      mustFilters.Add(mf => Util.ToTextQuery<IndexedInterface, Guid>(mf, request.DeviceName, fields));
     }
 
     return sd
-      => sd.Query(qd
-        => qd.Bool(bqd
-          => bqd.Must(mustFilters.ToArray())));
+      => sd
+        .MinScore(mustFilters.Any() ? 8 : 0)
+        .Query(qd
+          => qd.Bool(bqd
+            => bqd.Must(mustFilters.ToArray())));
   }
 }
