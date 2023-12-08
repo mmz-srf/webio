@@ -97,7 +97,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Publish
-      run: dotnet publish -c Release WebIO.Api/WebIO.Api.csproj
+      run: dotnet publish -c Release -r win-x64 WebIO.Api/WebIO.Api.csproj
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
