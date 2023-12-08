@@ -133,11 +133,11 @@ jobs:
         AZURE_AUDIENCE: ${{ secrets.AZURE_AUDIENCE }}
       env:
         AZURE_INSTANCE: ${{ env.AZURE_INSTANCE }}
-        run: |
-          cd build/app/
-            sed -i "s/#AZURE_CLIENT_ID#/$AZURE_CLIENT_ID/g" ./build/app/appsettings.Production.json 
-            sed -i "s/#AZURE_TENANT_ID#/$AZURE_TENANT_ID/g" ./build/app/appsettings.Production.json 
-            sed -i "s/#AZURE_AUDIENCE#/$AZURE_AUDIENCE/g" ./build/app/appsettings.Production.json
+      run: |
+        cd build/app/
+        sed -i "s/#AZURE_CLIENT_ID#/$AZURE_CLIENT_ID/g" ./build/app/appsettings.Production.json 
+        sed -i "s/#AZURE_TENANT_ID#/$AZURE_TENANT_ID/g" ./build/app/appsettings.Production.json 
+        sed -i "s/#AZURE_AUDIENCE#/$AZURE_AUDIENCE/g" ./build/app/appsettings.Production.json
     - name: Docker build
       run: |
         cd build

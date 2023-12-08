@@ -56,7 +56,12 @@ public static class Dependencies
                            throw new ArgumentException("No connection string defined!");
 
     return services
-      .RegisterElastic(new())
+      .RegisterElastic(new()
+      {
+        Url = new(configuration["Elastic:Url"] ?? "http://localhost:9200"),
+        Username = configuration["Elastic:User"],
+        Password = configuration["Elastic:Password"],
+      })
       .ElasticModel<IndexedDevice, Guid>().WithDataSource<DeviceDataSource>().Register()
       .ElasticModel<IndexedInterface, Guid>().WithDataSource<InterfaceDataSource>().Register()
       .ElasticModel<IndexedStream, Guid>().WithDataSource<StreamDataSource>().Register()
