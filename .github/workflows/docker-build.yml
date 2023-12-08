@@ -33,9 +33,9 @@ jobs:
         env:
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-        run: |
-          sed -i 's/#AZURE_CLIENT_ID#/"$AZURE_CLIENT_ID"/g' ./src/environments/environment.prod.ts 
-          sed -i 's/#AZURE_TENANT_ID#/"$AZURE_TENANT_ID"/g' ./src/environments/environment.prod.ts 
+        run: |-
+          sed -i "s/#AZURE_CLIENT_ID#/${{ secrets.AZURE_CLIENT_ID }}/g" ./src/environments/environment.prod.ts
+          sed -i "s/#AZURE_TENANT_ID#/${{ secrets.AZURE_TENANT_ID }}/g" ./src/environments/environment.prod.ts
       - name: Build
         run: npm run build-prod
       - name: Upload artifact
@@ -132,10 +132,10 @@ jobs:
         AZURE_AUDIENCE: ${{ secrets.AZURE_AUDIENCE }}
         AZURE_INSTANCE: ${{ env.AZURE_INSTANCE }}
       run: |
-        sed -i 's/#AZURE_CLIENT_ID#/"$AZURE_CLIENT_ID"/g' ./build/app/appsettings.Production.json 
-        sed -i 's/#AZURE_TENANT_ID#/"$AZURE_TENANT_ID"/g' ./build/app/appsettings.Production.json 
-        sed -i 's/#AZURE_AUDIENCE#/"$AZURE_AUDIENCE"/g' ./build/app/appsettings.Production.json
-        sed -i 's/#AZURE_INSTANCE#/"$AZURE_INSTANCE"/g' ./build/app/appsettings.Production.json
+        sed -i "s/#AZURE_CLIENT_ID#/${{ secrets.AZURE_CLIENT_ID }}/g" ./build/app/appsettings.Production.json
+        sed -i "s/#AZURE_TENANT_ID#/${{ secrets.AZURE_TENANT_ID }}/g" ./build/app/appsettings.Production.json
+        sed -i "s/#AZURE_AUDIENCE#/${{ secrets.AZURE_AUDIENCE }}/g" ./build/app/appsettings.Production.json
+        sed -i "s/#AZURE_INSTANCE#/${{ env.AZURE_INSTANCE }}/g" ./build/app/appsettings.Production.json
     - name: Docker build
       run: |
         cd build
