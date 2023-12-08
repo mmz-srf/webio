@@ -117,12 +117,14 @@ jobs:
       with:
         name: WebIO.Api
         path: build/app
+    - name: List API files
       run: ls -la build/app
     - name: Download Frontend
       uses: actions/download-artifact@v3
       with:
           name: WebIO.Frontend
           path: build/wwwroot
+    - name: List Frontend files
       run: ls -la build/wwwroot
     - name: Configure secrets
       with:
