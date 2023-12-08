@@ -28,15 +28,23 @@ jobs:
         run: npm ci
       - name: Swagger
         run: npm run swagger
-      - name: copy environment file (replace with secret later)
-        run: cp src/environments/environment.ts src/environments/environment.prod.ts
+      - name: put secrets in prod environment file
+        with:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_AUDIENCE: ${{ secrets.AZURE_AUDIENCE }}
+        env:
+          AZURE_INSTANCE: ${{ env.AZURE_INSTANCE }}
+        run: |
+          sed -i "s/#AZURE_CLIENT_ID#/$AZURE_CLIENT_ID/g" ./src/environments/environment.prod.ts 
+          sed -i "s/#AZURE_TENANT_ID#/$AZURE_TENANT_ID/g" ./src/environments/environment.prod.ts 
       - name: Build
         run: npm run build-prod
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: WebIO.Frontend
-          path: ./webclient/dist
+          path: ./webclient/dist/metechno-io-db
   build-and-test-backend:
     defaults:
       run:
@@ -109,11 +117,25 @@ jobs:
       with:
         name: WebIO.Api
         path: build/app
+      run: ls -la build/app
     - name: Download Frontend
       uses: actions/download-artifact@v3
       with:
           name: WebIO.Frontend
           path: build/wwwroot
+      run: ls -la build/wwwroot
+    - name: Configure secrets
+      with:
+        AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+        AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+        AZURE_AUDIENCE: ${{ secrets.AZURE_AUDIENCE }}
+      env:
+        AZURE_INSTANCE: ${{ env.AZURE_INSTANCE }}
+        run: |
+          cd build/app/
+            sed -i "s/#AZURE_CLIENT_ID#/$AZURE_CLIENT_ID/g" ./build/app/appsettings.Production.json 
+            sed -i "s/#AZURE_TENANT_ID#/$AZURE_TENANT_ID/g" ./build/app/appsettings.Production.json 
+            sed -i "s/#AZURE_AUDIENCE#/$AZURE_AUDIENCE/g" ./build/app/appsettings.Production.json
     - name: Docker build
       run: |
         cd build
