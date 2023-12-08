@@ -29,7 +29,8 @@ jobs:
       - name: Swagger
         run: npm run swagger
       - name: put secrets in prod environment file
-        with:
+        shell: bash
+        env:
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
@@ -124,11 +125,11 @@ jobs:
     - name: List Frontend files
       run: ls -la build/wwwroot
     - name: Configure secrets
-      with:
+      shell: bash
+      env:
         AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
         AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         AZURE_AUDIENCE: ${{ secrets.AZURE_AUDIENCE }}
-      env:
         AZURE_INSTANCE: ${{ env.AZURE_INSTANCE }}
       run: |
         cd build/app/
