@@ -82,12 +82,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Publish
-      run: dotnet publish -c Release WebIO.Cli/WebIO.Cli.csproj
+      run: dotnet publish -c Release -r win-x64 WebIO.Cli/WebIO.Cli.csproj
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
         name: WebIO.Cli
-        path: ./src/WebIO/WebIO.Cli/bin/Release/net7.0/publish
+        path: ./src/WebIO/WebIO.Cli/bin/Release/net7.0/win-x64/publish
   publish-api:
     defaults:
       run:
@@ -97,7 +97,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Publish
-      run: dotnet publish -c Release -r win-x64 WebIO.Api/WebIO.Api.csproj
+      run: dotnet publish -c Release WebIO.Api/WebIO.Api.csproj
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
