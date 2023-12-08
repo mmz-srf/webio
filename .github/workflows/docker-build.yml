@@ -32,9 +32,6 @@ jobs:
         with:
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          AZURE_AUDIENCE: ${{ secrets.AZURE_AUDIENCE }}
-        env:
-          AZURE_INSTANCE: ${{ env.AZURE_INSTANCE }}
         run: |
           sed -i "s/#AZURE_CLIENT_ID#/$AZURE_CLIENT_ID/g" ./src/environments/environment.prod.ts 
           sed -i "s/#AZURE_TENANT_ID#/$AZURE_TENANT_ID/g" ./src/environments/environment.prod.ts 
