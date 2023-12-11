@@ -147,6 +147,7 @@ public class ElasticDeviceRepository : IDeviceRepository
       DeviceName = query.Filter.FirstOrDefault(f => f.Key == "Name")?.Value ??
                    string.Empty,
       Properties = query.Filter.ToDictionary(i => i.Key, i => i.Value),
+      Sorting = ToSortDictionary(query),
     }, default).GetAwaiter().GetResult();
 
   private SearchResult<IndexedInterface> FindInterfaceByQuery(Query query)
@@ -162,6 +163,7 @@ public class ElasticDeviceRepository : IDeviceRepository
                       string.Empty,
       DeviceName = query.Filter.FirstOrDefault(f => f.Key == nameof(InterfaceSearchRequest.DeviceName))?.Value ??
                    string.Empty,
+      Sorting = ToSortDictionary(query),
       Properties = query.Filter.ToDictionary(i => i.Key, i => i.Value),
     }, default).GetAwaiter().GetResult();
   }
@@ -177,6 +179,7 @@ public class ElasticDeviceRepository : IDeviceRepository
                       string.Empty,
       DeviceName = query.Filter.FirstOrDefault(f => f.Key == nameof(StreamSearchRequest.DeviceName))?.Value ??
                    string.Empty,
+      Sorting = ToSortDictionary(query),
       Properties = query.Filter.ToDictionary(i => i.Key, i => i.Value),
     }, default).GetAwaiter().GetResult();
 
@@ -314,6 +317,20 @@ public class ElasticDeviceRepository : IDeviceRepository
       stream.DeviceProperties.ToImmutableDictionary(),
       stream.InterfaceProperties.ToImmutableDictionary(),
       null);
+
+  private static IEnumerable<KeyValuePair<string, string>> ToSortDictionary(Query query)
+    => query.Sort?.Split(',').Select(LcFirstIfBaseObjectMember)
+      .Zip(query.Order?.Split(',') ?? Enumerable.Empty<string>(), KeyValuePair.Create) 
+       ?? ImmutableArray<KeyValuePair<string, string>>.Empty;
+
+  private static string LcFirstIfBaseObjectMember(string field)
+    => field switch {
+      "Name" => "name",
+      "DeviceName" => "deviceName",
+      "InterfaceName" => "interfaceName",
+      "StreamName" => "streamName",
+      _ => $"properties.{field}",
+    };
 }
 
 public record DeviceSearchRequest : SearchRequest

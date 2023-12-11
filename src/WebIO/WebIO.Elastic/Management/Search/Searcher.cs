@@ -1,6 +1,8 @@
 namespace WebIO.Elastic.Management.Search;
 
 using System.Runtime.CompilerServices;
+using System.Text;
+using Elasticsearch.Net;
 using IndexManagement;
 using Microsoft.Extensions.Logging;
 using Nest;
@@ -28,12 +30,12 @@ public abstract class Searcher<TEntity, TSearchRequest, TId> : ISearcher<TEntity
   public async Task<SearchResult<TEntity>> FindAllAsync(TSearchRequest request, CancellationToken ct)
   {
     var searchResponse = await _client.SearchAsync<TEntity>(sd => PrepareQuery(request, sd), ct);
-    // var json = Encoding.UTF8.GetString(searchResponse.ApiCall.RequestBodyInBytes);
+    var json = Encoding.UTF8.GetString(searchResponse.ApiCall.RequestBodyInBytes);
     return new(Documents: IterateResultsAsync(searchResponse, request, ct), Total: searchResponse.Total);
   }
 
   public async Task<TEntity?> GetAsync(TId id, CancellationToken ct)
-    => (await GetAllAsync(new[] {id}, ct)).FirstOrDefault();
+    => (await GetAllAsync(new[] { id }, ct)).FirstOrDefault();
 
   public async Task<IEnumerable<TEntity>> GetAllAsync(IEnumerable<TId> ids, CancellationToken ct)
     => (await _client.GetManyAsync<TEntity>(ids.Select(id => $"{id}"), _indexManager.GetAliasName(), ct)).Select(hit
@@ -70,11 +72,13 @@ public abstract class Searcher<TEntity, TSearchRequest, TId> : ISearcher<TEntity
     TSearchRequest request,
     SearchDescriptor<TEntity> sd,
     int currentPosition = 0)
-    => UseIndex(_indexManager.GetAliasName(),
+    => UseIndex(
+      _indexManager.GetAliasName(),
+      Sort(request,
         SkipTake(
           currentPosition,
           request.Take ?? _config.BatchSize,
-          ToQuery(request)(sd)));
+          ToQuery(request)(sd))));
 
   private static SearchDescriptor<TEntity> UseIndex(string index, SearchDescriptor<TEntity> sd)
   {
@@ -89,6 +93,18 @@ public abstract class Searcher<TEntity, TSearchRequest, TId> : ISearcher<TEntity
   {
     sd.From(skip);
     sd.Take(take);
+    return sd;
+  }
+
+  private static SearchDescriptor<TEntity> Sort(
+    SearchRequest request,
+    SearchDescriptor<TEntity> sd)
+  {
+    sd.Sort(d => request.Sorting.Aggregate(d,
+      (sort, kv) => sort.Field(f
+        => f.Field(kv.Key)
+          .Order(kv.Value == "asc" ? SortOrder.Ascending : SortOrder.Descending)
+          .UnmappedType(FieldType.Keyword))));
     return sd;
   }
 }

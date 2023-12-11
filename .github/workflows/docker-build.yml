@@ -135,7 +135,7 @@ jobs:
         sed -i "s@#AZURE_CLIENT_ID#@${{ secrets.AZURE_CLIENT_ID }}@g" ./build/app/appsettings.Production.json
         sed -i "s@#AZURE_TENANT_ID#@${{ secrets.AZURE_TENANT_ID }}@g" ./build/app/appsettings.Production.json
         sed -i "s@#AZURE_AUDIENCE#@${{ secrets.AZURE_AUDIENCE }}@g" ./build/app/appsettings.Production.json
-        sed -i "s@#AZURE_INSTANCE#@${{ env.AZURE_INSTANCE }}@g" ./build/app/appsettings.Production.json
+        sed -i "s@#AZURE_INSTANCE#@https://login.microsoftonline.com/@g" ./build/app/appsettings.Production.json
     - name: Docker build
       run: |
         cd build

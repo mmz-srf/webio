@@ -45,6 +45,34 @@ public class DeviceSearcher : Searcher<IndexedDevice, DeviceSearchRequest, Guid>
       mustFilters.Add(mf => Util.ToTextQuery<IndexedDevice, Guid>(mf, request.DeviceName, fields));
     }
 
+    foreach (var (key, value) in request.Properties)
+    {
+      if (!string.IsNullOrWhiteSpace(value))
+      {
+        var fields = new[]
+        {
+          new TextFieldSelector<IndexedDevice>
+          {
+            Name = $"properties.{key}",
+            Boost = 10,
+            Type = TextFieldType.Exact,
+          },
+          new TextFieldSelector<IndexedDevice>
+          {
+            Name = $"properties.{key}",
+            Boost = 8,
+            Type = TextFieldType.PrefixWildcard,
+          },
+        };
+
+        mustFilters.Add(mf
+          => mf.Nested(nqd
+            => nqd
+              .Path(d => d.Properties)
+              .Query(q => Util.ToTextQuery<IndexedDevice, Guid>(q, value, fields))));
+      }
+    }
+
     return sd
       => sd
         .MinScore(mustFilters.Any() ? 8 : 0)

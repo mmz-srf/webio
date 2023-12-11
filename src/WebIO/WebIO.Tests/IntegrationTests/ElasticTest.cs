@@ -20,8 +20,8 @@ public class ElasticTest
     DeviceType = "testDeviceType",
     Comment = "test comment",
     Properties = new(new()),
-    Interfaces = new()
-    {
+    Interfaces =
+    [
       new()
       {
         Name = "testInterface",
@@ -29,8 +29,8 @@ public class ElasticTest
         InterfaceTemplate = "sender",
         Comment = "test comment",
         Properties = new(new()),
-        Streams = new()
-        {
+        Streams =
+        [
           new()
           {
             Name = "audio send stream",
@@ -40,10 +40,12 @@ public class ElasticTest
             Modification = new("testUser", DateTime.Now, "test modifier", DateTime.Now, "test comment"),
             Properties = new(new()),
           },
-        },
+
+        ],
         Modification = new("testUser", DateTime.Now, "test modifier", DateTime.Now, "test comment"),
       },
-    },
+
+    ],
     Modification = new("testUser", DateTime.Now, "test modifier", DateTime.Now, "test comment"),
   };
 
@@ -56,7 +58,7 @@ public class ElasticTest
     _app.Services.GetRequiredService<AppDbContext>().Database.EnsureCreated();
   }
 
-  [Fact(Skip = "Broken atm")]
+  [Fact]
   public void WriteAndLoadEntity()
   {
     var repo = _app.Services.GetRequiredService<IDeviceRepository>();

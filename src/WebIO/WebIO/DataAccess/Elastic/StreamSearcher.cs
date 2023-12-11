@@ -23,6 +23,11 @@ public class StreamSearcher : Searcher<IndexedStream, StreamSearchRequest, Guid>
   protected override Func<SearchDescriptor<IndexedStream>, SearchDescriptor<IndexedStream>> ToQuery(
     StreamSearchRequest request)
   {
+    if (request.InterfaceIds.Any())
+    {
+      return FilterByInterfaceIds(request.InterfaceIds);
+    }
+
     var mustFilters = new List<Func<QueryContainerDescriptor<IndexedStream>, QueryContainer>>();
 
     if (!string.IsNullOrWhiteSpace(request.StreamName))
@@ -44,7 +49,6 @@ public class StreamSearcher : Searcher<IndexedStream, StreamSearchRequest, Guid>
       };
       mustFilters.Add(mf => Util.ToTextQuery<IndexedStream, Guid>(mf, request.StreamName, fields));
     }
-    
 
     if (!string.IsNullOrWhiteSpace(request.DeviceName))
     {
@@ -65,7 +69,7 @@ public class StreamSearcher : Searcher<IndexedStream, StreamSearchRequest, Guid>
       };
       mustFilters.Add(mf => Util.ToTextQuery<IndexedStream, Guid>(mf, request.DeviceName, fields));
     }
-    
+
     if (!string.IsNullOrWhiteSpace(request.InterfaceName))
     {
       var fields = new[]
@@ -86,17 +90,110 @@ public class StreamSearcher : Searcher<IndexedStream, StreamSearchRequest, Guid>
       mustFilters.Add(mf => Util.ToTextQuery<IndexedStream, Guid>(mf, request.InterfaceName, fields));
     }
 
+    var propFilters = new List<Func<QueryContainerDescriptor<IndexedStream>, QueryContainer>>();
+    foreach (var (key, value) in request.Properties)
+    {
+      if (!string.IsNullOrWhiteSpace(value))
+      {
+        var fields = new[]
+        {
+          new TextFieldSelector<IndexedStream>
+          {
+            Name = $"properties.{key}",
+            Boost = 10,
+            Type = TextFieldType.Exact,
+          },
+          new TextFieldSelector<IndexedStream>
+          {
+            Name = $"properties.{key}",
+            Boost = 8,
+            Type = TextFieldType.PrefixWildcard,
+          },
+        };
+
+        propFilters.Add(mf
+          => mf.Nested(nqd
+            => nqd
+              .Path(d => d.Properties)
+              .Query(q => Util.ToTextQuery<IndexedStream, Guid>(q, value, fields))));
+      }
+    }
+
+    foreach (var (key, value) in request.Properties)
+    {
+      if (!string.IsNullOrWhiteSpace(value))
+      {
+        var fields = new[]
+        {
+          new TextFieldSelector<IndexedStream>
+          {
+            Name = $"interfaceProperties.{key}",
+            Boost = 10,
+            Type = TextFieldType.Exact,
+          },
+          new TextFieldSelector<IndexedStream>
+          {
+            Name = $"interfaceProperties.{key}",
+            Boost = 8,
+            Type = TextFieldType.PrefixWildcard,
+          },
+        };
+
+        propFilters.Add(mf
+          => mf.Nested(nqd
+            => nqd
+              .Path(d => d.InterfaceProperties)
+              .Query(q => Util.ToTextQuery<IndexedStream, Guid>(q, value, fields))));
+      }
+    }
+
+    foreach (var (key, value) in request.Properties)
+    {
+      if (!string.IsNullOrWhiteSpace(value))
+      {
+        var fields = new[]
+        {
+          new TextFieldSelector<IndexedStream>
+          {
+            Name = $"deviceProperties.{key}",
+            Boost = 10,
+            Type = TextFieldType.Exact,
+          },
+          new TextFieldSelector<IndexedStream>
+          {
+            Name = $"deviceProperties.{key}",
+            Boost = 8,
+            Type = TextFieldType.PrefixWildcard,
+          },
+        };
+
+        propFilters.Add(mf
+          => mf.Nested(nqd
+            => nqd
+              .Path(d => d.DeviceProperties)
+              .Query(q => Util.ToTextQuery<IndexedStream, Guid>(q, value, fields))));
+      }
+    }
+
     return sd
       => sd
         .MinScore(mustFilters.Any() ? 8 : 0)
         .Query(qd => qd.Bool(bqd =>
-      {
-        var shouldQueries = request.InterfaceIds.Select(ifaceId
-            => (Func<QueryContainerDescriptor<IndexedStream>, QueryContainer>) (sf
-              => sf.Match(f => f.Field(str => str.InterfaceId).Query($"{ifaceId}"))))
-          .ToArray();
+        {
+          var shouldQueries = request.InterfaceIds.Select(ifaceId
+              => (Func<QueryContainerDescriptor<IndexedStream>, QueryContainer>) (sf
+                => sf.Match(f => f.Field(str => str.InterfaceId).Query($"{ifaceId}"))))
+            .ToArray();
 
-        return bqd.Should(shouldQueries).Must(mustFilters.ToArray());
-      }));
+          return bqd.Should(shouldQueries).Must(mustFilters.ToArray()).Should(propFilters);
+        }));
   }
+
+  private static Func<SearchDescriptor<IndexedStream>, SearchDescriptor<IndexedStream>> FilterByInterfaceIds(
+    IEnumerable<Guid> ifaceIds)
+    => sd
+      => sd.Query(qd
+        => qd.Bool(bqd => bqd.Must(mf
+          => mf.Terms(f
+            => f.Field(str => str.InterfaceId).Terms(ifaceIds.Select(id => $"{id}"))))));
 }

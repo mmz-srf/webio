@@ -21,7 +21,7 @@ public static class HostingExtensions
     builder.AddSingleton(config);
 
     var connectionSettings = new ConnectionSettings(config.Url);
-    // connectionSettings.EnableDebugMode();
+    connectionSettings.EnableDebugMode();
     if (config.Proxy != null)
     {
       connectionSettings.Proxy(config.Proxy, config.ProxyUser, config.ProxyPassword);

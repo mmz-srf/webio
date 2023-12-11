@@ -176,7 +176,10 @@ public static partial class Util
     {
       foreach (var field in selectors)
       {
-        f.Field(field.Selector, field.Boost);
+        if(field.Selector != null)
+          f.Field(field.Selector, field.Boost);
+        else
+          f.Field(field.Name, field.Boost);
       }
 
       return f;
