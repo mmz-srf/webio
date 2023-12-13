@@ -21,7 +21,7 @@ public record IndexedInterface : IIndexedEntity<Guid>
   public string DeviceName { get; init; } = string.Empty;
 
   [Nested]
-  public IReadOnlyDictionary<string, string> Properties { get; init; } = ImmutableDictionary<string, string>.Empty;
+  public IReadOnlyDictionary<string, string> InterfaceProperties { get; init; } = ImmutableDictionary<string, string>.Empty;
 
   public int StreamsCountVideoSend { get; init; }
   public int StreamsCountAudioSend { get; init; }

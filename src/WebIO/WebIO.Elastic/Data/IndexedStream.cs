@@ -16,7 +16,7 @@ public record IndexedStream : IIndexedEntity<Guid>
   [Keyword] public StreamDirection Direction { get; init; }
 
   [Nested]
-  public IReadOnlyDictionary<string, string> Properties { get; init; } = ImmutableDictionary<string, string>.Empty;
+  public IReadOnlyDictionary<string, string> StreamProperties { get; init; } = ImmutableDictionary<string, string>.Empty;
 
   [Keyword] public Guid DeviceId { get; init; }
   [Keyword] public string DeviceType { get; init; } = string.Empty;

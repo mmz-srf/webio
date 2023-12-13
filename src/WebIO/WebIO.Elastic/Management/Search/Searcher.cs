@@ -2,7 +2,6 @@ namespace WebIO.Elastic.Management.Search;
 
 using System.Runtime.CompilerServices;
 using System.Text;
-using Elasticsearch.Net;
 using IndexManagement;
 using Microsoft.Extensions.Logging;
 using Nest;
@@ -102,9 +101,16 @@ public abstract class Searcher<TEntity, TSearchRequest, TId> : ISearcher<TEntity
   {
     sd.Sort(d => request.Sorting.Aggregate(d,
       (sort, kv) => sort.Field(f
-        => f.Field(kv.Key)
-          .Order(kv.Value == "asc" ? SortOrder.Ascending : SortOrder.Descending)
-          .UnmappedType(FieldType.Keyword))));
+        =>
+      {
+        var fieldSortDescriptor = f.Field(kv.FullName)
+          .Order(kv.SortOrder)
+          .UnmappedType(FieldType.Keyword);
+
+        return string.IsNullOrWhiteSpace(kv.Path)
+          ? fieldSortDescriptor
+          : fieldSortDescriptor.Nested(n => n.Path(kv.Path));
+      })));
     return sd;
   }
 }

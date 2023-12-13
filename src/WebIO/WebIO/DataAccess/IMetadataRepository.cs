@@ -16,4 +16,7 @@ public interface IMetadataRepository
     IEnumerable<Tag> Tags { get; }
 
     IEnumerable<StreamDefinition> NevionStreamDefinitions { get; }
+    bool IsDeviceProperty(string field);
+    bool IsInterfaceProperty(string field);
+    bool IsStreamProperty(string field);
 }

@@ -22,6 +22,7 @@ public static class HostingExtensions
 
     var connectionSettings = new ConnectionSettings(config.Url);
     connectionSettings.EnableDebugMode();
+    connectionSettings.DefaultFieldNameInferrer(p => p);
     if (config.Proxy != null)
     {
       connectionSettings.Proxy(config.Proxy, config.ProxyUser, config.ProxyPassword);

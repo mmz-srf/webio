@@ -12,12 +12,16 @@ using WebIO.Elastic.Management.Search;
 
 public class InterfaceSearcher : Searcher<IndexedInterface, InterfaceSearchRequest, Guid>
 {
+  private readonly IMetadataRepository _metadata;
+
   public InterfaceSearcher(
     ILogger<Searcher<IndexedInterface, InterfaceSearchRequest, Guid>> log,
     IElasticClient client,
     IIndexManager<IndexedInterface, Guid> indexManager,
-    ElasticConfiguration config) : base(log, client, indexManager, config)
+    ElasticConfiguration config,
+    IMetadataRepository metadata) : base(log, client, indexManager, config)
   {
+    _metadata = metadata;
   }
 
   protected override Func<SearchDescriptor<IndexedInterface>, SearchDescriptor<IndexedInterface>> ToQuery(
@@ -36,13 +40,13 @@ public class InterfaceSearcher : Searcher<IndexedInterface, InterfaceSearchReque
         new TextFieldSelector<IndexedInterface>
         {
           Selector = i => i.Name,
-          Boost = 5,
+          Boost = 10,
           Type = TextFieldType.Exact,
         },
         new TextFieldSelector<IndexedInterface>
         {
           Selector = i => i.Name,
-          Boost = 2.5,
+          Boost = 8,
           Type = TextFieldType.PrefixWildcard,
         },
       };
@@ -56,13 +60,13 @@ public class InterfaceSearcher : Searcher<IndexedInterface, InterfaceSearchReque
         new TextFieldSelector<IndexedInterface>
         {
           Selector = i => i.DeviceName,
-          Boost = 5,
+          Boost = 10,
           Type = TextFieldType.Exact,
         },
         new TextFieldSelector<IndexedInterface>
         {
           Selector = i => i.DeviceName,
-          Boost = 2.5,
+          Boost = 8,
           Type = TextFieldType.PrefixWildcard,
         },
       };
@@ -70,7 +74,7 @@ public class InterfaceSearcher : Searcher<IndexedInterface, InterfaceSearchReque
     }
 
     var propFilters = new List<Func<QueryContainerDescriptor<IndexedInterface>, QueryContainer>>();
-    foreach (var (key, value) in request.Properties)
+    foreach (var (key, value) in request.Properties.Where(kv => _metadata.IsInterfaceProperty(kv.Key)))
     {
       if (!string.IsNullOrWhiteSpace(value))
       {
@@ -78,13 +82,13 @@ public class InterfaceSearcher : Searcher<IndexedInterface, InterfaceSearchReque
         {
           new TextFieldSelector<IndexedInterface>
           {
-            Name = $"properties.{key}",
+            Name = $"{nameof(IndexedInterface.InterfaceProperties)}.{key}",
             Boost = 10,
             Type = TextFieldType.Exact,
           },
           new TextFieldSelector<IndexedInterface>
           {
-            Name = $"properties.{key}",
+            Name = $"{nameof(IndexedInterface.InterfaceProperties)}.{key}",
             Boost = 8,
             Type = TextFieldType.PrefixWildcard,
           },
@@ -93,12 +97,12 @@ public class InterfaceSearcher : Searcher<IndexedInterface, InterfaceSearchReque
         propFilters.Add(mf
           => mf.Nested(nqd
             => nqd
-              .Path(d => d.Properties)
+              .Path(d => d.InterfaceProperties)
               .Query(q => Util.ToTextQuery<IndexedInterface, Guid>(q, value, propFields))));
       }
     }
 
-    foreach (var (key, value) in request.Properties)
+    foreach (var (key, value) in request.Properties.Where(kv => _metadata.IsDeviceProperty(kv.Key)))
     {
       if (!string.IsNullOrWhiteSpace(value))
       {
@@ -106,13 +110,13 @@ public class InterfaceSearcher : Searcher<IndexedInterface, InterfaceSearchReque
         {
           new TextFieldSelector<IndexedInterface>
           {
-            Name = $"deviceProperties.{key}",
+            Name = $"{nameof(IndexedInterface.DeviceProperties)}.{key}",
             Boost = 10,
             Type = TextFieldType.Exact,
           },
           new TextFieldSelector<IndexedInterface>
           {
-            Name = $"deviceProperties.{key}",
+            Name = $"{nameof(IndexedInterface.DeviceProperties)}.{key}",
             Boost = 8,
             Type = TextFieldType.PrefixWildcard,
           },
@@ -130,9 +134,8 @@ public class InterfaceSearcher : Searcher<IndexedInterface, InterfaceSearchReque
       => sd
         .MinScore(mustFilters.Any() ? 8 : 0)
         .Query(qd
-          => qd.Bool(bqd
-            => bqd.Must(mustFilters.ToArray())
-              .Should(propFilters)));
+          => qd.Bool(bqd => bqd.Must(mustFilters.ToArray())) &&
+             qd.Bool(bqd => bqd.Should(propFilters)));
   }
 
   private static Func<SearchDescriptor<IndexedInterface>, SearchDescriptor<IndexedInterface>> FilterByDeviceId(

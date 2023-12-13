@@ -17,4 +17,12 @@ public class MockMetadataRepository : IMetadataRepository
   public DisplayConfiguration DisplayConfiguration => new();
   public IEnumerable<Tag> Tags => new List<Tag>();
   public IEnumerable<StreamDefinition> NevionStreamDefinitions { get; } = new List<StreamDefinition>();
+  public bool IsDeviceProperty(string field)
+    => true;
+
+  public bool IsInterfaceProperty(string field)
+    => true;
+
+  public bool IsStreamProperty(string field)
+    => true;
 }

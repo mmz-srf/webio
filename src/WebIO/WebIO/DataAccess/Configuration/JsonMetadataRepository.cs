@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Application;
 using ConfigFiles;
+using Extensions;
 using Microsoft.Extensions.Logging;
 using Model;
 using Model.DeviceTemplates;
@@ -74,4 +75,15 @@ public class JsonMetadataRepository : IMetadataRepository, ICanBeReloaded
       }
     }
   }
+  
+  
+  public bool IsDeviceProperty(string field)
+    => !SearchUtils.IsBaseTypeField(field) && DisplayConfiguration!.DeviceColumns
+      .SelectMany(columnGroup => columnGroup.Columns.Select(c => c.Property)).Contains(field);
+  public bool IsInterfaceProperty(string field)
+    => !SearchUtils.IsBaseTypeField(field) && DisplayConfiguration!.InterfaceColumns
+      .SelectMany(columnGroup => columnGroup.Columns.Select(c => c.Property)).Contains(field);
+  public bool IsStreamProperty(string field)
+    => !SearchUtils.IsBaseTypeField(field) && DisplayConfiguration!.StreamColumns
+      .SelectMany(columnGroup => columnGroup.Columns.Select(c => c.Property)).Contains(field);
 }

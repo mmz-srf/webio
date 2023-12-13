@@ -41,7 +41,7 @@ public class DeviceDataSource : IDataSource<IndexedDevice, Guid>
       Name = device.Name,
       DeviceType = device.DeviceType,
       Comment = device.Comment ?? string.Empty,
-      Properties = device.Properties.ToDictionary(p => p.Key, p => p.Value ?? string.Empty),
+      DeviceProperties = device.Properties.ToDictionary(p => p.Key, p => p.Value ?? string.Empty),
       InterfaceCount = db.Interfaces.Count(i => i.DeviceId == device.Id),
     };
 }

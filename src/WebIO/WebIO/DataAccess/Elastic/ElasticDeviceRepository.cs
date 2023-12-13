@@ -12,6 +12,8 @@ using Model.Readonly;
 using WebIO.Elastic.Data;
 using WebIO.Elastic.Management.Indexing;
 using WebIO.Elastic.Management.Search;
+using static Extensions.SearchUtils;
+using SortOrder = Nest.SortOrder;
 
 public class ElasticDeviceRepository : IDeviceRepository
 {
@@ -22,6 +24,7 @@ public class ElasticDeviceRepository : IDeviceRepository
   private readonly ISearcher<IndexedDevice, DeviceSearchRequest, Guid> _deviceSearcher;
   private readonly ISearcher<IndexedInterface, InterfaceSearchRequest, Guid> _ifaceSearcher;
   private readonly ISearcher<IndexedStream, StreamSearchRequest, Guid> _streamSearcher;
+  private readonly IMetadataRepository _metadata;
 
   private readonly EfCoreDeviceRepository _dbRepo;
 
@@ -32,6 +35,7 @@ public class ElasticDeviceRepository : IDeviceRepository
     ISearcher<IndexedDevice, DeviceSearchRequest, Guid> deviceSearcher,
     ISearcher<IndexedInterface, InterfaceSearchRequest, Guid> ifaceSearcher,
     ISearcher<IndexedStream, StreamSearchRequest, Guid> streamSearcher,
+    IMetadataRepository metadata,
     EfCoreDeviceRepository dbRepo)
   {
     _deviceIndexer = deviceIndexer;
@@ -40,6 +44,7 @@ public class ElasticDeviceRepository : IDeviceRepository
     _deviceSearcher = deviceSearcher;
     _ifaceSearcher = ifaceSearcher;
     _streamSearcher = streamSearcher;
+    _metadata = metadata;
     _dbRepo = dbRepo;
   }
 
@@ -194,7 +199,7 @@ public class ElasticDeviceRepository : IDeviceRepository
       Name = device.Name,
       DeviceType = device.DeviceType,
       Comment = device.Comment,
-      Properties = new(new(device.Properties)),
+      Properties = new(new(device.DeviceProperties)),
       Interfaces = interfaces.Select(iface => ToInterface(iface, streams)).ToList(),
       Modification = await _dbRepo.GetDeviceModificationAsync(device.Id, ct),
     };
@@ -231,7 +236,7 @@ public class ElasticDeviceRepository : IDeviceRepository
       Name = device.Name,
       DeviceType = device.DeviceType,
       Comment = device.Comment,
-      Properties = device.Properties.All.ToImmutableDictionary(),
+      DeviceProperties = device.Properties.All.ToImmutableDictionary(),
       InterfaceCount = device.Interfaces.Count,
     };
 
@@ -244,7 +249,7 @@ public class ElasticDeviceRepository : IDeviceRepository
       Index = iface.Index,
       InterfaceTemplate = iface.InterfaceTemplate ?? string.Empty,
       Comment = iface.Comment,
-      Properties = iface.Properties.All.ToImmutableDictionary(),
+      InterfaceProperties = iface.Properties.All.ToImmutableDictionary(),
       StreamsCountVideoSend =
         iface.Streams.Count(s => s is { Type: StreamType.Video, Direction: StreamDirection.Send }),
       StreamsCountAudioSend =
@@ -268,7 +273,7 @@ public class ElasticDeviceRepository : IDeviceRepository
       Comment = stream.Comment,
       Type = stream.Type,
       Direction = stream.Direction,
-      Properties = stream.Properties.All.ToImmutableDictionary(),
+      StreamProperties = stream.Properties.All.ToImmutableDictionary(),
     };
 
   private static DeviceInfo ToDeviceInfo(IndexedDevice device)
@@ -277,7 +282,7 @@ public class ElasticDeviceRepository : IDeviceRepository
       device.Name,
       device.DeviceType,
       device.Comment,
-      device.Properties.ToImmutableDictionary(),
+      device.DeviceProperties.ToImmutableDictionary(),
       // new ModificationInfo(), 
       device.InterfaceCount);
 
@@ -297,7 +302,7 @@ public class ElasticDeviceRepository : IDeviceRepository
         iface.StreamsCountVideoReceive,
         iface.StreamsCountAudioReceive,
         iface.StreamsCountAncillaryReceive),
-      iface.Properties.ToImmutableDictionary(),
+      iface.InterfaceProperties.ToImmutableDictionary(),
       iface.DeviceProperties.ToImmutableDictionary(),
       null
     );
@@ -313,45 +318,43 @@ public class ElasticDeviceRepository : IDeviceRepository
       stream.DeviceType,
       stream.DeviceName,
       stream.InterfaceName,
-      stream.Properties.ToImmutableDictionary(),
+      stream.StreamProperties.ToImmutableDictionary(),
       stream.DeviceProperties.ToImmutableDictionary(),
       stream.InterfaceProperties.ToImmutableDictionary(),
       null);
 
-  private static IEnumerable<KeyValuePair<string, string>> ToSortDictionary(Query query)
-    => query.Sort?.Split(',').Select(LcFirstIfBaseObjectMember)
-      .Zip(query.Order?.Split(',') ?? Enumerable.Empty<string>(), KeyValuePair.Create) 
-       ?? ImmutableArray<KeyValuePair<string, string>>.Empty;
+  private IEnumerable<SortFieldDefinition> ToSortDictionary(Query query)
+    => query.Sort?.Split(',')
+         .Zip(query.Order?.Split(',') ?? Enumerable.Empty<string>(), (key, value) => new SortFieldDefinition()
+         {
+           FieldName = key,
+           SortOrder = value == "asc" ? SortOrder.Ascending : SortOrder.Descending,
+           Path = GetPathForField(key),
+         })
+       ?? ImmutableArray<SortFieldDefinition>.Empty;
 
-  private static string LcFirstIfBaseObjectMember(string field)
-    => field switch {
-      "Name" => "name",
-      "DeviceName" => "deviceName",
-      "InterfaceName" => "interfaceName",
-      "StreamName" => "streamName",
-      _ => $"properties.{field}",
-    };
-}
+  private string GetPathForField(string field)
+  {
+    if (IsBaseTypeField(field))
+    {
+      return string.Empty;
+    }
 
-public record DeviceSearchRequest : SearchRequest
-{
-  public string DeviceName { get; init; } = string.Empty;
-  public IReadOnlyDictionary<string, string> Properties { get; init; } = ImmutableDictionary<string, string>.Empty;
-}
+    if (_metadata.IsDeviceProperty(field))
+    {
+      return "DeviceProperties.";
+    }
 
-public record InterfaceSearchRequest : SearchRequest
-{
-  public Guid? DeviceId { get; init; }
-  public string InterfaceName { get; init; } = string.Empty;
-  public string DeviceName { get; init; } = string.Empty;
-  public IReadOnlyDictionary<string, string> Properties { get; init; } = ImmutableDictionary<string, string>.Empty;
-}
+    if (_metadata.IsInterfaceProperty(field))
+    {
+      return "InterfaceProperties.";
+    }
 
-public record StreamSearchRequest : SearchRequest
-{
-  public string DeviceName { get; init; } = string.Empty;
-  public string InterfaceName { get; init; } = string.Empty;
-  public IEnumerable<Guid> InterfaceIds { get; init; } = new List<Guid>();
-  public string StreamName { get; init; } = string.Empty;
-  public IReadOnlyDictionary<string, string> Properties { get; init; } = ImmutableDictionary<string, string>.Empty;
+    if (_metadata.IsStreamProperty(field))
+    {
+      return "StreamProperties.";
+    }
+
+    return string.Empty;
+  }
 }

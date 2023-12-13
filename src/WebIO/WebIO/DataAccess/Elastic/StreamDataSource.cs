@@ -47,7 +47,7 @@ public class StreamDataSource : IDataSource<IndexedStream, Guid>
       Direction = stream.Direction,
       DeviceId = device.Id,
       DeviceType = device.DeviceType,
-      Properties = stream.Properties.ToDictionary(p => p.Key,
+      StreamProperties = stream.Properties.ToDictionary(p => p.Key,
         p => p.Value ?? string.Empty),
       InterfaceProperties = iface.Properties.ToDictionary(p => p.Key,
         p => p.Value ?? string.Empty),

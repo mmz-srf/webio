@@ -9,8 +9,6 @@ public static partial class Util
   public static readonly string[] ReservedCharacters =
   {
     "\\",
-    "+",
-    "-",
     "&&",
     "||",
     "!",

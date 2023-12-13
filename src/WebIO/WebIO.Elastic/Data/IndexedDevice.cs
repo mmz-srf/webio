@@ -12,7 +12,7 @@ public record IndexedDevice : IIndexedEntity<Guid>
   public string Comment { get; init; } = string.Empty;
 
   [Nested]
-  public IReadOnlyDictionary<string, string> Properties { get; init; } = ImmutableDictionary<string, string>.Empty;
+  public IReadOnlyDictionary<string, string> DeviceProperties { get; init; } = ImmutableDictionary<string, string>.Empty;
 
   public int InterfaceCount { get; init; }
 }

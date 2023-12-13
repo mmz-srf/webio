@@ -48,7 +48,7 @@ public class InterfaceDataSource : IDataSource<IndexedInterface, Guid>
       Comment = iface.Comment ?? string.Empty,
       DeviceType = device.DeviceType,
       DeviceName = device.Name,
-      Properties = iface.Properties.ToDictionary(p => p.Key,
+      InterfaceProperties = iface.Properties.ToDictionary(p => p.Key,
         p => p.Value ?? string.Empty),
       DeviceProperties = device.Properties.ToDictionary(p => p.Key,
         p => p.Value ?? string.Empty),

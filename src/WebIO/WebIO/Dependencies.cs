@@ -61,6 +61,7 @@ public static class Dependencies
         Url = new(configuration["Elastic:Url"] ?? "http://localhost:9200"),
         Username = configuration["Elastic:User"],
         Password = configuration["Elastic:Password"],
+        
       })
       .ElasticModel<IndexedDevice, Guid>().WithDataSource<DeviceDataSource>().Register()
       .ElasticModel<IndexedInterface, Guid>().WithDataSource<InterfaceDataSource>().Register()
@@ -74,7 +75,7 @@ public static class Dependencies
       .AddTransient<EfCoreDeviceRepository>()
       .AddTransient<IChangeLogRepository, EfCoreChangeLogRepository>()
       .AddTransient<IConfigFileReader, JsonFileReader>()
-      .AddTransient<IMetadataRepository, JsonMetadataRepository>();
+      .AddSingleton<IMetadataRepository, JsonMetadataRepository>();
   }
 
   private static IServiceCollection SetConfigRepos(this IServiceCollection services)
