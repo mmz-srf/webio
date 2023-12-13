@@ -2,6 +2,8 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Api.Controllers.Dto;
 using Api.UseCases;
 using DataAccess;
@@ -31,7 +33,7 @@ public class UpdateDeviceTest
       Comment = "test",
       Modification = new("test", DateTime.Now, "test", DateTime.Now, "test"),
     };
-    repositoryMock.Setup(x => x.GetDevice(It.IsAny<Guid>())).Returns(() => _device);
+    repositoryMock.Setup(x => x.GetDeviceAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>())).Returns(() => Task.FromResult(_device)!);
 
     Mock<IChangeLogRepository> changeLogMock = new();
 
@@ -55,7 +57,7 @@ public class UpdateDeviceTest
   }
 
   [Fact]
-  public void UpdateWithNothingToDo()
+  public async Task UpdateWithNothingToDo()
   {
     var deviceType = _metadataMock.MockDeviceTypes.BasicType;
 
@@ -73,15 +75,15 @@ public class UpdateDeviceTest
     };
     _useCase.Initialize(updateArgs, "tester");
 
-    _useCase.Validate().Should().BeTrue();
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _device.Modification.Modifier.Should().NotBe("tester");
     _device.Interfaces.Should().HaveCount(2);
   }
 
   [Fact]
-  public void ChangeInterfaceTemplate()
+  public async Task ChangeInterfaceTemplate()
   {
     var deviceType = _metadataMock.MockDeviceTypes.BasicType;
 
@@ -98,8 +100,9 @@ public class UpdateDeviceTest
       },
     }, "tester");
 
-    _useCase.Execute();
-
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
+    
     _device.Modification.Modifier.Should().Be("tester");
     _device.Interfaces.Should().HaveCount(2);
 
@@ -107,7 +110,7 @@ public class UpdateDeviceTest
   }
 
   [Fact]
-  public void UseDataFieldsOfChangedTemplate()
+  public async Task UseDataFieldsOfChangedTemplate()
   {
     var deviceType = _metadataMock.MockDeviceTypes.BasicType;
 
@@ -126,7 +129,8 @@ public class UpdateDeviceTest
       },
     }, "tester");
 
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _device.Modification.Modifier.Should().Be("tester");
     _device.Interfaces.Should().HaveCount(2);
@@ -140,7 +144,7 @@ public class UpdateDeviceTest
   }
 
   [Fact]
-  public void DoNotAllowInterfacesWhenNotSwDefined()
+  public async Task DoNotAllowInterfacesWhenNotSwDefined()
   {
     var deviceType = _metadataMock.MockDeviceTypes.BasicType;
 
@@ -158,12 +162,14 @@ public class UpdateDeviceTest
       },
     }, "tester");
 
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
+    
     _device.Interfaces.Should().HaveCount(2);
   }
 
   [Fact]
-  public void AddInterfaces()
+  public async Task AddInterfaces()
   {
     var deviceType = _metadataMock.MockDeviceTypes.SwDefinedInterfaces;
 
@@ -181,7 +187,8 @@ public class UpdateDeviceTest
       },
     }, "tester");
 
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _device.Interfaces.Should().HaveCount(3);
     _device.Interfaces[0].InterfaceTemplate.Should().Be("audioSend");
@@ -192,7 +199,7 @@ public class UpdateDeviceTest
   }
 
   [Fact]
-  public void RemoveInterfaces()
+  public async Task RemoveInterfaces()
   {
     var deviceType = _metadataMock.MockDeviceTypes.SwDefinedInterfaces;
 
@@ -208,7 +215,8 @@ public class UpdateDeviceTest
       },
     }, "tester");
 
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _device.Interfaces.Should().HaveCount(1);
     _device.Interfaces[0].InterfaceTemplate.Should().Be("audioSend");

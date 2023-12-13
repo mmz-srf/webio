@@ -2,6 +2,8 @@ namespace WebIO.Tests;
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Api.Controllers.Dto;
 using Api.UseCases;
 using ConfigFiles;
@@ -31,17 +33,17 @@ public class SavePropertiesTest
   }
 
   [Fact]
-  public void ValidateFailsWithEmptyChanges()
+  public async Task ValidateFailsWithEmptyChanges()
   {
     var useCase = new SaveModificationsUseCase(Mock.Of<IDeviceRepository>(), _metadata, _changeLogMock.Object,
       new NullLogger<SaveModificationsUseCase>());
     useCase.Initialize(new(), "Tester");
 
-    useCase.Validate().Should().BeFalse();
+    (await useCase.ValidateAsync(default)).Should().BeFalse();
   }
 
   [Fact]
-  public void ValidateFailsWithoutChanges()
+  public async Task ValidateFailsWithoutChanges()
   {
     var useCase = new SaveModificationsUseCase(Mock.Of<IDeviceRepository>(), _metadata, _changeLogMock.Object,
       new NullLogger<SaveModificationsUseCase>());
@@ -52,11 +54,11 @@ public class SavePropertiesTest
     };
     useCase.Initialize(changes, "Tester");
 
-    useCase.Validate().Should().BeFalse();
+    (await useCase.ValidateAsync(default)).Should().BeFalse();
   }
 
   [Fact]
-  public void ChangeNameProperty()
+  public async Task ChangeNameProperty()
   {
     var device = new Device
     {
@@ -65,8 +67,8 @@ public class SavePropertiesTest
     var useCase = InitUseCase(device, "Name", "zwei", "Device");
 
     // Test
-    useCase.Validate().Should().BeTrue();
-    useCase.Execute();
+    (await useCase.ValidateAsync(default)).Should().BeTrue();
+    await useCase.ExecuteAsync(default);
 
     device.Should().NotBeNull();
     device.Name.Should().Be("zwei");
@@ -76,7 +78,7 @@ public class SavePropertiesTest
   }
 
   [Fact]
-  public void AddLogEntry()
+  public async Task AddLogEntry()
   {
     var device = new Device
     {
@@ -85,8 +87,8 @@ public class SavePropertiesTest
     var useCase = InitUseCase(device, "DeviceLocation", "zwei", "Device");
 
     // Test
-    useCase.Validate().Should().BeTrue();
-    useCase.Execute();
+    (await useCase.ValidateAsync(default)).Should().BeTrue();
+    await useCase.ExecuteAsync(default);
 
     _logEntry.Should().NotBeNull();
     _logEntry!.FullDetails.Should().BeOfType<UpdateFieldsChangeLogEntry>()
@@ -104,8 +106,8 @@ public class SavePropertiesTest
     string entityType)
   {
     var mock = new Mock<IDeviceRepository>();
-    mock.Setup(repo => repo.GetDevicesByIds(It.IsAny<IEnumerable<Guid>>()))
-      .Returns(new List<Device> {device});
+    mock.Setup(repo => repo.GetDevicesByIdsAsync(It.IsAny<IEnumerable<Guid>>(), It.IsAny<CancellationToken>()))
+      .Returns(Task.FromResult((IEnumerable<Device>) new List<Device> { device }));
 
     // setup object under Test
     var changes = new PropertiesChangedSummaryDto

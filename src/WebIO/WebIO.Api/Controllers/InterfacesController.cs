@@ -27,7 +27,8 @@ public class InterfacesController : ControllerBase
   }
 
   [HttpPost]
-  public ActionResult<QueryResultDto<InterfaceDto>> Get(
+  public async Task<ActionResult<QueryResultDto<InterfaceDto>>> Get(
+    CancellationToken ct,
     int start = 0,
     int count = 100,
     string? sort = null,
@@ -41,11 +42,11 @@ public class InterfacesController : ControllerBase
       .WithSorting(sort, sortOrder)
       .WithFilter(filter, global);
 
-    var interfaceInfos = _deviceRepository.GetInterfaceInfos(query);
+    var interfaceInfos = await _deviceRepository.GetInterfaceInfosAsync(query, ct);
 
     query = new Query(0, 0)
       .WithFilter(filter, global);
-    var totalCount = _deviceRepository.GetInterfaceCount(query);
+    var totalCount = await _deviceRepository.GetInterfaceCountAsync(query, ct);
 
     var result = new QueryResultDto<InterfaceDto>
     {

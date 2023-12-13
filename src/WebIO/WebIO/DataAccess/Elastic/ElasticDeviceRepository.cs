@@ -48,103 +48,100 @@ public class ElasticDeviceRepository : IDeviceRepository
     _dbRepo = dbRepo;
   }
 
-  public Device? GetDevice(Guid deviceId)
+  public async Task<Device?> GetDeviceAsync(Guid deviceId, CancellationToken ct)
   {
-    var device = _deviceSearcher.GetAsync(deviceId, default).GetAwaiter().GetResult(); // todo use async
-    var ifaces = _ifaceSearcher.FindAllAsync(new()
+    var device = await _deviceSearcher.GetAsync(deviceId, ct);
+    var ifaces = await _ifaceSearcher.FindAllAsync(new()
     {
       DeviceId = deviceId,
-    }, default).GetAwaiter().GetResult(); // todo use async
-    var streams = _streamSearcher.FindAllAsync(new()
+    }, ct);
+    var streams = await _streamSearcher.FindAllAsync(new()
     {
-      InterfaceIds = ifaces.Documents.ToBlockingEnumerable().Select(iface => iface.Id),
-    }, default).GetAwaiter().GetResult();
+      InterfaceIds = ifaces.Documents.ToBlockingEnumerable(cancellationToken: ct).Select(iface => iface.Id),
+    }, ct);
 
     return device == null
       ? null
-      : ToDevice(device, ifaces.Documents.ToBlockingEnumerable(), streams.Documents.ToBlockingEnumerable(), default)
-        .GetAwaiter().GetResult(); // todo use async
+      : await ToDevice(device, ifaces.Documents.ToBlockingEnumerable(cancellationToken: ct),
+        streams.Documents.ToBlockingEnumerable(cancellationToken: ct),
+        ct);
   }
 
-  public void Upsert(Device device)
+  public async Task UpsertAsync(Device device, CancellationToken ct)
   {
-    _deviceIndexer.IndexAsync(ToIndexedDevice(device), default).GetAwaiter().GetResult(); // todo: use async
-    _ifaceIndexer.IndexAllAsync(device.Interfaces.Select(iface => ToIndexedInterface(iface, device.Id)), default)
-      .GetAwaiter().GetResult(); // todo: use async
-    _streamIndexer
+    await _deviceIndexer.IndexAsync(ToIndexedDevice(device), ct);
+    await _ifaceIndexer.IndexAllAsync(device.Interfaces.Select(iface => ToIndexedInterface(iface, device.Id)), ct);
+    await _streamIndexer
       .IndexAllAsync(
         device.Interfaces.SelectMany(iface
-          => iface.Streams.Select(stream => ToIndexedStream(stream, iface.Id))), default)
-      .GetAwaiter().GetResult(); // todo: use async
+          => iface.Streams.Select(stream => ToIndexedStream(stream, iface.Id))), ct);
   }
 
-  public void Delete(Guid deviceId)
+  public async Task DeleteAsync(Guid deviceId, CancellationToken ct)
   {
-    var device = GetDevice(deviceId);
+    var device = await GetDeviceAsync(deviceId, ct);
 
     if (device != null)
     {
-      _streamIndexer.DeleteAllAsync(device.Interfaces.SelectMany(iface => iface.Streams.Select(stream => stream.Id)),
-        default).GetAwaiter().GetResult(); // todo: use async
-      _ifaceIndexer.DeleteAllAsync(device.Interfaces.Select(iface => iface.Id), default).GetAwaiter()
-        .GetResult(); // todo: use async
-      _deviceIndexer.DeleteAsync(deviceId, default).GetAwaiter().GetResult(); // todo: use async
+      await _streamIndexer.DeleteAllAsync(
+        device.Interfaces.SelectMany(iface => iface.Streams.Select(stream => stream.Id)), ct);
+      await _ifaceIndexer.DeleteAllAsync(device.Interfaces.Select(iface => iface.Id), ct);
+      await _deviceIndexer.DeleteAsync(deviceId, ct);
     }
   }
 
-  public QueryResult<DeviceInfo> GetDeviceInfos(Query query)
+  public async Task<QueryResult<DeviceInfo>> GetDeviceInfosAsync(Query query, CancellationToken ct)
   {
-    var result = FindDeviceByQuery(query);
+    var result = await FindDeviceByQueryAsync(query, ct);
     return new(
       query.StartIndex,
       query.Count,
-      result.Documents.Select(ToDeviceInfo).ToBlockingEnumerable().ToImmutableList());
+      (await result.Documents.Select(ToDeviceInfo).ToListAsync(ct)).ToImmutableList());
   }
 
-  public int GetDeviceCount(Query query)
-    => (int) FindDeviceByQuery(query).Total;
+  public async Task<int> GetDeviceCountAsync(Query query, CancellationToken ct)
+    => (int) (await FindDeviceByQueryAsync(query, ct)).Total;
 
-  public QueryResult<InterfaceInfo> GetInterfaceInfos(Query query)
+  public async Task<QueryResult<InterfaceInfo>> GetInterfaceInfosAsync(Query query, CancellationToken ct)
   {
-    var result = FindInterfaceByQuery(query);
+    var result = await FindInterfaceByQueryAsync(query, ct);
     return new(
       query.StartIndex,
       query.Count,
-      result.Documents.Select(ToInterfaceInfo).ToBlockingEnumerable().ToImmutableList());
+      (await result.Documents.Select(ToInterfaceInfo).ToListAsync(ct)).ToImmutableList());
   }
 
-  public int GetInterfaceCount(Query query)
-    => (int) FindInterfaceByQuery(query).Total;
+  public async Task<int> GetInterfaceCountAsync(Query query, CancellationToken ct)
+    => (int) (await FindInterfaceByQueryAsync(query, ct)).Total;
 
-  public QueryResult<StreamInfo> GetStreamInfos(Query query)
+  public async Task<QueryResult<StreamInfo>> GetStreamInfosAsync(Query query, CancellationToken ct)
   {
-    var result = FindStreamByQuery(query);
+    var result = await FindStreamByQueryAsync(query, ct);
     return new(
       query.StartIndex,
       query.Count,
-      result.Documents.Select(ToStreamInfo).ToBlockingEnumerable().ToImmutableList());
+      (await result.Documents.Select(ToStreamInfo).ToListAsync(ct)).ToImmutableList());
   }
 
-  public int GetStreamCount(Query query)
-    => (int) FindStreamByQuery(query).Total;
+  public async Task<int> GetStreamCountAsync(Query query, CancellationToken ct)
+    => (int) (await FindStreamByQueryAsync(query, ct)).Total;
 
-  public bool IsDuplicateDeviceName(string deviceName, Guid ownId)
+  public async Task<bool> IsDuplicateDeviceNameAsync(string deviceName, Guid ownId, CancellationToken ct)
   {
-    var existingDevices = _deviceSearcher.FindAllAsync(new()
+    var existingDevices = await _deviceSearcher.FindAllAsync(new()
     {
       DeviceName = deviceName,
-    }, default).GetAwaiter().GetResult(); // todo use async
+    }, ct);
 
-    var existingDevice = existingDevices.Documents.SingleOrDefaultAsync().GetAwaiter().GetResult();
+    var existingDevice = await existingDevices.Documents.SingleOrDefaultAsync(cancellationToken: ct);
     return existingDevice != null && existingDevice.Id != ownId;
   }
 
-  public IEnumerable<Device> GetDevicesByIds(IEnumerable<Guid> deviceIds)
-    => _deviceSearcher.GetAllAsync(deviceIds, default).GetAwaiter().GetResult().Select(idev
-      => ToDevice(idev, new List<IndexedInterface>(), new List<IndexedStream>(), default).GetAwaiter()
-        .GetResult()); // todo use async
+  public async Task<IEnumerable<Device>> GetDevicesByIdsAsync(IEnumerable<Guid> deviceIds, CancellationToken ct)
+    => (await _deviceSearcher.GetAllAsync(deviceIds, ct)).Select(idev
+      => ToDevice(idev, new List<IndexedInterface>(), new List<IndexedStream>(), ct).GetAwaiter().GetResult());  // TODO: use async
 
-  private SearchResult<IndexedDevice> FindDeviceByQuery(Query query)
+  private Task<SearchResult<IndexedDevice>> FindDeviceByQueryAsync(Query query, CancellationToken ct)
     => _deviceSearcher.FindAllAsync(new()
     {
       Take = query.Count,
@@ -153,9 +150,9 @@ public class ElasticDeviceRepository : IDeviceRepository
                    string.Empty,
       Properties = query.Filter.ToDictionary(i => i.Key, i => i.Value),
       Sorting = ToSortDictionary(query),
-    }, default).GetAwaiter().GetResult();
+    }, ct);
 
-  private SearchResult<IndexedInterface> FindInterfaceByQuery(Query query)
+  private Task<SearchResult<IndexedInterface>> FindInterfaceByQueryAsync(Query query, CancellationToken ct)
   {
     var deviceId = query.Filter.FirstOrDefault(f => f.Key == nameof(InterfaceSearchRequest.DeviceId))?.Value;
     var deviceGuid = Guid.TryParse(deviceId, out var guid) ? guid : Guid.Empty;
@@ -170,10 +167,10 @@ public class ElasticDeviceRepository : IDeviceRepository
                    string.Empty,
       Sorting = ToSortDictionary(query),
       Properties = query.Filter.ToDictionary(i => i.Key, i => i.Value),
-    }, default).GetAwaiter().GetResult();
+    }, ct);
   }
 
-  private SearchResult<IndexedStream> FindStreamByQuery(Query query)
+  private Task<SearchResult<IndexedStream>> FindStreamByQueryAsync(Query query, CancellationToken ct)
     => _streamSearcher.FindAllAsync(new()
     {
       Take = query.Count,
@@ -186,7 +183,7 @@ public class ElasticDeviceRepository : IDeviceRepository
                    string.Empty,
       Sorting = ToSortDictionary(query),
       Properties = query.Filter.ToDictionary(i => i.Key, i => i.Value),
-    }, default).GetAwaiter().GetResult();
+    }, ct);
 
   private async Task<Device> ToDevice(
     IndexedDevice device,
@@ -215,7 +212,7 @@ public class ElasticDeviceRepository : IDeviceRepository
       InterfaceTemplate = iface.InterfaceTemplate,
       Comment = iface.Comment,
       Streams = streams.Where(stream => stream.InterfaceId == iface.Id).Select(ToStream).ToList(),
-      Modification = _dbRepo.GetInterfaceModificationAsync(iface.Id, default).GetAwaiter().GetResult(),
+      Modification = _dbRepo.GetInterfaceModificationAsync(iface.Id, default).GetAwaiter().GetResult(), // todo: use async
     };
 
   private Stream ToStream(IndexedStream stream)
@@ -226,7 +223,7 @@ public class ElasticDeviceRepository : IDeviceRepository
       Comment = stream.Comment,
       Type = stream.Type,
       Direction = stream.Direction,
-      Modification = _dbRepo.GetStreamModificationAsync(stream.Id, default).GetAwaiter().GetResult(),
+      Modification = _dbRepo.GetStreamModificationAsync(stream.Id, default).GetAwaiter().GetResult(), // todo: use async
     };
 
   private static IndexedDevice ToIndexedDevice(Device device)

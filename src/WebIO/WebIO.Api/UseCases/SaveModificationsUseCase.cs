@@ -42,13 +42,13 @@ public partial class SaveModificationsUseCase : IUseCase
     return this;
   }
 
-  public bool Validate()
+  public Task<bool> ValidateAsync(CancellationToken ct)
   {
     using var span = Telemetry.Span();
-    return _changes != null
+    return Task.FromResult(_changes != null
            && _changes.ChangedEvents.Any()
            && !string.IsNullOrWhiteSpace(_username)
-           && AllFieldsValid();
+           && AllFieldsValid());
   }
 
   private bool AllFieldsValid()
@@ -66,7 +66,7 @@ public partial class SaveModificationsUseCase : IUseCase
     };
   }
 
-  public void Execute()
+  public async Task ExecuteAsync(CancellationToken ct)
   {
     using var span = Telemetry.Span();
     var modifyArgs = new ModifyArgs(_username, DateTime.Now, _changes!.Comment);
@@ -75,7 +75,7 @@ public partial class SaveModificationsUseCase : IUseCase
     var modsPerDevice = _changes.ChangedEvents.GroupBy(m => Guid.Parse(m.Device));
 
     var devices =
-      _deviceRepository.GetDevicesByIds(_changes.ChangedEvents.Select(m => Guid.Parse(m.Device)).Distinct())
+      (await _deviceRepository.GetDevicesByIdsAsync(_changes.ChangedEvents.Select(m => Guid.Parse(m.Device)).Distinct(), ct))
         .ToDictionary(d => d.Id);
 
     foreach (var deviceModifications in modsPerDevice)
@@ -139,7 +139,7 @@ public partial class SaveModificationsUseCase : IUseCase
         }
       }
 
-      _deviceRepository.Upsert(device);
+      await _deviceRepository.UpsertAsync(device, ct);
     }
 
     var logMessage = changeInfos

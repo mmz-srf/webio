@@ -8,19 +8,19 @@ var builder = CreateAppBuilder(args);
 builder.Services.Setup();
 var webApp = builder.Build();
 
-return Parser.Default.ParseArguments<InitOptions, ImportOptions, ReindexAllOptions, VersionOptions>(args)
+return await Parser.Default.ParseArguments<InitOptions, ImportOptions, ReindexAllOptions, VersionOptions>(args)
   .MapResult(
-    (InitOptions _) => HandleErrors(() => InitializeSchema(webApp)),
-    (ImportOptions opt) => HandleErrors(() => Import(webApp, opt.ImportFile)),
-    (ReindexAllOptions _) => HandleErrors(() => ReindexAll(webApp)),
+    (InitOptions _) => HandleErrors(() => InitializeSchema(webApp, default)),
+    (ImportOptions opt) => HandleErrors(() => Import(webApp, opt.ImportFile, default)),
+    (ReindexAllOptions _) => HandleErrors(() => ReindexAll(webApp, default)),
     (VersionOptions _) => HandleErrors(PrintVersion),
-    _ => 1);
+    _ => Task.FromResult(1));
 
-int HandleErrors(Action action)
+async Task<int> HandleErrors(Func<Task> action)
 {
   try
   {
-    action();
+    await action();
     return 0;
   }
   catch (Exception e)
@@ -30,5 +30,8 @@ int HandleErrors(Action action)
   }
 }
 
-void PrintVersion()
-  => Console.WriteLine($"{App.AppName} v{Assembly.GetEntryAssembly()!.GetName().Version}");
+Task PrintVersion()
+{
+  Console.WriteLine($"{App.AppName} v{Assembly.GetEntryAssembly()!.GetName().Version}");
+  return Task.CompletedTask;
+}

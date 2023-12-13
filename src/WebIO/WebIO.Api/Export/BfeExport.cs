@@ -30,7 +30,7 @@ public class BfeExport : Export, IExport
     _log = log;
   }
 
-  public ExportResult Export(ExportArgs exportArgs)
+  public async Task<ExportResult> Export(ExportArgs exportArgs, CancellationToken ct)
   {
     _log.LogInformation("Generating BFE Export");
 
@@ -40,12 +40,12 @@ public class BfeExport : Export, IExport
     var now = DateTime.Now;
     var filename = $"BFE_{now:yyyyMMdd_HHmm}.xlsx";
 
-    var interfaceInfos = GetAllInterfaces(exportArgs);
+    var interfaceInfos = await GetAllInterfacesAsync(exportArgs, ct);
     ExportInterfaces(interfaceInfos, p, "KscAcquisition", "Inventory_BFE_KSC_Acq");
     ExportInterfaces(interfaceInfos, p, "KscAggregation", "Inventory_BFE_KSC_Agg");
     ExportInterfaces(interfaceInfos, p, "KscProduction", "Inventory_BFE_KSC_Pro");
 
-    var streamInfos = GetAllStreams(exportArgs);
+    var streamInfos = await GetAllStreamsAsync(exportArgs, ct);
     ExportStreams(streamInfos, p, "KscAcquisition", StreamDirection.Send, "I-O_BFE_KSC_Acq_Sender");
     ExportStreams(streamInfos, p, "KscAcquisition", StreamDirection.Receive, "I-O_BFE_KSC_Acq_Receiver");
     ExportStreams(streamInfos, p, "KscAggregation", StreamDirection.Send, "I-O_BFE_KSC_Agg_Sender");
@@ -61,7 +61,7 @@ public class BfeExport : Export, IExport
     return ExportResult.Create(stream, ExportFileType.Excel, filename);
   }
 
-  public ExportResult Export(Dictionary<string, string> request)
+  public async Task<ExportResult> Export(Dictionary<string, string> request, CancellationToken ct)
   {
     _log.LogInformation("Generating BFE Export");
 
@@ -70,12 +70,12 @@ public class BfeExport : Export, IExport
     var now = DateTime.Now;
     var filename = $"BFE_{now:yyyyMMdd_HHmm}.xlsx";
 
-    var interfaceInfos = GetAllInterfaces(request);
+    var interfaceInfos = await GetAllInterfacesAsync(request, ct);
     ExportInterfaces(interfaceInfos, p, "KscAcquisition", "Inventory_BFE_KSC_Acq");
     ExportInterfaces(interfaceInfos, p, "KscAggregation", "Inventory_BFE_KSC_Agg");
     ExportInterfaces(interfaceInfos, p, "KscProduction", "Inventory_BFE_KSC_Pro");
 
-    var streamInfos = GetAllStreams(request);
+    var streamInfos = await GetAllStreamsAsync(request, ct);
     ExportStreams(streamInfos, p, "KscAcquisition", StreamDirection.Send, "I-O_BFE_KSC_Acq_Sender");
     ExportStreams(streamInfos, p, "KscAcquisition", StreamDirection.Receive, "I-O_BFE_KSC_Acq_Receiver");
     ExportStreams(streamInfos, p, "KscAggregation", StreamDirection.Send, "I-O_BFE_KSC_Agg_Sender");

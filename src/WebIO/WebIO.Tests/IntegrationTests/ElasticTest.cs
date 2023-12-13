@@ -1,18 +1,21 @@
 ﻿namespace WebIO.Tests.IntegrationTests;
 
 using System;
+using System.Threading.Tasks;
 using Cli;
 using DataAccess;
 using DataAccess.EntityFrameworkCore;
 using Elastic.Data;
 using Elastic.Hosting;
+using Elastic.Management;
+using Elasticsearch.Net;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Model;
+using Nest;
 using Xunit;
 
-public class ElasticTest
+public class ElasticTest : IDisposable
 {
   private readonly Device _testObject = new()
   {
@@ -37,35 +40,60 @@ public class ElasticTest
             Comment = "test comment",
             Type = StreamType.Audio,
             Direction = StreamDirection.Send,
-            Modification = new("testUser", DateTime.Now, "test modifier", DateTime.Now, "test comment"),
+            Modification = Modification.Empty,
             Properties = new(new()),
           },
-
         ],
-        Modification = new("testUser", DateTime.Now, "test modifier", DateTime.Now, "test comment"),
+        Modification = Modification.Empty,
       },
-
     ],
-    Modification = new("testUser", DateTime.Now, "test modifier", DateTime.Now, "test comment"),
+    Modification = Modification.Empty,
   };
 
-  private readonly IHost _app;
+  private readonly IServiceProvider _serviceProvider;
 
   public ElasticTest()
   {
-    _app = CliApp.CreateAppBuilder(Array.Empty<string>()).Build();
-    _app.Services.GetRequiredService<IElasticStartup>().InitializeAllIndexes(default).GetAwaiter().GetResult();
-    _app.Services.GetRequiredService<AppDbContext>().Database.EnsureCreated();
+    var host = CliApp.CreateAppBuilder(new[] { "--Elastic:IndexPrefix", "test" });
+
+    var app = host.Build();
+    _serviceProvider = app.Services.CreateScope().ServiceProvider;
+
+    var config = _serviceProvider.GetRequiredService<ElasticConfiguration>();
+    _serviceProvider.GetRequiredService<IElasticStartup>().InitializeAllIndexes(default).GetAwaiter().GetResult();
+    _serviceProvider.GetRequiredService<AppDbContext>().Database.EnsureCreated();
   }
 
   [Fact]
-  public void WriteAndLoadEntity()
+  public async Task WriteAndLoadEntity()
   {
-    var repo = _app.Services.GetRequiredService<IDeviceRepository>();
-    repo.Upsert(_testObject);
+    var repo = _serviceProvider.GetRequiredService<IDeviceRepository>();
+    await repo.UpsertAsync(_testObject, default);
 
-    var entity = repo.GetDevice(_testObject.Id);
+    var entity = await repo.GetDeviceAsync(_testObject.Id, default);
 
     entity.Should().BeEquivalentTo(_testObject);
+  }
+
+  private void ReleaseUnmanagedResources()
+  {
+    var client = _serviceProvider.GetRequiredService<IElasticClient>();
+    var testIndices = client.Indices.GetAlias("test-*").Indices;
+
+    foreach (var (name, _) in testIndices)
+    {
+      client.Indices.Delete(name);
+    }
+  }
+
+  public void Dispose()
+  {
+    ReleaseUnmanagedResources();
+    GC.SuppressFinalize(this);
+  }
+
+  ~ElasticTest()
+  {
+    ReleaseUnmanagedResources();
   }
 }

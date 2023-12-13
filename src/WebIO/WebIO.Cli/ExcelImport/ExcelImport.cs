@@ -69,7 +69,7 @@ public partial class ExcelImport
     _deviceCreation = new(_metadataRepository, log);
   }
 
-  public void Import(string filename)
+  public async Task Import(string filename, CancellationToken ct)
   {
     var deviceFields = _metadataRepository.DataFields.Where(f => f.EditLevels.Contains(FieldLevel.Device)).ToList();
     var interfaceFields = _metadataRepository.DataFields.Where(f => f.EditLevels.Contains(FieldLevel.Interface))
@@ -152,7 +152,7 @@ public partial class ExcelImport
           ImportStreamsOfType(streams, iface, StreamDirection.Send, StreamType.Ancillary, streamFields);
           ImportStreamsOfType(streams, iface, StreamDirection.Receive, StreamType.Ancillary, streamFields);
         });
-        _deviceRepository.Upsert(device);
+        await _deviceRepository.UpsertAsync(device, ct);
       }
     }
   }

@@ -2,7 +2,7 @@
 
 public interface IExport
 {
-    ExportResult Export(ExportArgs exportArgs);
+    Task<ExportResult> Export(ExportArgs exportArgs, CancellationToken ct);
 
     string Name { get; }
     string DisplayName { get; }
