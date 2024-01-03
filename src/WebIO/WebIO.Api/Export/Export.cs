@@ -28,7 +28,7 @@ public abstract class Export
         _log = log;
     }
 
-    protected List<InterfaceValueGetter> GetAllInterfaces(ExportArgs exportArgs)
+    protected async Task<List<InterfaceValueGetter>> GetAllInterfacesAsync(ExportArgs exportArgs, CancellationToken ct)
     {
         _log.LogDebug("Loading Interfaces");
         var query = new Query(0,int.MaxValue);
@@ -39,7 +39,7 @@ public abstract class Export
             query = query.WithFilter(exportArgs.Filters, null);
         }
 
-        var data = _deviceRepository.GetInterfaceInfos(query).Data;
+        var data = (await _deviceRepository.GetInterfaceInfosAsync(query, ct)).Data;
         if (!exportArgs.All && exportArgs.SelectedDeviceIds.Any())
         {
             data =  data
@@ -53,26 +53,26 @@ public abstract class Export
             .ToList();
     }
 
-    protected List<InterfaceValueGetter> GetAllInterfaces(Dictionary<string, string> request)
+    protected async Task<List<InterfaceValueGetter>> GetAllInterfacesAsync(Dictionary<string, string> request, CancellationToken ct)
     {
         _log.LogDebug("Loading Interfaces");
         var query = new Query(0,0)
             .WithFilter(request, null);
 
-        var interfaceCount = _deviceRepository.GetInterfaceCount(query);
+        var interfaceCount = await _deviceRepository.GetInterfaceCountAsync(query, ct);
 
         query = new Query(0, interfaceCount)
             .WithSorting(null, null)
             .WithFilter(request, null);
 
-        var interfaceInfos = _deviceRepository.GetInterfaceInfos(query)
+        var interfaceInfos = (await _deviceRepository.GetInterfaceInfosAsync(query, ct))
             .Data
             .Select(ii => new InterfaceValueGetter(ii, _metadata))
             .ToList();
         return interfaceInfos;
     }
 
-    protected List<StreamsValueGetter> GetAllStreams(ExportArgs exportArgs)
+    protected async Task<List<StreamsValueGetter>> GetAllStreamsAsync(ExportArgs exportArgs, CancellationToken ct)
     {
         _log.LogDebug("Loading Streams");
 
@@ -84,7 +84,7 @@ public abstract class Export
             query = query.WithFilter(exportArgs.Filters, null);
         }
 
-        var data = _deviceRepository.GetStreamInfos(query).Data;
+        var data = (await _deviceRepository.GetStreamInfosAsync(query, ct)).Data;
         if (!exportArgs.All && exportArgs.SelectedDeviceIds.Any())
         {
             data = data
@@ -97,20 +97,22 @@ public abstract class Export
             .ToList();
     }
 
-    protected List<StreamsValueGetter> GetAllStreams(Dictionary<string, string> request)
+    protected async Task<List<StreamsValueGetter>> GetAllStreamsAsync(
+        Dictionary<string, string> request,
+        CancellationToken ct)
     {
         _log.LogDebug("Loading Streams");
 
         var query = new Query(0, 0)
             .WithFilter(request, null);
 
-        var streamsCount = _deviceRepository.GetInterfaceCount(query);
+        var streamsCount = await _deviceRepository.GetInterfaceCountAsync(query, ct);
 
         query = new Query(0, streamsCount)
             .WithSorting(null, null)
             .WithFilter(request, null);
 
-        var streamInfos = _deviceRepository.GetStreamInfos(query)
+        var streamInfos = (await _deviceRepository.GetStreamInfosAsync(query, ct))
             .Data
             .Select(ii => new StreamsValueGetter(ii, _metadata, _nevionApi))
             .ToList();

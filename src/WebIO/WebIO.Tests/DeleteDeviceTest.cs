@@ -1,6 +1,8 @@
 ﻿namespace WebIO.Tests;
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Api.UseCases;
 using DataAccess;
 using FluentAssertions;
@@ -11,75 +13,77 @@ using Xunit;
 
 public class DeleteDeviceTest
 {
-    private readonly Mock<IDeviceRepository> _repositoryMock;
-    private readonly Mock<IChangeLogRepository> _changeLogMock;
+  private readonly Mock<IDeviceRepository> _repositoryMock;
+  private readonly Mock<IChangeLogRepository> _changeLogMock;
 
-    private ChangeLogEntry? _logEntry;
+  private ChangeLogEntry? _logEntry;
 
+  public DeleteDeviceTest()
+  {
+    _repositoryMock = new();
 
-    public DeleteDeviceTest()
+    _changeLogMock = new();
+    _changeLogMock.Setup(r => r.Add(It.IsAny<ChangeLogEntry>()))
+      .Callback<ChangeLogEntry>(e => _logEntry = e);
+  }
+
+  [Fact]
+  public async Task DeviceIsDeleted()
+  {
+    var device = new Device
     {
-        _repositoryMock = new();
+      Name = "test",
+      Comment = "test",
+      Modification = new("test", DateTime.Now, "test", DateTime.Now, "test"),
+    };
+    _repositoryMock.Setup(x => x.GetDeviceAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+      .Returns(Task.FromResult(device)!);
 
-        _changeLogMock = new();
-        _changeLogMock.Setup(r => r.Add(It.IsAny<ChangeLogEntry>()))
-            .Callback<ChangeLogEntry>(e => _logEntry = e);
-    }
+    var deletedId = Guid.Empty;
+    _repositoryMock.Setup(x => x.DeleteAsync(device.Id, It.IsAny<CancellationToken>()))
+      .Callback<Guid, CancellationToken>(
+        (id, _) => deletedId = id);
 
+    var useCase = new DeleteDeviceUseCase(_repositoryMock.Object, _changeLogMock.Object,
+      new NullLogger<DeleteDeviceUseCase>());
 
-    [Fact]
-    public void DeviceIsDeleted()
+    useCase.Initialize(new()
     {
-        var device = new Device
-        {
-            Name = "test",
-            Comment = "test",
-            Modification = new("test", DateTime.Now, "test", DateTime.Now, "test"),
-        };
-        _repositoryMock.Setup(x => x.GetDevice(It.IsAny<Guid>())).Returns(device);
+      DeviceId = device.Id,
+      Comment = "gelöscht",
+    }, "Tester");
 
-        var deletedId = Guid.Empty;
-        _repositoryMock.Setup(x => x.Delete(device.Id)).Callback<Guid>(id => deletedId = id);
+    (await useCase.ValidateAsync(default)).Should().BeTrue();
+    await useCase.ExecuteAsync(default);
 
-        var useCase = new DeleteDeviceUseCase(_repositoryMock.Object, _changeLogMock.Object, new NullLogger<DeleteDeviceUseCase>());
+    deletedId.Should().Be(device.Id);
+  }
 
-        useCase.Initialize(new()
-        {
-            DeviceId = device.Id,
-            Comment = "gelöscht",
-        }, "Tester");
-
-        useCase.Validate().Should().BeTrue();
-        useCase.Execute();
-
-        deletedId.Should().Be(device.Id);
-    }
-
-
-    [Fact]
-    public void AddLogEntry()
+  [Fact]
+  public async Task AddLogEntry()
+  {
+    var device = new Device
     {
-        var device = new Device
-        {
-            Name = "test",
-            Comment = "test",
-            Modification = new("test", DateTime.Now, "test", DateTime.Now, "test"),
-        };
-        _repositoryMock.Setup(x => x.GetDevice(It.IsAny<Guid>())).Returns(device);
+      Name = "test",
+      Comment = "test",
+      Modification = new("test", DateTime.Now, "test", DateTime.Now, "test"),
+    };
+    _repositoryMock.Setup(x => x.GetDeviceAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(device)!);
 
-        var useCase = new DeleteDeviceUseCase(_repositoryMock.Object, _changeLogMock.Object, new NullLogger<DeleteDeviceUseCase>());
-        useCase.Initialize(new()
-        {
-            DeviceId = device.Id,
-            Comment = "gelöscht",
-        }, "Tester");
+    var useCase = new DeleteDeviceUseCase(_repositoryMock.Object, _changeLogMock.Object,
+      new NullLogger<DeleteDeviceUseCase>());
+    useCase.Initialize(new()
+    {
+      DeviceId = device.Id,
+      Comment = "gelöscht",
+    }, "Tester");
 
-        useCase.Validate().Should().BeTrue();
-        useCase.Execute();
+    (await useCase.ValidateAsync(default)).Should().BeTrue();
+    await useCase.ExecuteAsync(default);
 
-        _logEntry.Should().NotBeNull();
-        //    _logEntry.Comment.Should().Be("comment");
-        _logEntry!.FullDetails.Should().BeOfType<DeleteDeviceChangeLogEntry>();
-        // .Which.DeviceName.Should().Be("device name test");
-    }
+    _logEntry.Should().NotBeNull();
+    //    _logEntry.Comment.Should().Be("comment");
+    _logEntry!.FullDetails.Should().BeOfType<DeleteDeviceChangeLogEntry>();
+    // .Which.DeviceName.Should().Be("device name test");
+  }
 }

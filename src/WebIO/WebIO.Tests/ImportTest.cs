@@ -3,6 +3,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Cli.ExcelImport;
 using ConfigFiles;
 using DataAccess;
@@ -19,11 +21,11 @@ public class ImportTest
 
   public ImportTest()
   {
-    List<Device> savedDevices = new();
+    List<Device> savedDevices = [];
     var metadataRepo = new JsonMetadataRepository(new NullLogger<JsonMetadataRepository>(),
       new JsonFileReader(new NullLogger<JsonFileReader>()));
     var deviceRepoMock = new Mock<IDeviceRepository>();
-    deviceRepoMock.Setup(r => r.Upsert(It.IsAny<Device>())).Callback<Device>(d => savedDevices.Add(d));
+    deviceRepoMock.Setup(r => r.UpsertAsync(It.IsAny<Device>(), It.IsAny<CancellationToken>())).Callback<Device, CancellationToken>((d,_) => savedDevices.Add(d));
     _import = new(deviceRepoMock.Object, metadataRepo, new NullLogger<ExcelImport>());
   }
 

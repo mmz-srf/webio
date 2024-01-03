@@ -28,15 +28,15 @@ public class ChangeEventsController : ControllerBase
     }
 
     [HttpGet("history")]
-    public ActionResult<QueryResultDto<ChangeHistoryDto>> GetHistory(int start = 0, int count = 100)
+    public async Task<ActionResult<QueryResultDto<ChangeHistoryDto>>> GetHistory(CancellationToken ct, int start = 0, int count = 100)
     {
-        var history = _changeLogRepository.Query(start, count);
+        var history = await _changeLogRepository.QueryAsync(start, count, ct);
         var result = new QueryResultDto<ChangeHistoryDto>
         {
             State = QueryResultState.Success,
             Count = history.Count,
             Start = history.StartIndex,
-            TotalCount = _changeLogRepository.QueryCount(),
+            TotalCount = await _changeLogRepository.QueryCountAsync(ct),
             Data = history.Data.Select(MapToDto).ToList(),
         };
         return Ok(result);
@@ -44,14 +44,14 @@ public class ChangeEventsController : ControllerBase
 
     [Authorize(Policy = Claims.CanEdit)]
     [HttpPost]
-    public IActionResult Post([FromBody] PropertiesChangedSummaryDto modifications)
+    public async Task<IActionResult> Post([FromBody] PropertiesChangedSummaryDto modifications, CancellationToken ct)
     {
         var useCase = _useCases.Create<SaveModificationsUseCase>();
         useCase.Initialize(modifications, UsernameFromToken);
 
-        if (useCase.Validate())
+        if (await useCase.ValidateAsync(ct))
         {
-            useCase.Execute();
+            await useCase.ExecuteAsync(ct);
             return Ok();
         }
 
@@ -60,14 +60,14 @@ public class ChangeEventsController : ControllerBase
 
     [Authorize(Policy = Claims.CanEdit)]
     [HttpPost("createDevice")]
-    public IActionResult CreateDevice([FromBody] DeviceAddedEventDto deviceAdded)
+    public async Task<IActionResult> CreateDevice([FromBody] DeviceAddedEventDto deviceAdded, CancellationToken ct)
     {
         var useCase = _useCases.Create<CreateDeviceUseCase>();
         useCase.Initialize(deviceAdded, UsernameFromToken);
 
-        if (useCase.Validate())
+        if (await useCase.ValidateAsync(ct))
         {
-            useCase.Execute();
+            await useCase.ExecuteAsync(ct);
             return Ok();
         }
 
@@ -76,14 +76,14 @@ public class ChangeEventsController : ControllerBase
 
     [Authorize(Policy = Claims.CanEdit)]
     [HttpPost("deleteDevice")]
-    public IActionResult DeleteDevice([FromBody] DeviceDeletedDto deleted)
+    public async Task<IActionResult> DeleteDevice([FromBody] DeviceDeletedDto deleted, CancellationToken ct)
     {
         var useCase = _useCases.Create<DeleteDeviceUseCase>();
         useCase.Initialize(deleted, UsernameFromToken);
 
-        if (useCase.Validate())
+        if (await useCase.ValidateAsync(ct))
         {
-            useCase.Execute();
+            await useCase.ExecuteAsync(ct);
             return Ok();
         }
 
@@ -92,14 +92,14 @@ public class ChangeEventsController : ControllerBase
 
     [Authorize(Policy = Claims.CanEdit)]
     [HttpPost("updateDevice")]
-    public IActionResult UpdateDevice([FromBody] DeviceUpdatedEventDto devicetoUpdate)
+    public async Task<IActionResult> UpdateDevice([FromBody] DeviceUpdatedEventDto devicetoUpdate, CancellationToken ct)
     {
         var useCase = _useCases.Create<UpdateDeviceUseCase>();
         useCase.Initialize(devicetoUpdate, UsernameFromToken);
 
-        if (useCase.Validate())
+        if (await useCase.ValidateAsync(ct))
         {
-            useCase.Execute();
+            await useCase.ExecuteAsync(ct);
             return Ok();
         }
 

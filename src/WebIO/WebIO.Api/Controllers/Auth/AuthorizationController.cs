@@ -3,6 +3,7 @@ namespace WebIO.Api.Controllers.Auth;
 using DataAccess.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web.Resource;
 
 [Route("api/[controller]")]
@@ -19,9 +20,9 @@ public class AuthorizationController : Controller
   }
 
   [HttpGet("write-access")]
-  public ActionResult<bool> WriteAccess()
+  public async Task<ActionResult<bool>> WriteAccess(CancellationToken ct)
   {
     var username = TokenHelper.GetUsernameFromClaims(User.Claims);
-    return Ok(!string.IsNullOrWhiteSpace(username) && _context.AdminUsers.Any(u => u.Email == username));
+    return Ok(!string.IsNullOrWhiteSpace(username) && await _context.AdminUsers.AnyAsync(u => u.Email == username, ct));
   }
 }

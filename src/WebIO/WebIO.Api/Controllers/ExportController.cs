@@ -55,14 +55,14 @@ public class ExportController : ControllerBase
   // }
 
   [HttpPost]
-  public IActionResult CreateExportFile([FromBody] ExportArgs exportArgs)
+  public async Task<IActionResult> CreateExportFile([FromBody] ExportArgs exportArgs, CancellationToken ct)
   {
     var export = _exportFactory.GetExport(exportArgs.ExportTargetName);
 
     SanitizeFilters(exportArgs, "Name");
     SanitizeFilters(exportArgs, "Name_1");
 
-    var result = export.Export(exportArgs);
+    var result = await export.Export(exportArgs, ct);
     if (result.Failed || result.Data == null)
     {
       return BadRequest();
@@ -73,9 +73,9 @@ public class ExportController : ControllerBase
 
   private static void SanitizeFilters(ExportArgs exportArgs, string filterKey)
   {
-    if (exportArgs.Filters.ContainsKey(filterKey))
+    if (exportArgs.Filters.TryGetValue(filterKey, out var value))
     {
-      exportArgs.Filters.TryAdd("DeviceName", exportArgs.Filters[filterKey]);
+      exportArgs.Filters.TryAdd("DeviceName", value);
       exportArgs.Filters.Remove(filterKey);
     }
   }

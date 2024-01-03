@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Elastic;
 using EntityFrameworkCore;
 using Model;
@@ -18,42 +20,42 @@ public class DbAndElasticDeviceRepository : IDeviceRepository
     _db = db;
   }
 
-  public Device? GetDevice(Guid deviceId)
-    => _elastic.GetDevice(deviceId);
+  public Task<Device?> GetDeviceAsync(Guid deviceId, CancellationToken ct)
+    => _elastic.GetDeviceAsync(deviceId, ct);
 
-  public void Upsert(Device device)
+  public async Task UpsertAsync(Device device, CancellationToken ct)
   {
-    _db.Upsert(device);
-    _elastic.Upsert(device);
+    await _db.UpsertAsync(device, ct);
+    await _elastic.UpsertAsync(device, ct);
   }
 
-  public void Delete(Guid deviceId)
+  public async Task DeleteAsync(Guid deviceId, CancellationToken ct)
   {
-    _db.Delete(deviceId);
-    _elastic.Delete(deviceId);
+    await _db.DeleteAsync(deviceId, ct);
+    await _elastic.DeleteAsync(deviceId, ct);
   }
 
-  public QueryResult<DeviceInfo> GetDeviceInfos(Query query)
-    => _elastic.GetDeviceInfos(query);
+  public Task<QueryResult<DeviceInfo>> GetDeviceInfosAsync(Query query, CancellationToken ct)
+    => _elastic.GetDeviceInfosAsync(query, ct);
 
-  public int GetDeviceCount(Query query)
-    => _elastic.GetDeviceCount(query);
+  public Task<int> GetDeviceCountAsync(Query query, CancellationToken ct)
+    => _elastic.GetDeviceCountAsync(query, ct);
 
-  public QueryResult<InterfaceInfo> GetInterfaceInfos(Query query)
-    => _elastic.GetInterfaceInfos(query);
+  public Task<QueryResult<InterfaceInfo>> GetInterfaceInfosAsync(Query query, CancellationToken ct)
+    => _elastic.GetInterfaceInfosAsync(query, ct);
 
-  public int GetInterfaceCount(Query query)
-    => _elastic.GetInterfaceCount(query);
+  public Task<int> GetInterfaceCountAsync(Query query, CancellationToken ct)
+    => _elastic.GetInterfaceCountAsync(query, ct);
 
-  public QueryResult<StreamInfo> GetStreamInfos(Query query)
-    => _elastic.GetStreamInfos(query);
+  public Task<QueryResult<StreamInfo>> GetStreamInfosAsync(Query query, CancellationToken ct)
+    => _elastic.GetStreamInfosAsync(query, ct);
 
-  public int GetStreamCount(Query query)
-    => _elastic.GetStreamCount(query);
+  public Task<int> GetStreamCountAsync(Query query, CancellationToken ct)
+    => _elastic.GetStreamCountAsync(query, ct);
 
-  public bool IsDuplicateDeviceName(string deviceName, Guid ownId)
-    => _elastic.IsDuplicateDeviceName(deviceName, ownId);
+  public Task<bool> IsDuplicateDeviceNameAsync(string deviceName, Guid ownId, CancellationToken ct)
+    => _elastic.IsDuplicateDeviceNameAsync(deviceName, ownId, ct);
 
-  public IEnumerable<Device> GetDevicesByIds(IEnumerable<Guid> deviceIds)
-    => _elastic.GetDevicesByIds(deviceIds);
+  public Task<IEnumerable<Device>> GetDevicesByIdsAsync(IEnumerable<Guid> deviceIds, CancellationToken ct)
+    => _elastic.GetDevicesByIdsAsync(deviceIds, ct);
 }

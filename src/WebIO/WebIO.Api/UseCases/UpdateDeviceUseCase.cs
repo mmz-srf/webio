@@ -37,17 +37,16 @@ public class UpdateDeviceUseCase : IUseCase
     return this;
   }
 
-  public bool Validate()
+  public Task<bool> ValidateAsync(CancellationToken ct)
   {
     using var span = Telemetry.Span();
-    return _update != null
-           && !string.IsNullOrWhiteSpace(_username);
+    return Task.FromResult(_update != null && !string.IsNullOrWhiteSpace(_username));
   }
 
-  public void Execute()
+  public async Task ExecuteAsync(CancellationToken ct)
   {
     using var span = Telemetry.Span();
-    var device = _deviceRepository.GetDevice(_update!.DeviceId);
+    var device = await _deviceRepository.GetDeviceAsync(_update!.DeviceId, ct);
     if (device == null)
     {
       _log.LogWarning("Update Device: Device with id {Device} not found", _update.DeviceId);
@@ -120,7 +119,7 @@ public class UpdateDeviceUseCase : IUseCase
         NewInterfaces = device.Interfaces.Select(i => i.InterfaceTemplate!).ToList(),
       });
 
-    _deviceRepository.Upsert(device);
+    await _deviceRepository.UpsertAsync(device, ct);
     _changeLog.Add(logEntry);
   }
 }

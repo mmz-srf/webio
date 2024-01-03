@@ -1,6 +1,8 @@
 namespace WebIO.Tests;
 
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Api.Controllers.Dto;
 using Api.UseCases;
 using DataAccess;
@@ -27,8 +29,8 @@ public class CreateDeviceTest
     _metadataMock = new();
 
     _repositoryMock = new();
-    _repositoryMock.Setup(r => r.Upsert(It.IsAny<Device>()))
-      .Callback<Device>(d => _created = d);
+    _repositoryMock.Setup(r => r.UpsertAsync(It.IsAny<Device>(), It.IsAny<CancellationToken>()))
+      .Callback<Device, CancellationToken>((d,_) => _created = d);
 
     _changeLogMock = new();
     _changeLogMock.Setup(r => r.Add(It.IsAny<ChangeLogEntry>()))
@@ -38,7 +40,7 @@ public class CreateDeviceTest
   }
 
   [Fact]
-  public void ValidateFailsWithoutDeviceType()
+  public async Task ValidateFailsWithoutDeviceType()
   {
     var useCase = new CreateDeviceUseCase(_metadataMock, _repositoryMock.Object, _changeLogMock.Object,
       new NullLogger<CreateDeviceUseCase>());
@@ -48,13 +50,12 @@ public class CreateDeviceTest
       DeviceType = "test",
     }, "Tester");
 
-    useCase.Validate()
-      .Should()
-      .BeFalse();
+    (await useCase.ValidateAsync(default))
+        .Should().BeFalse();
   }
 
   [Fact]
-  public void ValidateSucceedsIfDeviceConfigFound()
+  public async Task ValidateSucceedsIfDeviceConfigFound()
   {
     _useCase.Initialize(new()
     {
@@ -62,13 +63,13 @@ public class CreateDeviceTest
       DeviceType = _metadataMock.DeviceTypes.First().Name ?? string.Empty,
     }, "Tester");
 
-    _useCase.Validate()
+    (await _useCase.ValidateAsync(default))
       .Should()
       .BeTrue();
   }
 
   [Fact]
-  public void CreateDeviceWithProperName()
+  public async Task CreateDeviceWithProperName()
   {
     var deviceType = _metadataMock.MockDeviceTypes.BasicType;
 
@@ -78,8 +79,9 @@ public class CreateDeviceTest
       DeviceType = deviceType.Name ?? string.Empty,
     }, "tester");
 
-    _useCase.Validate().Should().BeTrue();
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default))
+      .Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _created.Should().NotBeNull();
     _created!.Name.Should().Be("device name test");
@@ -88,7 +90,7 @@ public class CreateDeviceTest
   }
 
   [Fact]
-  public void CreateDeviceWithFieldValues()
+  public async Task CreateDeviceWithFieldValues()
   {
     var deviceType = _metadataMock.MockDeviceTypes.BasicType;
 
@@ -98,14 +100,15 @@ public class CreateDeviceTest
       DeviceType = deviceType.Name ?? string.Empty,
     }, "tester");
 
-    _useCase.Validate().Should().BeTrue();
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default))
+      .Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _created!.Properties.All.Should().ContainKey("Driver").WhoseValue.Should().Be("Test1");
   }
 
   [Fact]
-  public void CreateDeviceWithInterfaces()
+  public async Task CreateDeviceWithInterfaces()
   {
     var deviceType = _metadataMock.MockDeviceTypes.BasicType;
 
@@ -121,8 +124,8 @@ public class CreateDeviceTest
       Interfaces = interfaces,
     }, "tester");
 
-    _useCase.Validate().Should().BeTrue();
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _created!.Interfaces.Should().HaveCount(2)
       .And.SatisfyRespectively(
@@ -131,7 +134,7 @@ public class CreateDeviceTest
   }
 
   [Fact]
-  public void CreateDeviceWithSwDefinedInterfaceCount()
+  public async Task CreateDeviceWithSwDefinedInterfaceCount()
   {
     var deviceType = _metadataMock.MockDeviceTypes.SwDefinedInterfaces;
 
@@ -147,8 +150,8 @@ public class CreateDeviceTest
       },
     }, "tester");
 
-    _useCase.Validate().Should().BeTrue();
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _created!.Interfaces.Should().HaveCount(3)
       .And.SatisfyRespectively(
@@ -160,7 +163,7 @@ public class CreateDeviceTest
   }
 
   [Fact]
-  public void CreateDeviceWithInterfacesWithProperties()
+  public async Task CreateDeviceWithInterfacesWithProperties()
   {
     var deviceType = _metadataMock.MockDeviceTypes.BasicType;
 
@@ -176,8 +179,8 @@ public class CreateDeviceTest
       Interfaces = interfaces,
     }, "tester");
 
-    _useCase.Validate().Should().BeTrue();
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _created!.Interfaces.Should().HaveCount(2);
     foreach (var i in _created.Interfaces)
@@ -188,7 +191,7 @@ public class CreateDeviceTest
   }
 
   [Fact]
-  public void CreateDeviceWithStreamsWithProperties()
+  public async Task CreateDeviceWithStreamsWithProperties()
   {
     var deviceType = _metadataMock.MockDeviceTypes.BasicType;
 
@@ -204,8 +207,8 @@ public class CreateDeviceTest
       Interfaces = interfaces,
     }, "tester");
 
-    _useCase.Validate().Should().BeTrue();
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _created!.Interfaces.Should().HaveCount(2);
     var if1 = _created.Interfaces.First();
@@ -227,7 +230,7 @@ public class CreateDeviceTest
   }
 
   [Fact]
-  public void CreateDeviceWithInterfacesWithFlexibleStreams()
+  public async Task CreateDeviceWithInterfacesWithFlexibleStreams()
   {
     var deviceType = _metadataMock.MockDeviceTypes.FlexibleStreams;
 
@@ -252,8 +255,8 @@ public class CreateDeviceTest
       },
     }, "tester");
 
-    _useCase.Validate().Should().BeTrue();
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
     _created!.Interfaces.Should().HaveCount(2);
 
     // setting of properties
@@ -283,7 +286,7 @@ public class CreateDeviceTest
   }
 
   [Fact]
-  public void AddLogEntry()
+  public async Task AddLogEntry()
   {
     var deviceType = _metadataMock.MockDeviceTypes.BasicType;
 
@@ -300,8 +303,8 @@ public class CreateDeviceTest
       Interfaces = interfaces,
     }, "tester");
 
-    _useCase.Validate().Should().BeTrue();
-    _useCase.Execute();
+    (await _useCase.ValidateAsync(default)).Should().BeTrue();
+    await _useCase.ExecuteAsync(default);
 
     _logEntry.Should().NotBeNull();
     _logEntry!.Comment.Should().Be("comment");

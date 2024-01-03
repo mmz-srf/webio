@@ -41,10 +41,10 @@ public class CreateDeviceUseCase : IUseCase
     _added = added;
   }
 
-  public bool Validate()
+  public async Task<bool> ValidateAsync(CancellationToken ct)
   {
     using var span = Telemetry.Span();
-    var deviceNameUnique = !_deviceRepository.IsDuplicateDeviceName(_added!.Name, default);
+    var deviceNameUnique = !await _deviceRepository.IsDuplicateDeviceNameAsync(_added!.Name, default, ct);
 
     if (deviceNameUnique)
     {
@@ -57,7 +57,7 @@ public class CreateDeviceUseCase : IUseCase
     return false;
   }
 
-  public void Execute()
+  public async Task ExecuteAsync(CancellationToken ct)
   {
     using var span = Telemetry.Span();
     var modifyArgs = new ModifyArgs(_username, DateTime.Now, _added!.Comment);
@@ -81,7 +81,7 @@ public class CreateDeviceUseCase : IUseCase
         DeviceType = _deviceType!.Name ?? string.Empty,
       });
 
-    _deviceRepository.Upsert(device);
+    await _deviceRepository.UpsertAsync(device, ct);
     _changeLog.Add(logEntry);
   }
 }

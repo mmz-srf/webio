@@ -29,9 +29,9 @@ public class DevicesController : ControllerBase
 
   // Get api/devices/name/details
   [HttpGet("{deviceId:guid}/details")]
-  public ActionResult<DeviceDetailsDto> GetDeviceDetails(Guid deviceId)
+  public async Task<ActionResult<DeviceDetailsDto>> GetDeviceDetails(Guid deviceId, CancellationToken ct)
   {
-    var device = _deviceRepository.GetDevice(deviceId);
+    var device = await _deviceRepository.GetDeviceAsync(deviceId, ct);
     if (device == null)
     {
       return NotFound($"Device with id {deviceId} not found");
@@ -64,7 +64,8 @@ public class DevicesController : ControllerBase
   }
   
   [HttpPost]
-  public ActionResult<QueryResultDto<DeviceDto>> Get(
+  public async Task<ActionResult<QueryResultDto<DeviceDto>>> Get(
+    CancellationToken ct,
     int start = 0,
     int count = 100,
     string? sort = null,
@@ -78,12 +79,12 @@ public class DevicesController : ControllerBase
       .WithSorting(sort, sortOrder)
       .WithFilter(filter, global);
 
-    var deviceInfos = _deviceRepository.GetDeviceInfos(query);
+    var deviceInfos = await _deviceRepository.GetDeviceInfosAsync(query, ct);
 
     query = new Query(0, 0)
       .WithFilter(filter, global);
 
-    var totalCount = _deviceRepository.GetDeviceCount(query);
+    var totalCount = await _deviceRepository.GetDeviceCountAsync(query, ct);
 
     var result = new QueryResultDto<DeviceDto>
     {
@@ -98,10 +99,10 @@ public class DevicesController : ControllerBase
   }
 
   [HttpGet("isDuplicate")]
-  public ActionResult<bool> IsDuplicate(string deviceName, string ownId)
+  public async Task<ActionResult<bool>> IsDuplicate(string deviceName, string ownId, CancellationToken ct)
   {
-    return _deviceRepository.IsDuplicateDeviceName(deviceName,
-      string.IsNullOrWhiteSpace(ownId) ? Guid.Empty : Guid.Parse(ownId));
+    return await _deviceRepository.IsDuplicateDeviceNameAsync(deviceName,
+      string.IsNullOrWhiteSpace(ownId) ? Guid.Empty : Guid.Parse(ownId), ct);
   }
 
   [HttpGet("fields")]

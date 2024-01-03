@@ -2,6 +2,6 @@
 
 public interface IUseCase
 {
-    bool Validate();
-    void Execute();
+    Task<bool> ValidateAsync(CancellationToken ct);
+    Task ExecuteAsync(CancellationToken ct);
 }

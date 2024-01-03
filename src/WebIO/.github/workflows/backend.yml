@@ -41,4 +41,4 @@ jobs:
     needs: build-and-test-backend
     steps:
     - name: Publish
-      run: dotnet publish -c Release WebIO.Api/WebIO.Api.csproj
+      run: dotnet publish -c Release --runtime linux-x64 --self-contained true WebIO.Api/WebIO.Api.csproj

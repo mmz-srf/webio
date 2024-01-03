@@ -2,7 +2,10 @@
 
 using System.Collections.Immutable;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Mappers;
+using Microsoft.EntityFrameworkCore;
 using Model;
 using Model.Readonly;
 
@@ -21,20 +24,19 @@ public class EfCoreChangeLogRepository : IChangeLogRepository
         _context.SaveChanges();
     }
 
-    public QueryResult<ChangeLogEntryInfo> Query(int start, int count)
+    public async Task<QueryResult<ChangeLogEntryInfo>> QueryAsync(int start, int count, CancellationToken ct)
     {
-        var entries = _context.ChangeLog
+        var entries = (await _context.ChangeLog
             .OrderByDescending(x => x.Timestamp)
             .Skip(start)
             .Take(count)
             .Select(x => x.ToReadonly())
+            .ToListAsync(ct))
             .ToImmutableList();
 
         return new(start, entries.Count, entries);
     }
 
-    public int QueryCount()
-    {
-        return _context.ChangeLog.Count();
-    }
+    public Task<int> QueryCountAsync(CancellationToken ct)
+        => _context.ChangeLog.CountAsync(ct);
 }

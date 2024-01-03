@@ -27,7 +27,8 @@ public class StreamsController : ControllerBase
   }
 
   [HttpPost]
-  public ActionResult<QueryResultDto<StreamDto>> Get(
+  public async Task<ActionResult<QueryResultDto<StreamDto>>> Get(
+    CancellationToken ct,
     int start = 0,
     int count = 100,
     string? sort = null,
@@ -41,12 +42,12 @@ public class StreamsController : ControllerBase
       .WithSorting(sort, sortOrder)
       .WithFilter(filter, global);
 
-    var streamInfos = _deviceRepository.GetStreamInfos(query);
+    var streamInfos = await _deviceRepository.GetStreamInfosAsync(query, ct);
 
     query = new Query(0, 0)
       .WithFilter(filter, global);
 
-    var totalCount = _deviceRepository.GetStreamCount(query);
+    var totalCount = await _deviceRepository.GetStreamCountAsync(query, ct);
 
     var result = new QueryResultDto<StreamDto>
     {

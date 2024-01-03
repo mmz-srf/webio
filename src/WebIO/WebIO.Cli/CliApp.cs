@@ -13,11 +13,11 @@ public static class CliApp
   public static IServiceCollection Setup(this IServiceCollection services)
     => services.AddTransient<ExcelImport.ExcelImport>();
   
-  public static void Import(IHost host, string importFile)
+  public static async Task Import(IHost host, string importFile, CancellationToken ct)
   {
     using var scope = host.Services.CreateScope();
     var elasticStartup = scope.ServiceProvider.GetRequiredService<IElasticStartup>();
-    elasticStartup.InitializeAllIndexes(default).GetAwaiter().GetResult();
+    await elasticStartup.InitializeAllIndexes(ct);
     
     var scripts = new ScriptHelper(scope.ServiceProvider.GetRequiredService<ILogger<ScriptHelper>>());
     var configReader = scope.ServiceProvider.GetRequiredService<IConfigFileReader>();
@@ -27,30 +27,30 @@ public static class CliApp
     }
 
     var importer = scope.ServiceProvider.GetRequiredService<ExcelImport.ExcelImport>();
-    importer.Import(importFile);
+    await importer.Import(importFile, ct);
   }
 
-  public static void ReindexAll(IHost host)
+  public static async Task ReindexAll(IHost host, CancellationToken ct)
   {
     using var scope = host.Services.CreateScope();
     var reindexer = scope.ServiceProvider.GetRequiredService<IReindexEverything>();
-    reindexer.ReindexAllAsync(default).GetAwaiter().GetResult();
+    await reindexer.ReindexAllAsync(ct);
   }
 
-  public static void InitializeSchema(IHost webHost)
+  public static async Task InitializeSchema(IHost webHost, CancellationToken ct)
   {
     using var scope = webHost.Services.CreateScope();
     
     if (scope.ServiceProvider.GetService(typeof(EfCoreDeviceRepository)) is EfCoreDeviceRepository repo)
     {
-      repo.InitSchema();
+      await repo.InitSchema(ct);
     }
   }
 
   public static HostApplicationBuilder CreateAppBuilder(string[] args)
   {
     var builder = Host.CreateApplicationBuilder(args);
-    App.RegisterConfiguration(builder.Configuration, builder.Environment);
+    App.RegisterConfiguration(builder.Configuration, builder.Environment, args);
     builder.Logging.AddConfiguration(builder.Configuration);
     builder.Services.ConfigureServices(builder.Configuration);
     return builder;
