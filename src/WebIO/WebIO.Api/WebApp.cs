@@ -70,7 +70,7 @@ public static class WebApp
       WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"),
       Args = args,
     });
-    RegisterConfiguration(builder.Configuration, builder.Environment);
+    RegisterConfiguration(builder.Configuration, builder.Environment, args);
     builder.Logging.AddConfiguration(builder.Configuration);
 
     builder.Services

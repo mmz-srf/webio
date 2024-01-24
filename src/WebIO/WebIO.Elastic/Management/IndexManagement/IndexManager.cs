@@ -166,5 +166,5 @@ public class IndexManager<TIndexedEntity, TId> : IIndexManager<TIndexedEntity, T
               af => af.PreserveOriginal())));
 
   private string CreateNewIndexName()
-    => $"{GetAliasName()}-{DateTime.Now:yyyyMMddHHmmssfff}".PrefixWith(_config.IndexPrefix);
+    => $"{GetAliasName()}-{DateTime.Now:yyyyMMddHHmmssfff}";
 }

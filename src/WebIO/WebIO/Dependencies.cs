@@ -11,6 +11,7 @@ using DataAccess.Elastic;
 using DataAccess.EntityFrameworkCore;
 using Elastic.Data;
 using Elastic.Hosting;
+using Elastic.Management;
 using Elastic.Management.Search;
 using IdentityModel.Client;
 using Microsoft.EntityFrameworkCore;
@@ -56,12 +57,12 @@ public static class Dependencies
                            throw new ArgumentException("No connection string defined!");
 
     return services
-      .RegisterElastic(new()
+      .RegisterElastic(new ElasticConfiguration()
       {
         Url = new(configuration["Elastic:Url"] ?? "http://localhost:9200"),
         Username = configuration["Elastic:User"],
         Password = configuration["Elastic:Password"],
-        
+        IndexPrefix = configuration["Elastic:IndexPrefix"],
       })
       .ElasticModel<IndexedDevice, Guid>().WithDataSource<DeviceDataSource>().Register()
       .ElasticModel<IndexedInterface, Guid>().WithDataSource<InterfaceDataSource>().Register()

@@ -32,18 +32,18 @@ public class DeleteDeviceUseCase : IUseCase
     }
 
 
-    public bool Validate()
+    public Task<bool> ValidateAsync(CancellationToken ct)
     {
         using var span = Telemetry.Span();
-        return !string.IsNullOrWhiteSpace(_username);
+        return Task.FromResult(!string.IsNullOrWhiteSpace(_username));
     }
 
 
-    public void Execute()
+    public async Task ExecuteAsync(CancellationToken ct)
     {
         using var span = Telemetry.Span();
         _log.LogInformation("Delete Device with Id: {DeletedId}", _deleted!.DeviceId);
-        _deviceRepository.Delete(_deleted.DeviceId);
+        await _deviceRepository.DeleteAsync(_deleted.DeviceId, ct);
 
         var logEntry = new ChangeLogEntry(
             DateTime.Now,
@@ -52,8 +52,6 @@ public class DeleteDeviceUseCase : IUseCase
             $"Deleted device { _deleted.DeviceId }",
             new DeleteDeviceChangeLogEntry());
 
-
         _changeLog.Add(logEntry);
-
     }
 }

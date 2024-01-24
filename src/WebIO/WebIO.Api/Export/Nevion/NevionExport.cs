@@ -32,13 +32,13 @@ public class NevionExport : Export, IExport
     _log = log;
   }
 
-  public ExportResult Export(ExportArgs exportArgs)
+  public async Task<ExportResult> Export(ExportArgs exportArgs, CancellationToken ct)
   {
     _log.LogInformation("Generating Nevion Export");
     var now = DateTime.Now;
 
-    var interfaceInfos = GetAllInterfaces(exportArgs);
-    var streamInfos = GetAllStreams(exportArgs);
+    var interfaceInfos = await GetAllInterfacesAsync(exportArgs, ct);
+    var streamInfos = await GetAllStreamsAsync(exportArgs, ct);
 
     //_log.Debug("Writing I/O Worksheet");
     _log.LogInformation("Done Generating Nevion Export");
@@ -48,21 +48,21 @@ public class NevionExport : Export, IExport
       using var z = new ZipArchive(zipStream, ZipArchiveMode.Update, leaveOpen: true);
       _log.LogDebug("Writing Inventory");
       var inventory = z.CreateEntry($@"Nevion\Nevion_Inventory_{now:yyyyMMddHHmm}.csv");
-      using (var output = inventory.Open())
+      await using (var output = inventory.Open())
       {
         ExportData(interfaceInfos, _exportConfigurations.NevionBom, output);
       }
 
       _log.LogDebug("Writing I/O Worksheet");
       var ios = z.CreateEntry($@"Nevion\Nevion_ios_{now:yyyyMMddHHmm}.csv");
-      using (var output = ios.Open())
+      await using (var output = ios.Open())
       {
         ExportData(streamInfos, _exportConfigurations.NevionIo, output);
       }
 
       _log.LogDebug("Writing Nevion Export");
       var nevion = z.CreateEntry($@"Nevion\Nevion_{now:yyyyMMddHHmm}.csv");
-      using (var output = nevion.Open())
+      await using (var output = nevion.Open())
       {
         ExportData(streamInfos, _exportConfigurations.Nevion, output);
       }
@@ -72,13 +72,13 @@ public class NevionExport : Export, IExport
     return ExportResult.Create(zipStream, ExportFileType.Zip, $"Nevion_{now:yyyyMMddHHmm}.zip");
   }
 
-  public ExportResult Export(Dictionary<string, string> request)
+  public async Task<ExportResult> Export(Dictionary<string, string> request, CancellationToken ct)
   {
     _log.LogInformation("Generating Nevion Export");
     var now = DateTime.Now;
 
-    var interfaceInfos = GetAllInterfaces(request);
-    var streamInfos = GetAllStreams(request);
+    var interfaceInfos = await GetAllInterfacesAsync(request, ct);
+    var streamInfos = await GetAllStreamsAsync(request, ct);
 
     _log.LogInformation("Done Generating Nevion Export");
 
@@ -88,21 +88,21 @@ public class NevionExport : Export, IExport
 
       _log.LogDebug("Writing Inventory");
       var inventory = z.CreateEntry($@"Nevion\Nevion_Inventory_{now:yyyyMMddHHmm}.csv");
-      using (var output = inventory.Open())
+      await using (var output = inventory.Open())
       {
         ExportData(interfaceInfos, _exportConfigurations.NevionBom, output);
       }
 
       _log.LogDebug("Writing I/O Worksheet");
       var ios = z.CreateEntry($@"Nevion\Nevion_ios_{now:yyyyMMddHHmm}.csv");
-      using (var output = ios.Open())
+      await using (var output = ios.Open())
       {
         ExportData(streamInfos, _exportConfigurations.NevionIo, output);
       }
 
       _log.LogDebug("Writing Nevion Export");
       var nevion = z.CreateEntry($@"Nevion\Nevion_{now:yyyyMMddHHmm}.csv");
-      using (var output = nevion.Open())
+      await using (var output = nevion.Open())
       {
         ExportData(streamInfos, _exportConfigurations.Nevion, output);
       }

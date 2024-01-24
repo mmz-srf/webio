@@ -2,22 +2,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Model;
 using Model.Readonly;
 
 public interface IDeviceRepository
 {
-    Device? GetDevice(Guid deviceId);
-    void Upsert(Device device);
-    void Delete(Guid deviceId);
+    Task<Device?> GetDeviceAsync(Guid deviceId, CancellationToken ct);
+    Task UpsertAsync(Device device, CancellationToken ct);
+    Task DeleteAsync(Guid deviceId, CancellationToken ct);
 
-    QueryResult<DeviceInfo> GetDeviceInfos(Query query);
-    int GetDeviceCount(Query query);
-    QueryResult<InterfaceInfo> GetInterfaceInfos(Query query);
-    int GetInterfaceCount(Query query);
-    QueryResult<StreamInfo> GetStreamInfos(Query query);
-    int GetStreamCount(Query query);
+    Task<QueryResult<DeviceInfo>> GetDeviceInfosAsync(Query query, CancellationToken ct);
+    Task<int> GetDeviceCountAsync(Query query, CancellationToken ct);
+    Task<QueryResult<InterfaceInfo>> GetInterfaceInfosAsync(Query query, CancellationToken ct);
+    Task<int> GetInterfaceCountAsync(Query query, CancellationToken ct);
+    Task<QueryResult<StreamInfo>> GetStreamInfosAsync(Query query, CancellationToken ct);
+    Task<int> GetStreamCountAsync(Query query, CancellationToken ct);
 
-    bool IsDuplicateDeviceName(string deviceName, Guid ownId);
-    IEnumerable<Device> GetDevicesByIds(IEnumerable<Guid> deviceIds);
+    Task<bool> IsDuplicateDeviceNameAsync(string deviceName, Guid ownId, CancellationToken ct);
+    Task<IEnumerable<Device>> GetDevicesByIdsAsync(IEnumerable<Guid> deviceIds, CancellationToken ct);
 }
