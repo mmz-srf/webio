@@ -1,6 +1,13 @@
 ﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
+    "Init": {
+      "commandName": "Project",
+      "commandLineArgs": "init",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },  
     "Reindex-All": {
       "commandName": "Project",
       "commandLineArgs": "reindex-all",
